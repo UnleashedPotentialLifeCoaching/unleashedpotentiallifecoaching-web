@@ -88,6 +88,7 @@ const BookTimeForm = ({ setOpen }: Props) => {
           <br />
           <p>Select a time</p>
           <InputText id="time" name="time" label="Select time" type="time" />
+          <br />
           <InputText
             id="comments"
             name="comments"
