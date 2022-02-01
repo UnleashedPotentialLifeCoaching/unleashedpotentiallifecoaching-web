@@ -64,7 +64,6 @@ export const bookingTemplate = (booking: BookingForm) => {
     fullName,
     phone,
     previousCoaching,
-    recommend,
     selectCoach,
     time,
   } = booking
@@ -80,7 +79,6 @@ export const bookingTemplate = (booking: BookingForm) => {
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Date: </strong>${date}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Time: </strong>${time}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Has been previously coached: </strong>${previousCoaching}</p>
-      <p style="margin-bottom:12px; font-size: 18px;"><strong>They would recommend us to a friend: </strong>${recommend}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Additional comments</strong></p>
       <p>${comments}</p>
     `;

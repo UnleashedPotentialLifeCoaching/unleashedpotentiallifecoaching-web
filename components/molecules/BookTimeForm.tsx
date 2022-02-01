@@ -88,11 +88,6 @@ const BookTimeForm = ({ setOpen }: Props) => {
           <br />
           <p>Select a time</p>
           <InputText id="time" name="time" label="Select time" type="time" />
-          <InputRadio
-            label="recommend"
-            title="Would you recommend us to your friends?"
-            options={BOOLEAN_CHOICE}
-          />
           <InputText
             id="comments"
             name="comments"

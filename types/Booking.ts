@@ -7,7 +7,6 @@ export interface BookingForm {
   ratings: string;
   explanation: string;
   improvements: string;
-  recommend: string;
   comments: string;
   subject: string;
   message: string;
