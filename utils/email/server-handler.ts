@@ -28,6 +28,8 @@ const sendSeverEmail = async (contents: Email) => {
     ],
   };
 
+  console.log("Email:::", data);
+
   const request = await fetch(SENDGRID_API, {
     method: 'POST',
     headers: {

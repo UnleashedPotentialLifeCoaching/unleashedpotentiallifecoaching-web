@@ -5,7 +5,7 @@ interface Props {
 const Button = ({ label, handlePress }: Props) => (
   <button
     type="submit"
-    onClick={handlePress || undefined}
+    onClick={handlePress}
     className="bg-forrest-900 hover:bg-forrest  text-white text-center py-4 px-12 text-xl rounded"
   >
     {label}

@@ -1,13 +1,13 @@
 import { ReviewForm } from 'types/Review';
-
 import { ContactForm } from 'types/Contact';
+import { BookingForm } from 'types/Booking'
 
 export const reviewTemplate = (review: ReviewForm) => {
   const {
     fullName,
     email,
     phone,
-    rating,
+    ratings,
     explanation,
     improvements,
     recommend,
@@ -21,7 +21,7 @@ export const reviewTemplate = (review: ReviewForm) => {
   <p style="margin-bottom:12px; font-size: 18px;"><strong>Full name: </strong>${fullName}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>Email: </strong>${email}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>Phone: </strong>${phone}</p>
-  <p style="margin-bottom:12px; font-size: 18px;"><strong>Rate Our Services </strong>${rating}</p>
+  <p style="margin-bottom:12px; font-size: 18px;"><strong>Rate our services: </strong>${ratings}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>What did you like best?</strong></p>
   <p>${explanation}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>How can we improve?</strong></p>
@@ -52,6 +52,41 @@ export const contactTemplate = (contact: ContactForm) => {
 
   return {
     subject: emailSubject,
+    body,
+  };
+};
+
+export const bookingTemplate = (booking: BookingForm) => {
+  const {
+    comments,
+    date,
+    email,
+    fullName,
+    phone,
+    previousCoaching,
+    recommend,
+    selectCoach,
+    time,
+  } = booking
+
+  const bookingSubject =
+    `Someone has booked time with ${selectCoach} from unleashedpotentiallifecoaching.com`;
+  const body = `
+      <h2>Details on the recent booking request from ${selectCoach}</h2>
+      <p style="margin-bottom:35px; font-size: 18px;"><u>Here are the details:</u></p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Full name: </strong>${fullName}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Email: </strong>${email}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Phone: </strong>${phone}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Date: </strong>${date}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Time: </strong>${time}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Has been previously coached: </strong>${previousCoaching}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>They would recommend us to a friend: </strong>${recommend}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Additional comments</strong></p>
+      <p>${comments}</p>
+    `;
+
+  return {
+    subject: bookingSubject,
     body,
   };
 };

@@ -10,7 +10,7 @@ export interface ReviewForm {
   fullName: string;
   email: string;
   phone: string;
-  rating: string;
+  ratings: string;
   explanation: string;
   improvements: string;
   recommend: string;

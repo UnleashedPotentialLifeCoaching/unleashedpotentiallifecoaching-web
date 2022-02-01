@@ -49,63 +49,60 @@ const BookTimeForm = ({ setOpen }: Props) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     onSubmitHandler(e);
-    setOpen(false);
   };
 
   return (
     <div>
-      {didSend && <FormResponse message={response} />}
-      <form onSubmit={handleSubmit} onChange={onChangeHandler}>
-        <InputText
-          id="book-time-full-name"
-          name="fullName"
-          label="Full Name"
-          type="text"
-        />
-        <br />
-        <InputText
-          id="book-time-email"
-          name="email"
-          label="Email"
-          type="email"
-        />
-        <br />
-        <InputText
-          id="book-time-phone"
-          name="phone"
-          label="Phone"
-          type="phone"
-        />
-        <InputRadio
-          label="previous-coaching"
-          title="Have you been coached before?"
-          options={BOOLEAN_CHOICE}
-        />
-        <InputRadio
-          label="coaches"
-          title="Select a coach"
-          options={coachOptions}
-        />
-        <br />
-        <p>Pick a date</p>
-        <InputText id="date" name="date" label="Pick a date" type="date" />
-        <br />
-        <p>Select a time</p>
-        <InputText id="time" name="time" label="Select time" type="time" />
-        <InputRadio
-          label="recommend"
-          title="Would you recommend us to your friends?"
-          options={BOOLEAN_CHOICE}
-        />
-        <InputText
-          id="comments"
-          name="comments"
-          label="Anything else you would like to add?"
-          type="textarea"
-        />
-        <br />
-        <Button label="Submit Review" />
-      </form>
+      {didSend ? (
+        <>
+          <FormResponse message={response} />
+          <div className="text-center">
+          <Button handlePress={() => setOpen(false)} label="Close" />
+          </div>
+        </>
+      ) : (
+        <form onSubmit={handleSubmit} onChange={onChangeHandler}>
+          <InputText
+            id="bt-full-name"
+            name="fullName"
+            label="Full Name"
+            type="text"
+          />
+          <br />
+          <InputText id="bt-email" name="email" label="Email" type="email" />
+          <br />
+          <InputText id="bt-phone" name="phone" label="phone" type="phone" />
+          <InputRadio
+            label="previousCoaching"
+            title="Have you been coached before?"
+            options={BOOLEAN_CHOICE}
+          />
+          <InputRadio
+            label="selectCoach"
+            title="Select a coach"
+            options={coachOptions}
+          />
+          <br />
+          <p>Pick a date</p>
+          <InputText id="date" name="date" label="Pick a date" type="date" />
+          <br />
+          <p>Select a time</p>
+          <InputText id="time" name="time" label="Select time" type="time" />
+          <InputRadio
+            label="recommend"
+            title="Would you recommend us to your friends?"
+            options={BOOLEAN_CHOICE}
+          />
+          <InputText
+            id="comments"
+            name="comments"
+            label="Anything else you would like to add?"
+            type="textarea"
+          />
+          <br />
+          <Button label="Submit Review" />
+        </form>
+      )}
     </div>
   );
 };
