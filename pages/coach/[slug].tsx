@@ -34,7 +34,7 @@ const CoachProfile = ({ coach, coaches, slug, featuredReview }: Props) => {
   return <CoachPage coach={coach} featuredReview={featuredReview} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params, res }) => {
   const slug = params?.slug;
   const request = await coachesQuery();
   const reviews = await reviewsQuery();
@@ -93,6 +93,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   const featuredReview = formatReview(reviews);
 
+  /** Caching headers */
+  res.setHeader(
+    'Cache-Control',
+    'max-age=0, s-maxage=86400, stale-while-revalidate'
+  );
   return {
     props: {
       coach: coachData,

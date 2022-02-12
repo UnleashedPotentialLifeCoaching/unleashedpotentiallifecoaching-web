@@ -21,7 +21,7 @@ const Reviews = ({ featuredReview, page, allReviews }: Props) => {
   return <ReviewsPage {...pageProps} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({res}) => {
   const reviews = await reviewsQuery();
   const pageContent = await reviewsPageQuery();
   const featuredReview = formatReview(reviews);
@@ -41,6 +41,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
     bannerImage: node.banner_image.url,
   }));
 
+  /** Caching headers */
+  res.setHeader(
+    'Cache-Control',
+    'max-age=0, s-maxage=86400, stale-while-revalidate'
+  );
   return {
     props: {
       page: page[0],
