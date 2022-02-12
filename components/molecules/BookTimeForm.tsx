@@ -96,7 +96,7 @@ const BookTimeForm = ({ setOpen }: Props) => {
             type="textarea"
           />
           <br />
-          <Button label="Submit Review" />
+          <Button label="Book Time" />
         </form>
       )}
     </div>
