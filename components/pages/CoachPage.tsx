@@ -19,7 +19,7 @@ interface Props {
 }
 
 const CoachPage = ({ coach, featuredReview }: Props) => {
-  const { name, image, welcomeMessage, biography, bookTimeImage, seo } = coach;
+  const { name, image, welcomeMessage, biography, seo } = coach;
   const seoTitle = seo?.title ? seo.title : SEO_DEFAULTS.title;
   const seoMetaDescription = seo?.metaDescription
     ? seo.metaDescription

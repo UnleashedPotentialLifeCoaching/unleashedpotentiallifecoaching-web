@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 
   res.setHeader(
     'Cache-Control',
-    'max-age=0, s-maxage=86400, stale-while-revalidate'
+    'public, s-maxage=86400, stale-while-revalidate=59'
   );
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);
