@@ -22,6 +22,9 @@ export const allReviewsSchema: string = `query{
         featured
         name
         quote
+        _meta {
+          firstPublicationDate
+        }
       }
     }
   }

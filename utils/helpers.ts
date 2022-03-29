@@ -4,15 +4,13 @@ import { Review } from 'types/Review';
 export const urlify = (str: string): string =>
   str.replace(/\s+/g, '-').toLowerCase();
 
-export const formatReview = (review: any): Review => {
-  return review
+export const formatReview = (review: any): Review => review
     .filter((review: any) => review.node.featured === true)
     .map(({ node }: { node: any }) => ({
       featured: node.featured,
       name: node.name[0].text,
       quote: node.quote,
     }))[0];
-};
 
 export const formatCoaches = (node: any): Coach => ({
   id: node.appearance_order,

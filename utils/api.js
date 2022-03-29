@@ -64,7 +64,8 @@ export const coachesQuery = async () => {
 export const reviewsQuery = async () => {
   const data = await fetchAPI(allReviewsSchema);
 
-  return data.allReviewss?.edges;
+  return data.allReviewss?.edges.sort((a, b) => a.node._meta.firstPublicationDate < b.node._meta.firstPublicationDate ? 1 : -1);
+  ;
 };
 
 export const reviewsPageQuery = async () => {

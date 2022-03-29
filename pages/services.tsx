@@ -57,12 +57,12 @@ export const getServerSideProps: GetServerSideProps = async ({res}) => {
   /** Caching headers */
   res.setHeader(
     'Cache-Control',
-    'public, s-maxage=86400, stale-while-revalidate=59'
+    'public, s-maxage=1200, stale-while-revalidate=59'
   );
   return {
     props: {
       service: page[0],
-      featuredReview,
+      featuredReview: (featuredReview) ? featuredReview : null,
       coaches,
     },
   };
