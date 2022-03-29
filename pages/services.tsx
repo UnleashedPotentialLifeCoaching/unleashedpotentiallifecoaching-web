@@ -34,7 +34,7 @@ const Services = ({ service, featuredReview, coaches }: Props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({res}) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const services = await servicesQuery();
   const reviews = await reviewsQuery();
   const coachesRequest = await coachesQuery();
@@ -54,11 +54,6 @@ export const getServerSideProps: GetServerSideProps = async ({res}) => {
     .map(({ node }: { node: any }) => formatCoaches(node))
     .sort((a: any, b: any) => (a.id > b.id ? 1 : -1));
 
-  /** Caching headers */
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=1200, stale-while-revalidate=59'
-  );
   return {
     props: {
       service: page[0],
