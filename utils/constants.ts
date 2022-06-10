@@ -68,12 +68,25 @@ export const SITE_NAVS = [
     slug: '/our-story',
     label: 'Our Story',
   },
+
   {
     id: 5,
-    slug: '/podcast',
-    label: 'Podcast',
+    slug:null,
+    label: 'Media',
+    children: [
+      {
+        id: 1,
+        slug: '/blog',
+        label: 'Blog'
+      },
+      {
+        id: 2,
+        slug: '/podcast',
+        label: 'Podcast'
+      }
+    ]
   },
-  {
+   {
     id: 6,
     slug: '/reviews',
     label: 'Reviews',
