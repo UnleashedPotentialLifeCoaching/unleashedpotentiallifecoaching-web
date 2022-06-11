@@ -16,8 +16,9 @@ interface Props {
   videos: VIDEO_PROPS[];
   page: PAGE;
   featuredReview: IFeaturedReview;
+  setTriggerNextPage: (e: boolean) => void;
 }
-const PodcastPage = ({ videos, page, featuredReview }: Props) => (
+const PodcastPage = ({ videos, page, featuredReview, setTriggerNextPage }: Props) => (
   <FadeInContainer>
     <SiteHead {...page?.seo} />
     <PageBanner
@@ -35,6 +36,7 @@ const PodcastPage = ({ videos, page, featuredReview }: Props) => (
               key={title}
             />
           ))}
+          <button onClick={() => setTriggerNextPage(true)}>Next Page</button>
       </main>
     </Container>
     <FeaturedReview {...featuredReview} />

@@ -111,4 +111,7 @@ export const SITE_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://www.unleashedpotentiallifecoaching.com/'
     : 'http://localhost:3000';
-export const YT_CHANNEL_URL = `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YT_API_KEY}&channelId=${process.env.NEXT_PUBLIC_CHANNEL_ID}&part=snippet,id&order=date&maxResults=100`;
+const YT_CHANNEL_BASE = `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YT_API_KEY}&channelId=${process.env.NEXT_PUBLIC_CHANNEL_ID}`
+export const YT_CHANNEL_URL = `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=10`;
+export const YT_CHANNEL_URL_NEXT_PAGE = (nextPageToken: string) => `${YT_CHANNEL_BASE}${YT_CHANNEL_URL}&pageToken=${nextPageToken}`;
+
