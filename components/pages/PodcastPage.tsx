@@ -6,6 +6,7 @@ import SiteHead from 'components/shared/SiteHead';
 import { BANNER_URL } from 'utils/constants';
 import { VIDEO_PROPS, PAGE } from 'types/Podcast';
 import { IFeaturedReview } from 'types/Review';
+import ButtonGroup from 'components/organisms/podcast/ButtonGroup';
 
 const Video = dynamic(() => import('components/organisms/podcast/Video'));
 const FeaturedReview = dynamic(
@@ -17,8 +18,19 @@ interface Props {
   page: PAGE;
   featuredReview: IFeaturedReview;
   setTriggerNextPage: (e: boolean) => void;
+  setTriggerPrevPage: (e: boolean) => void;
+  nextPageToken: string;
+  prevPageToken: string;
 }
-const PodcastPage = ({ videos, page, featuredReview, setTriggerNextPage }: Props) => (
+const PodcastPage = ({ 
+  videos,
+  page,
+  featuredReview,
+  setTriggerNextPage,
+  setTriggerPrevPage,
+  nextPageToken,
+  prevPageToken
+ }: Props) => (
   <FadeInContainer>
     <SiteHead {...page?.seo} />
     <PageBanner
@@ -26,7 +38,13 @@ const PodcastPage = ({ videos, page, featuredReview, setTriggerNextPage }: Props
       bannerImage={page?.banner_image || BANNER_URL}
     />
     <Container>
-      <main className="flex flex-col text-center justify-center items-center">
+      <ButtonGroup
+        setTriggerNextPage={setTriggerNextPage}
+        setTriggerPrevPage={setTriggerPrevPage}
+        nextPageToken={nextPageToken}
+        prevPageToken={prevPageToken}
+        />
+      <main className="flex flex-col sm:flex-row sm:flex-wrap sm:gap-x-8 xl:gap-x-16">
         {videos.length > 0 &&
           videos.map(({ url, title, description }: VIDEO_PROPS) => (
             <Video
@@ -36,8 +54,13 @@ const PodcastPage = ({ videos, page, featuredReview, setTriggerNextPage }: Props
               key={title}
             />
           ))}
-          <button onClick={() => setTriggerNextPage(true)}>Next Page</button>
       </main>
+      <ButtonGroup
+        setTriggerNextPage={setTriggerNextPage}
+        setTriggerPrevPage={setTriggerPrevPage}
+        nextPageToken={nextPageToken}
+        prevPageToken={prevPageToken}
+        />
     </Container>
     <FeaturedReview {...featuredReview} />
   </FadeInContainer>
