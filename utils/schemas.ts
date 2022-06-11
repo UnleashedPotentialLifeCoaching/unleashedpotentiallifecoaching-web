@@ -116,6 +116,7 @@ export const allBlogsSchema: string = `query {
         sub_title
         slug_text
         publish_date
+        featured_image
         author {
           ...on Coach {
             name
@@ -123,6 +124,19 @@ export const allBlogsSchema: string = `query {
           }
         }
             
+      }
+    }
+  }
+}`
+
+export const blogPageSchema = `query {
+  allBlog_pages {
+    edges {
+      node {
+        title
+        seo_title
+        seo_meta_description
+        banner_image
       }
     }
   }

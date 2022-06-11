@@ -1,31 +1,46 @@
+import BlogPage from 'components/pages/BlogPage';
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import { Review } from 'types/Review';
-import { allBlogsQuery, reviewsQuery } from 'utils/api';
+import { Seo } from 'types/SEO';
+import { allBlogsQuery, blogPageQuery, reviewsQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
 
 interface Props {
   featuredReview: Review;
   posts: any;
+  page: {
+    seo: Seo;
+    bannerImage?: string;
+    title: string;
+  }; 
 }
 
-const Blog =  ({ featuredReview, posts }: Props) => {
-  const pageProps ={ featuredReview, posts };
- return (
-   <div>Well get there..</div>
- )
+const Blog =  ({ featuredReview, posts, page }: Props) => {
+  const pageProps ={ featuredReview, posts, page };
+ return <BlogPage {...pageProps} /> 
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const reviews = await reviewsQuery();
   const featuredReview = formatReview(reviews);
   const fetchPosts = await allBlogsQuery();
-  console.log({ fetchPosts })
+  const fetchBlogPage = await blogPageQuery();
   const posts = fetchPosts?.map(({ node }: any) =>  node);
+
+  const page = fetchBlogPage.map(({ node }: { node: any }) => ({
+      seo: {
+        title: node?.seo_title || "",
+        metaDescription: node?.seo_meta_description || ""    
+      },
+      title: node?.title[0]?.text,
+      bannerImage: node.banner_image.url,
+  }))[0];
 
   return {
     props: {
       posts,
+      page,
       featuredReview: (featuredReview) ? featuredReview : null,
     }
   }

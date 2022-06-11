@@ -18,3 +18,16 @@ a {
 .banner-shadow {
   text-shadow: rgb(0 0 0 / 40%) 0px 4px 4px;
 }
+.blog-post-excerpt {
+  max-width: 500px;
+}
+.blog-post-excerpt > h1 {
+  @apply text-2xl;
+  @apply text-stone-600;
+  @apply mb-3;
+}
+.blog-post-excerpt > h2 {
+  @apply text-base;
+  @apply leading-7;
+  @apply font-serif;
+}

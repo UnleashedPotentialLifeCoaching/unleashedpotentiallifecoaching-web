@@ -13,7 +13,8 @@ import {
   ourStorySchema,
   servicesPageSchema,
   podcastPageSchema,
-  allBlogsSchema
+  allBlogsSchema,
+  blogPageSchema
 } from 'utils/schemas';
 
 export const PrismicClient = Prismic.client(REF_API_URL, {
@@ -97,4 +98,9 @@ export const allBlogsQuery = async () => {
   const data = await fetchAPI(allBlogsSchema);
 
   return data?.allBlog_posts?.edges;
+}
+
+export const blogPageQuery = async () => {
+  const data = await fetchAPI(blogPageSchema);
+  return data?.allBlog_pages?.edges;
 }
