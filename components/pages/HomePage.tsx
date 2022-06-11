@@ -8,7 +8,7 @@ import Coaches from 'components/organisms/home/Coaches';
 import Container from 'layouts/Container';
 import { Coach } from 'types/Coach';
 import { Banner, BlockWidget, FeaturedContent } from 'types/Home';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 
 const FeaturedReview = dynamic(
@@ -21,7 +21,7 @@ interface Props {
   blockWidgets: BlockWidget[];
   seo: Seo;
   coaches: Coach[];
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
 }
 
 const HomePage = ({

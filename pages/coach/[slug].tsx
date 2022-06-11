@@ -6,7 +6,7 @@ import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { Coach } from 'types/Coach';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { coachesQuery, reviewsQuery } from 'utils/api';
 import { urlify } from 'utils/helpers';
 import { formatReview } from 'utils/helpers';
@@ -15,7 +15,7 @@ interface Props {
   coach: Coach;
   coaches: Coach[];
   slug: string;
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
 }
 
 const CoachProfile = ({ coach, coaches, slug, featuredReview }: Props) => {

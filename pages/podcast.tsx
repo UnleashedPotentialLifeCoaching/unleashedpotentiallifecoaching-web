@@ -3,12 +3,12 @@ import PodcastPage from 'components/pages/PodcastPage';
 import { GetServerSideProps } from 'next';
 import { YT_CHANNEL_URL } from 'utils/constants';
 import { YTProps, VIDEO_PROPS, PAGE } from 'types/Podcast';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { reviewsQuery, podcastQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
 
 interface Props {
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   page: PAGE;
 }
 

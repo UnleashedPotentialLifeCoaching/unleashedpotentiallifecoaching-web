@@ -1,13 +1,13 @@
 import BlogPage from 'components/pages/BlogPage';
 import { GetServerSideProps } from 'next';
 import React from 'react';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 import { allBlogsQuery, blogPageQuery, reviewsQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
 
 interface Props {
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   posts: any;
   page: {
     seo: Seo;

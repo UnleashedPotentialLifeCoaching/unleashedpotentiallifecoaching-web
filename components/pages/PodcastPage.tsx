@@ -5,7 +5,7 @@ import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
 import { BANNER_URL } from 'utils/constants';
 import { VIDEO_PROPS, PAGE } from 'types/Podcast';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 
 const Video = dynamic(() => import('components/organisms/podcast/Video'));
 const FeaturedReview = dynamic(
@@ -15,7 +15,7 @@ const FeaturedReview = dynamic(
 interface Props {
   videos: VIDEO_PROPS[];
   page: PAGE;
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
 }
 const PodcastPage = ({ videos, page, featuredReview }: Props) => (
   <FadeInContainer>

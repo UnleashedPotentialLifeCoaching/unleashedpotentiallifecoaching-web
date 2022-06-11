@@ -2,7 +2,7 @@ import HomePage from 'components/pages/HomePage';
 import { GetServerSideProps } from 'next';
 import { Coach } from 'types/Coach';
 import { Banner, BlockWidget, FeaturedContent } from 'types/Home';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 import { coachesQuery, homePageQuery, reviewsQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
@@ -13,7 +13,7 @@ interface Props {
   blockWidgets: BlockWidget[];
   seo: Seo;
   coaches: Coach[];
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
 }
 
 const Home = ({

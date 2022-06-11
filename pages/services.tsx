@@ -4,14 +4,14 @@ import { CoachesContext } from 'contexts/CoachesContext';
 import { GetServerSideProps } from 'next';
 import React, { useContext, useEffect } from 'react';
 import { Coach } from 'types/Coach';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { TServices } from 'types/Services';
 import { coachesQuery, reviewsQuery, servicesQuery } from 'utils/api';
 import { formatCoaches, formatReview } from 'utils/helpers';
 
 interface Props {
   service: TServices;
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   coaches: Coach[];
 }
 const Services = ({ service, featuredReview, coaches }: Props) => {

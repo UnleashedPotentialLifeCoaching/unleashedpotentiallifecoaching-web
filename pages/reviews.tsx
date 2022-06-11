@@ -1,13 +1,13 @@
 import ReviewsPage from 'components/pages/ReviewsPage';
 import { GetServerSideProps } from 'next';
 import React from 'react';
-import { Review } from 'types/Review';
+import { Review, IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 import { reviewsPageQuery, reviewsQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
 
 interface Props {
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   page: {
     seo: Seo;
     bannerImage?: string;
