@@ -106,3 +106,24 @@ export const podcastPageSchema: string = `query {
     }
   }
 }`;
+
+
+export const allBlogsSchema: string = `query {
+  allBlog_posts {
+    edges {
+      node {        
+        post_title
+        sub_title
+        slug_text
+        publish_date
+        author {
+          ...on Coach {
+            name
+            
+          }
+        }
+            
+      }
+    }
+  }
+}`

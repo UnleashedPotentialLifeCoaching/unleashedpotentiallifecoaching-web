@@ -12,6 +12,7 @@ const FeaturedReview = dynamic(
 
 interface Props {
   featuredReview: Review;
+  posts: any;
 }
 const PodcastPage = ({ featuredReview }: Props) => (
   <FadeInContainer>
@@ -21,16 +22,8 @@ const PodcastPage = ({ featuredReview }: Props) => (
     />
     <Container>
       <main className="flex flex-col text-center justify-center items-center">
-        {videos.length > 0 &&
-          videos.map(({ url, title, description }: VIDEO_PROPS) => (
-            <Video
-              url={url}
-              title={title}
-              description={description}
-              key={title}
-            />
-          ))}
-      </main>
+        Posts will go here..
+              </main>
     </Container>
     <FeaturedReview {...featuredReview} />
   </FadeInContainer>
