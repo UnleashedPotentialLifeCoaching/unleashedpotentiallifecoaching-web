@@ -18,17 +18,17 @@ const ButtonGroup = ({
         onClick={() => setTriggerPrevPage(true)}
         className={` ${
           !Boolean(prevPageToken) ? 'opacity-25' : ''
-        } mb-4 sm:mb-0 font-bold px-3 py-3 rounded bg-forrest text-white`}
+        } mb-4 sm:mb-0 font-bold w-24  text-center py-3 rounded bg-forrest text-white`}
       >
-        Previous Page
+        Previous 
       </button>
       <button
         onClick={() => setTriggerNextPage(true)}
         className={` ${
           !Boolean(nextPageToken) ? 'opacity-25' : ''
-        } mb-4 sm:mb-0 font-bold px-3 py-3 rounded bg-forrest text-white`}
+        } mb-4 sm:mb-0 font-bold w-24  text-center py-3 rounded bg-forrest text-white`}
       >
-        Next Page
+        Next 
       </button>
     </div>
   );

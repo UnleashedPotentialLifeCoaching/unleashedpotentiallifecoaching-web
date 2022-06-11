@@ -55,12 +55,6 @@ const PodcastPage = ({
             />
           ))}
       </main>
-      <ButtonGroup
-        setTriggerNextPage={setTriggerNextPage}
-        setTriggerPrevPage={setTriggerPrevPage}
-        nextPageToken={nextPageToken}
-        prevPageToken={prevPageToken}
-      />
     </Container>
     <FeaturedReview {...featuredReview} />
   </FadeInContainer>
