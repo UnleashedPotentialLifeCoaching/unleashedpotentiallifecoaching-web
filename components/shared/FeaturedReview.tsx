@@ -1,8 +1,8 @@
 import { RichText, RichTextBlock } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 
-const FeaturedReview = ({ name, quote }: Review) => (
+const FeaturedReview = ({ name, quote }: IFeaturedReview) => (
   <div className="bg-forrest py-12 lg:mb-12">
     {(name && quote) && (
       <>

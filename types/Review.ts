@@ -16,3 +16,8 @@ export interface ReviewForm {
   recommend: string;
   comments: string;
 }
+
+export interface IFeaturedReview {
+  name: string;
+  quote: RichTextBlock[];
+}
