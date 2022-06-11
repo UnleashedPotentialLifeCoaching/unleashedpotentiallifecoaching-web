@@ -35,14 +35,14 @@ const BlogPage = ({ featuredReview, posts, page }: Props) => {
       <main className="flex flex-col justify-center items-center">
         {posts.map((post: any) => (
           <Link href={`/post/${post?.slug_text}`} key={JSON.stringify(post)}>
-            <a className="flex flex-row border-b pb-12">
+            <a className="flex flex-col sm:flex-row border-b pb-12">
               <Image
                 src={post?.featured_image?.url}
                 alt={post?.post_title}
                 width={post?.featured_image?.dimensions?.width / 2}
                 height={post?.featured_image?.dimensions?.height / 2}
               />
-              <div className="ml-5 blog-post-excerpt">            
+              <div className=" mt-3 sm:mt-0 sm:ml-8 blog-post-excerpt">            
                 <p className="text-2xl text-forrest">{post?.post_title[0]?.text}</p>
                 <p className="my-2 flex flex-row items-center">
                   <span className="font-bold leading-snug mr-1 text-stone-400">Date: </span>
@@ -51,6 +51,7 @@ const BlogPage = ({ featuredReview, posts, page }: Props) => {
                   <span className="text-base text-stone-500">{post?.author?.name[0]?.text}</span>
                 </p>
                 <p className="leading-7 font-serif text-base">{post?.sub_title[0]?.text}</p>
+                <button className="my-6 px-6 py-3 rounded-sm text-xl bg-forrest text-white">Read More</button>
               </div>
             </a>
           </Link>
