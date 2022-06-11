@@ -30,10 +30,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
     banner_image: node.banner_image.url,
   }));
 
-
   return {
     props: {
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
       page: formatPage[0],
     },
   };

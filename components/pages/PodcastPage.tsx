@@ -22,15 +22,15 @@ interface Props {
   nextPageToken: string;
   prevPageToken: string;
 }
-const PodcastPage = ({ 
+const PodcastPage = ({
   videos,
   page,
   featuredReview,
   setTriggerNextPage,
   setTriggerPrevPage,
   nextPageToken,
-  prevPageToken
- }: Props) => (
+  prevPageToken,
+}: Props) => (
   <FadeInContainer>
     <SiteHead {...page?.seo} />
     <PageBanner
@@ -43,7 +43,7 @@ const PodcastPage = ({
         setTriggerPrevPage={setTriggerPrevPage}
         nextPageToken={nextPageToken}
         prevPageToken={prevPageToken}
-        />
+      />
       <main className="flex flex-col sm:flex-row sm:flex-wrap sm:gap-x-8 xl:gap-x-16">
         {videos.length > 0 &&
           videos.map(({ url, title, description }: VIDEO_PROPS) => (
@@ -60,7 +60,7 @@ const PodcastPage = ({
         setTriggerPrevPage={setTriggerPrevPage}
         nextPageToken={nextPageToken}
         prevPageToken={prevPageToken}
-        />
+      />
     </Container>
     <FeaturedReview {...featuredReview} />
   </FadeInContainer>

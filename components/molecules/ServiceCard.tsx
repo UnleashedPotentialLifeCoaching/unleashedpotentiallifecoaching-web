@@ -12,7 +12,13 @@ const ServiceCard = ({ name, image }: Coach) => {
   return (
     <div className="mb-12 flex flex-col items-center justify-center space-y-4 lg:space-y-2 lg:flex-row">
       <div className="w-full sm:max-w-md lg:w-1/2 lg:inline ">
-        <Image {...image} alt={image?.alt} width={500} height={500} layout="intrinsic" />
+        <Image
+          {...image}
+          alt={image?.alt}
+          width={500}
+          height={500}
+          layout="intrinsic"
+        />
       </div>
       <div className="bg-white shadow-xl rounded border z-30 w-full sm:max-w-md lg:-ml-12">
         <div className="mx-3 my-4 rounded border border-black lg:h-52">

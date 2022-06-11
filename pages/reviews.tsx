@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       page: page[0],
       allReviews,
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
     },
   };
 };

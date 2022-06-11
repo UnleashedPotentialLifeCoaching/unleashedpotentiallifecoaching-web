@@ -13,12 +13,12 @@ interface Props {
     seo: Seo;
     bannerImage?: string;
     title: string;
-  }; 
+  };
 }
 
-const Blog =  ({ featuredReview, posts, page }: Props) => {
-  const pageProps ={ featuredReview, posts, page };
- return <BlogPage {...pageProps} /> 
+const Blog = ({ featuredReview, posts, page }: Props) => {
+  const pageProps = { featuredReview, posts, page };
+  return <BlogPage {...pageProps} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -26,25 +26,24 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const featuredReview = formatReview(reviews);
   const fetchPosts = await allBlogsQuery();
   const fetchBlogPage = await blogPageQuery();
-  const posts = fetchPosts?.map(({ node }: any) =>  node);
+  const posts = fetchPosts?.map(({ node }: any) => node);
 
   const page = fetchBlogPage.map(({ node }: { node: any }) => ({
-      seo: {
-        title: node?.seo_title || "",
-        metaDescription: node?.seo_meta_description || ""    
-      },
-      title: node?.title[0]?.text,
-      bannerImage: node.banner_image.url,
+    seo: {
+      title: node?.seo_title || '',
+      metaDescription: node?.seo_meta_description || '',
+    },
+    title: node?.title[0]?.text,
+    bannerImage: node.banner_image.url,
   }))[0];
 
   return {
     props: {
       posts,
       page,
-      featuredReview: (featuredReview) ? featuredReview : null,
-    }
-  }
-
-}
+      featuredReview: featuredReview ? featuredReview : null,
+    },
+  };
+};
 
 export default Blog;

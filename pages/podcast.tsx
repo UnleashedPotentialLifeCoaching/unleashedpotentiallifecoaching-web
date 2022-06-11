@@ -19,8 +19,6 @@ const PodCast = ({ featuredReview, page }: Props) => {
   const [triggerNextPage, setTriggerNextPage] = useState<boolean>(false);
   const [triggerPrevPage, setTriggerPrevPage] = useState<boolean>(false);
 
-  
-
   useEffect(() => {
     const getVideos = async (channelUrl: string) => {
       const request = await fetch(channelUrl, {
@@ -31,13 +29,13 @@ const PodCast = ({ featuredReview, page }: Props) => {
       })
         .then((data) => data.json())
         .catch((err) => err);
-console.log({ request })
+      console.log({ request });
       if (request.items.length > 0) {
-        if(request?.nextPageToken) {
+        if (request?.nextPageToken) {
           setNextPageToken(request?.nextPageToken);
         }
-        
-       if(request?.prevPageToken) {
+
+        if (request?.prevPageToken) {
           setPrevPageToken(request?.prevPageToken);
         }
         const videoData: VIDEO_PROPS[] = request.items.map(
@@ -55,14 +53,14 @@ console.log({ request })
       getVideos(YT_CHANNEL_URL);
     }
 
-    if(triggerNextPage) {
+    if (triggerNextPage) {
       const nextPageUrl = YT_CHANNEL_URL_NEXT_PAGE(nextPageToken);
-      getVideos(nextPageUrl)
+      getVideos(nextPageUrl);
       setTriggerNextPage(false);
     }
-    if(triggerPrevPage) {
+    if (triggerPrevPage) {
       const nextPageUrl = YT_CHANNEL_URL_NEXT_PAGE(prevPageToken);
-      getVideos(nextPageUrl)
+      getVideos(nextPageUrl);
       setTriggerPrevPage(false);
     }
   }, [videos, triggerNextPage, nextPageToken, prevPageToken, triggerPrevPage]);
@@ -74,7 +72,7 @@ console.log({ request })
     setTriggerNextPage,
     setTriggerPrevPage,
     nextPageToken,
-    prevPageToken
+    prevPageToken,
   };
 
   return <PodcastPage {...podcastPageProps} />;
@@ -95,7 +93,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
       page: formatPage[0],
     },
   };

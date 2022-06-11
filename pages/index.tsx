@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
           },
     }))
     .sort((a: any, b: any) => (a.id > b.id ? 1 : -1));
-  
+
   const featuredReview = formatReview(reviews);
 
   return {
@@ -86,7 +86,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
       blockWidgets,
       coaches,
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
     },
   };
 };

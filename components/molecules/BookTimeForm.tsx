@@ -57,7 +57,7 @@ const BookTimeForm = ({ setOpen }: Props) => {
         <>
           <FormResponse message={response} />
           <div className="text-center">
-          <Button handlePress={() => setOpen(false)} label="Close" />
+            <Button handlePress={() => setOpen(false)} label="Close" />
           </div>
         </>
       ) : (

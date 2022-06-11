@@ -20,17 +20,15 @@ const Video = ({ url, title, description }: VIDEO_PROPS) => (
 );
 
 const VideoContainer = styled.div`
-    width: 100%;
-    margin-bottom: 42px;
-    @media(min-width: 640px) {
-      width: 47%;
-    }
+  width: 100%;
+  margin-bottom: 42px;
+  @media (min-width: 640px) {
+    width: 47%;
+  }
 `;
 const Iframe = styled.iframe`
-   width: 100%;
-   min-height: 350px;
-
-   
+  width: 100%;
+  min-height: 350px;
 `;
 
 const VideoDetails = styled.div`

@@ -107,7 +107,6 @@ export const podcastPageSchema: string = `query {
   }
 }`;
 
-
 export const allBlogsSchema: string = `query {
   allBlog_posts {
     edges {
@@ -127,7 +126,7 @@ export const allBlogsSchema: string = `query {
       }
     }
   }
-}`
+}`;
 
 export const blogPageSchema = `query {
   allBlog_pages {
@@ -140,4 +139,4 @@ export const blogPageSchema = `query {
       }
     }
   }
-}`
+}`;

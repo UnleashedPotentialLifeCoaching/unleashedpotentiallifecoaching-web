@@ -98,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       coach: coachData,
       coaches,
       slug,
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
     },
   };
 };

@@ -1,6 +1,6 @@
 import { ReviewForm } from 'types/Review';
 import { ContactForm } from 'types/Contact';
-import { BookingForm } from 'types/Booking'
+import { BookingForm } from 'types/Booking';
 
 export const reviewTemplate = (review: ReviewForm) => {
   const {
@@ -66,10 +66,9 @@ export const bookingTemplate = (booking: BookingForm) => {
     previousCoaching,
     selectCoach,
     time,
-  } = booking
+  } = booking;
 
-  const bookingSubject =
-    `Someone has booked time with ${selectCoach} from unleashedpotentiallifecoaching.com`;
+  const bookingSubject = `Someone has booked time with ${selectCoach} from unleashedpotentiallifecoaching.com`;
   const body = `
       <h2>Details on the recent booking request from ${selectCoach}</h2>
       <p style="margin-bottom:35px; font-size: 18px;"><u>Here are the details:</u></p>
