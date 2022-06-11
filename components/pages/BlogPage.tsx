@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import FadeInContainer from 'layouts/FadeInContainer';
 import Container from 'layouts/Container';
 import PageBanner from 'components/shared/PageBanner';
