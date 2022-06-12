@@ -36,6 +36,7 @@ const Home = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  console.log("hi")
   const page = await homePageQuery();
   const coachesRequest = await coachesQuery();
   const reviews = await reviewsQuery();

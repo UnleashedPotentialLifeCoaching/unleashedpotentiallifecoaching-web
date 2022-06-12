@@ -18,18 +18,14 @@ interface Props {
   page: PAGE;
   featuredReview: IFeaturedReview;
   setTriggerNextPage: (e: boolean) => void;
-  setTriggerPrevPage: (e: boolean) => void;
   nextPageToken: string;
-  prevPageToken: string;
 }
 const PodcastPage = ({
   videos,
   page,
   featuredReview,
   setTriggerNextPage,
-  setTriggerPrevPage,
   nextPageToken,
-  prevPageToken,
 }: Props) => (
   <FadeInContainer>
     <SiteHead {...page?.seo} />
@@ -38,13 +34,7 @@ const PodcastPage = ({
       bannerImage={page?.banner_image || BANNER_URL}
     />
     <Container>
-      <ButtonGroup
-        setTriggerNextPage={setTriggerNextPage}
-        setTriggerPrevPage={setTriggerPrevPage}
-        nextPageToken={nextPageToken}
-        prevPageToken={prevPageToken}
-      />
-      <main className="flex flex-col sm:flex-row sm:flex-wrap sm:gap-x-8 xl:gap-x-16">
+     <main className="flex flex-col items-center justify-center">
         {videos.length > 0 &&
           videos.map(({ url, title, description }: VIDEO_PROPS) => (
             <Video
@@ -55,6 +45,11 @@ const PodcastPage = ({
             />
           ))}
       </main>
+      <ButtonGroup
+        setTriggerNextPage={setTriggerNextPage}
+        nextPageToken={nextPageToken}
+      />
+    
     </Container>
     <FeaturedReview {...featuredReview} />
   </FadeInContainer>

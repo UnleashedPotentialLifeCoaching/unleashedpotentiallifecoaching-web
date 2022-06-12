@@ -15,9 +15,7 @@ interface Props {
 const PodCast = ({ featuredReview, page }: Props) => {
   const [videos, setVideos] = useState<VIDEO_PROPS[]>([]);
   const [nextPageToken, setNextPageToken] = useState<string>('');
-  const [prevPageToken, setPrevPageToken] = useState<string>('');
   const [triggerNextPage, setTriggerNextPage] = useState<boolean>(false);
-  const [triggerPrevPage, setTriggerPrevPage] = useState<boolean>(false);
 
   useEffect(() => {
     const getVideos = async (channelUrl: string) => {
@@ -35,17 +33,18 @@ const PodCast = ({ featuredReview, page }: Props) => {
           setNextPageToken(request?.nextPageToken);
         }
 
-        if (request?.prevPageToken) {
-          setPrevPageToken(request?.prevPageToken);
-        }
-        const videoData: VIDEO_PROPS[] = request.items.map(
+       const videoData: VIDEO_PROPS[] = request.items.map(
           ({ id, snippet }: YTProps) => ({
             url: `https://www.youtube.com/embed/${id.videoId}`,
             title: snippet.title,
             description: snippet.description,
           })
         );
-        setVideos(videoData);
+        if(videos.length > 1) {
+          setVideos(prev => [...prev, ...videoData])
+         }else{
+          setVideos(videoData)
+         }
       }
     };
 
@@ -58,21 +57,15 @@ const PodCast = ({ featuredReview, page }: Props) => {
       getVideos(nextPageUrl);
       setTriggerNextPage(false);
     }
-    if (triggerPrevPage) {
-      const nextPageUrl = YT_CHANNEL_URL_NEXT_PAGE(prevPageToken);
-      getVideos(nextPageUrl);
-      setTriggerPrevPage(false);
-    }
-  }, [videos, triggerNextPage, nextPageToken, prevPageToken, triggerPrevPage]);
+   
+  }, [videos, triggerNextPage, nextPageToken ]);
 
   const podcastPageProps = {
     featuredReview,
     page,
     videos,
     setTriggerNextPage,
-    setTriggerPrevPage,
     nextPageToken,
-    prevPageToken,
   };
 
   return <PodcastPage {...podcastPageProps} />;
