@@ -18,22 +18,17 @@ interface Props {
 }
 
 const PostPage = ({ post, featuredReview }: Props) => {
-  const seoMetaDescription = seo?.metaDescription
-    ? seo.metaDescription
-    : SEO_DEFAULTS.metaDescription;
-
+  const seoMetaDescription = post?.seo_meta_description || SEO_DEFAULTS.metaDescription;
+  const seoTitle = post?.seo_meta_title || SEO_DEFAULTS.title;
+  console.log({ seoTitle, seoMetaDescription})
+  console.log({ post })
   return (
     <FadeInContainer>
       <SiteHead title={seoTitle} metaDescription={seoMetaDescription} />
       <main>
         <Container>
-          <ProfileHeader
-            name={name}
-            image={image}
-            welcomeMessage={welcomeMessage}
-          />
-          <br />
-          <Biography biography={biography} />
+
+         <p>We...</p>
         </Container>
       </main>
       <FeaturedReview {...featuredReview} />
