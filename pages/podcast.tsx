@@ -33,7 +33,7 @@ const PodCast = ({ featuredReview, page }: Props) => {
           setNextPageToken(request?.nextPageToken);
         }
 
-       const videoData: VIDEO_PROPS[] = request.items.map(
+      const videoData: VIDEO_PROPS[] = request.items.map(
           ({ id, snippet }: YTProps) => ({
             url: `https://www.youtube.com/embed/${id.videoId}`,
             title: snippet.title,
@@ -58,7 +58,7 @@ const PodCast = ({ featuredReview, page }: Props) => {
       setTriggerNextPage(false);
     }
    
-  }, [videos, triggerNextPage, nextPageToken ]);
+  }, [videos, triggerNextPage, nextPageToken]);
 
   const podcastPageProps = {
     featuredReview,

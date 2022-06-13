@@ -128,7 +128,7 @@ export const allBlogsSchema: string = `query {
   }
 }`;
 
-export const blogPageSchema = `query {
+export const blogPageSchema:string = `query {
   allBlog_pages {
     edges {
       node {
@@ -136,6 +136,25 @@ export const blogPageSchema = `query {
         seo_title
         seo_meta_description
         banner_image
+      }
+    }
+  }
+}`;
+
+
+export const blogPostSchema = (uid: string) => `query {
+  blog_post(uid:"${uid}", lang:"en-us"){
+    sub_title
+    featured_image
+    post_title
+    post_content
+    publish_date
+    seo_meta_description
+    seo_meta_title
+    author {
+      ... on Coach {
+		    name
+        profile_image
       }
     }
   }
