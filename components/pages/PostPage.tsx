@@ -43,7 +43,7 @@ const PostPage = ({ post, featuredReview }: Props) => {
                />
               )}
             </div>
-            <div className="w-full sm:w-1/4">
+            <div className="w-full border-2 sm:w-1/4 sm:px-4">
                Sidebar..
             </div>
           </div>
