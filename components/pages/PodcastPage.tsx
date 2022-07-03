@@ -5,7 +5,8 @@ import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
 import { BANNER_URL } from 'utils/constants';
 import { VIDEO_PROPS, PAGE } from 'types/Podcast';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
+import ButtonGroup from 'components/organisms/podcast/ButtonGroup';
 
 const Video = dynamic(() => import('components/organisms/podcast/Video'));
 const FeaturedReview = dynamic(
@@ -15,9 +16,17 @@ const FeaturedReview = dynamic(
 interface Props {
   videos: VIDEO_PROPS[];
   page: PAGE;
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
+  setTriggerNextPage: (e: boolean) => void;
+  nextPageToken: string;
 }
-const PodcastPage = ({ videos, page, featuredReview }: Props) => (
+const PodcastPage = ({
+  videos,
+  page,
+  featuredReview,
+  setTriggerNextPage,
+  nextPageToken,
+}: Props) => (
   <FadeInContainer>
     <SiteHead {...page?.seo} />
     <PageBanner
@@ -25,7 +34,7 @@ const PodcastPage = ({ videos, page, featuredReview }: Props) => (
       bannerImage={page?.banner_image || BANNER_URL}
     />
     <Container>
-      <main className="flex flex-col text-center justify-center items-center">
+     <main className="flex flex-col items-center justify-center">
         {videos.length > 0 &&
           videos.map(({ url, title, description }: VIDEO_PROPS) => (
             <Video
@@ -36,6 +45,11 @@ const PodcastPage = ({ videos, page, featuredReview }: Props) => (
             />
           ))}
       </main>
+      <ButtonGroup
+        setTriggerNextPage={setTriggerNextPage}
+        nextPageToken={nextPageToken}
+      />
+    
     </Container>
     <FeaturedReview {...featuredReview} />
   </FadeInContainer>

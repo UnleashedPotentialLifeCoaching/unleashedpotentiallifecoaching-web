@@ -1,23 +1,25 @@
 import { useState, useEffect } from 'react';
 import PodcastPage from 'components/pages/PodcastPage';
 import { GetServerSideProps } from 'next';
-import { YT_CHANNEL_URL } from 'utils/constants';
+import { YT_CHANNEL_URL, YT_CHANNEL_URL_NEXT_PAGE } from 'utils/constants';
 import { YTProps, VIDEO_PROPS, PAGE } from 'types/Podcast';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { reviewsQuery, podcastQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
 
 interface Props {
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   page: PAGE;
 }
 
 const PodCast = ({ featuredReview, page }: Props) => {
   const [videos, setVideos] = useState<VIDEO_PROPS[]>([]);
+  const [nextPageToken, setNextPageToken] = useState<string>('');
+  const [triggerNextPage, setTriggerNextPage] = useState<boolean>(false);
 
   useEffect(() => {
-    const getVideos = async () => {
-      const request = await fetch(YT_CHANNEL_URL, {
+    const getVideos = async (channelUrl: string) => {
+      const request = await fetch(channelUrl, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
@@ -25,28 +27,45 @@ const PodCast = ({ featuredReview, page }: Props) => {
       })
         .then((data) => data.json())
         .catch((err) => err);
-
+      console.log({ request });
       if (request.items.length > 0) {
-        const videoData: VIDEO_PROPS[] = request.items.map(
+        if (request?.nextPageToken) {
+          setNextPageToken(request?.nextPageToken);
+        }
+
+      const videoData: VIDEO_PROPS[] = request.items.map(
           ({ id, snippet }: YTProps) => ({
             url: `https://www.youtube.com/embed/${id.videoId}`,
             title: snippet.title,
             description: snippet.description,
           })
         );
-        setVideos(videoData);
+        if(videos.length > 1) {
+          setVideos(prev => [...prev, ...videoData])
+         }else{
+          setVideos(videoData)
+         }
       }
     };
 
     if (videos.length <= 0) {
-      getVideos();
+      getVideos(YT_CHANNEL_URL);
     }
-  }, [videos]);
+
+    if (triggerNextPage) {
+      const nextPageUrl = YT_CHANNEL_URL_NEXT_PAGE(nextPageToken);
+      getVideos(nextPageUrl);
+      setTriggerNextPage(false);
+    }
+   
+  }, [videos, triggerNextPage, nextPageToken]);
 
   const podcastPageProps = {
     featuredReview,
     page,
     videos,
+    setTriggerNextPage,
+    nextPageToken,
   };
 
   return <PodcastPage {...podcastPageProps} />;
@@ -67,7 +86,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
       page: formatPage[0],
     },
   };

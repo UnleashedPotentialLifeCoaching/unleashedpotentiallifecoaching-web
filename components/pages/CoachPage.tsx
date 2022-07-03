@@ -5,7 +5,7 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { Coach } from 'types/Coach';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { SEO_DEFAULTS } from 'utils/constants';
 
 const FeaturedReview = dynamic(
@@ -15,7 +15,7 @@ const Biography = dynamic(() => import('components/organisms/coach/Biography'));
 
 interface Props {
   coach: Coach;
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
 }
 
 const CoachPage = ({ coach, featuredReview }: Props) => {

@@ -106,3 +106,56 @@ export const podcastPageSchema: string = `query {
     }
   }
 }`;
+
+export const allBlogsSchema: string = `query {
+  allBlog_posts {
+    edges {
+      node {        
+        post_title
+        sub_title
+        slug_text
+        publish_date
+        featured_image
+        author {
+          ...on Coach {
+            name
+            
+          }
+        }
+            
+      }
+    }
+  }
+}`;
+
+export const blogPageSchema:string = `query {
+  allBlog_pages {
+    edges {
+      node {
+        title
+        seo_title
+        seo_meta_description
+        banner_image
+      }
+    }
+  }
+}`;
+
+
+export const blogPostSchema = (uid: string) => `query {
+  blog_post(uid:"${uid}", lang:"en-us"){
+    sub_title
+    featured_image
+    post_title
+    post_content
+    publish_date
+    seo_meta_description
+    seo_meta_title
+    author {
+      ... on Coach {
+		    name
+        profile_image
+      }
+    }
+  }
+}`;

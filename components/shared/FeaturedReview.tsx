@@ -1,22 +1,22 @@
 import { RichText, RichTextBlock } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 
-const FeaturedReview = ({ name, quote }: Review) => (
+const FeaturedReview = ({ name, quote }: IFeaturedReview) => (
   <div className="bg-forrest py-12 lg:mb-12">
-    {(name && quote) && (
+    {name && quote && (
       <>
-      <p className="text-white font-serif italic font-bold text-center text-5xl mb-12">
-      Client Love
-    </p>
-    <div className="px-12 py-8 lg:py-0 lg:px-48">
-      <Message>
-        <RichText render={quote} />
-      </Message>
-      <Name id="contact">
-        - <p>{name}</p>
-      </Name>
-    </div>
+        <p className="text-white font-serif italic font-bold text-center text-5xl mb-12">
+          Client Love
+        </p>
+        <div className="px-12 py-8 lg:py-0 lg:px-48">
+          <Message>
+            <RichText render={quote} />
+          </Message>
+          <Name id="contact">
+            - <p>{name}</p>
+          </Name>
+        </div>
       </>
     )}
   </div>

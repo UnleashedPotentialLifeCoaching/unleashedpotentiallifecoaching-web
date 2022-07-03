@@ -2,7 +2,7 @@ import HomePage from 'components/pages/HomePage';
 import { GetServerSideProps } from 'next';
 import { Coach } from 'types/Coach';
 import { Banner, BlockWidget, FeaturedContent } from 'types/Home';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 import { coachesQuery, homePageQuery, reviewsQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
@@ -13,7 +13,7 @@ interface Props {
   blockWidgets: BlockWidget[];
   seo: Seo;
   coaches: Coach[];
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
 }
 
 const Home = ({
@@ -36,6 +36,7 @@ const Home = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  console.log("hi")
   const page = await homePageQuery();
   const coachesRequest = await coachesQuery();
   const reviews = await reviewsQuery();
@@ -65,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
           },
     }))
     .sort((a: any, b: any) => (a.id > b.id ? 1 : -1));
-  
+
   const featuredReview = formatReview(reviews);
 
   return {
@@ -86,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
       },
       blockWidgets,
       coaches,
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
     },
   };
 };

@@ -2,12 +2,12 @@ import OurStoryPage from 'components/pages/OurStoryPage';
 import { GetServerSideProps } from 'next';
 import React from 'react';
 import { TOurStory } from 'types/OurStory';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { ourStoryQuery, reviewsQuery } from 'utils/api';
 import { formatReview } from 'utils/helpers';
 
 interface Props {
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   page: TOurStory;
 }
 
@@ -30,10 +30,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
     banner_image: node.banner_image.url,
   }));
 
-
   return {
     props: {
-      featuredReview: (featuredReview) ? featuredReview : null,
+      featuredReview: featuredReview ? featuredReview : null,
       page: formatPage[0],
     },
   };

@@ -7,9 +7,8 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
 import { RichText, RichTextBlock } from 'prismic-reactjs';
 import React from 'react';
-import styled from 'styled-components';
 import { Coach } from 'types/Coach';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 
 const FeaturedReview = dynamic(
@@ -22,7 +21,7 @@ interface Props {
     section_content: RichTextBlock[];
     section_title: RichTextBlock[];
   }[];
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   coaches: Coach[];
   bannerImage?: string;
 }

@@ -3,7 +3,7 @@ import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
 import PageBanner from 'components/shared/PageBanner';
-import { Review } from 'types/Review';
+import { IFeaturedReview, Review } from 'types/Review';
 import { Seo } from 'types/SEO';
 
 const FeaturedReview = dynamic(
@@ -18,7 +18,7 @@ const ReviewForm = dynamic(
 );
 
 interface Props {
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   page: {
     seo: Seo;
     bannerImage?: string;

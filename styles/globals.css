@@ -18,3 +18,43 @@ a {
 .banner-shadow {
   text-shadow: rgb(0 0 0 / 40%) 0px 4px 4px;
 }
+.blog-post-excerpt {
+  max-width: 500px;
+}
+.blog-post-excerpt > h1 {
+  @apply text-2xl;
+  @apply text-stone-600;
+  @apply mb-3;
+}
+.blog-post-excerpt > h2 {
+  @apply text-base;
+  @apply leading-7;
+  @apply font-serif;
+}
+
+.blog-post-content > p {
+  @apply text-xl;
+  @apply leading-loose;
+  @apply text-gray-700;
+  @apply mb-5;
+}
+.blog-post-content > p > a {
+  @apply text-green-600;
+  @apply underline;
+}
+
+.blog-post-content > ul {
+  list-style-type: disc;
+}
+
+.blog-post-content > ol {
+  list-style-type: decimal;
+}
+
+.blog-post-sub-title > h2 {
+  @apply text-3xl;
+  @apply font-bold;
+  @apply leading-loose;
+  @apply my-6;
+  @apply text-stone-500;
+}

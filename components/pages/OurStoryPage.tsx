@@ -5,7 +5,7 @@ import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
 import ContentWrapper from 'layouts/ContentWrapper';
-import { Review } from 'types/Review';
+import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 
 const FeaturedReview = dynamic(
@@ -16,7 +16,7 @@ interface Props {
   seo: Seo;
   title: string;
   pageContent: RichTextBlock[];
-  featuredReview: Review;
+  featuredReview: IFeaturedReview;
   banner_image?: string | null | undefined;
 }
 

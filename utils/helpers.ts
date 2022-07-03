@@ -4,7 +4,8 @@ import { Review } from 'types/Review';
 export const urlify = (str: string): string =>
   str.replace(/\s+/g, '-').toLowerCase();
 
-export const formatReview = (review: any): Review => review
+export const formatReview = (review: any): Review =>
+  review
     .filter((review: any) => review.node.featured === true)
     .map(({ node }: { node: any }) => ({
       featured: node.featured,
@@ -17,17 +18,17 @@ export const formatCoaches = (node: any): Coach => ({
   name: node.name[0].text,
   image: node.book_time_photo
     ? {
-      src: node.book_time_photo.url,
-      width: node.book_time_photo.dimensions.width,
-      height: node.book_time_photo.dimensions.height,
-      alt: node.name[0].text,
-    }
+        src: node.book_time_photo.url,
+        width: node.book_time_photo.dimensions.width,
+        height: node.book_time_photo.dimensions.height,
+        alt: node.name[0].text,
+      }
     : {
-      src: node.profile_image.url,
-      width: node.profile_image.dimensions.width,
-      height: node.profile_image.dimensions.height,
-      alt: node.name[0].text,
-    },
+        src: node.profile_image.url,
+        width: node.profile_image.dimensions.width,
+        height: node.profile_image.dimensions.height,
+        alt: node.name[0].text,
+      },
 });
 
 export const removeSlashFromSlug = (slug: string) => slug.replace('/', '');
@@ -44,17 +45,17 @@ export const convertTime = (time: string): string | undefined => {
   let timeValue;
 
   if (hours > 0 && hours <= 12) {
-    timeValue = "" + hours;
+    timeValue = '' + hours;
   } else if (hours > 12) {
-    timeValue = "" + (hours - 12);
+    timeValue = '' + (hours - 12);
   } else if (hours == 0) {
-    timeValue = "12";
+    timeValue = '12';
   }
 
-  timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes; // get seconds
-  timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+  timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get seconds
+  timeValue += hours >= 12 ? ' P.M.' : ' A.M.'; // get AM/PM
   return timeValue;
-}
+};
 
 // date conversion
 export const formatDate = (date: string): string | undefined => {
@@ -73,7 +74,9 @@ export const formatDate = (date: string): string | undefined => {
     'November',
     'December',
   ];
-  const results = `${month[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
+  const results = `${
+    month[dateObj.getMonth()]
+  } ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
 
   return results;
-}
+};

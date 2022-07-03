@@ -13,6 +13,9 @@ import {
   ourStorySchema,
   servicesPageSchema,
   podcastPageSchema,
+  allBlogsSchema,
+  blogPageSchema,
+  blogPostSchema,
 } from 'utils/schemas';
 
 export const PrismicClient = Prismic.client(REF_API_URL, {
@@ -64,8 +67,11 @@ export const coachesQuery = async () => {
 export const reviewsQuery = async () => {
   const data = await fetchAPI(allReviewsSchema);
 
-  return data.allReviewss?.edges.sort((a, b) => a.node._meta.firstPublicationDate < b.node._meta.firstPublicationDate ? 1 : -1);
-  ;
+  return data.allReviewss?.edges.sort((a, b) =>
+    a.node._meta.firstPublicationDate < b.node._meta.firstPublicationDate
+      ? 1
+      : -1
+  );
 };
 
 export const reviewsPageQuery = async () => {
@@ -91,3 +97,20 @@ export const podcastQuery = async () => {
 
   return data.allPodcast_pages?.edges;
 };
+
+export const allBlogsQuery = async () => {
+  const data = await fetchAPI(allBlogsSchema);
+
+  return data?.allBlog_posts?.edges;
+};
+
+export const blogPageQuery = async () => {
+  const data = await fetchAPI(blogPageSchema);
+  return data?.allBlog_pages?.edges;
+};
+
+export const blogPostQuery = async (uid) => {
+  const data = await fetchAPI(blogPostSchema(uid));
+
+  return data?.blog_post
+}

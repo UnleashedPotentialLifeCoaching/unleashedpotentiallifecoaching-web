@@ -78,7 +78,7 @@ const Header = () => (
             </div>
           </div>
         </div>
-        <Disclosure.Panel className="sm:hidden">
+        <Disclosure.Panel className="sm:hidden border-t absolute shadow-xl w-full z-10 bg-white">
           <div className="pt-2 pb-3 space-y-1">
             {SITE_NAVS.map(({ id, slug, children, label }) =>
               slug ? (

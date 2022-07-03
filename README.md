@@ -19,3 +19,9 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 - [Tailwind.css](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Twilio/Send Grid](https://www.twilio.com/sendgrid/email-api)
+
+
+** Blog Section todo**
+- set up the blog template similar to https://thereseborchard.com/grounding-why-i-connect-with-the-earth-every-day
+- set up a banner image section from the blog post in prismic
+- and update the query to get the banner image
