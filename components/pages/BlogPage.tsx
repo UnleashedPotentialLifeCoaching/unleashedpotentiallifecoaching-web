@@ -8,6 +8,7 @@ import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 import Link from 'next/link';
 import Image from 'next/image';
+import { format } from 'date-fns';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
@@ -51,7 +52,7 @@ const BlogPage = ({ featuredReview, posts, page }: Props) => {
                       Date:{' '}
                     </span>
                     <span className="mr-3 text-base text-stone-500">
-                      {post?.post_date}
+                      {format(new Date(post?.publish_date), 'LLLL M, yyyy')}
                     </span>
                     <span className="mr-1 font-bold leading-snug text-stone-400">
                       Coach:
