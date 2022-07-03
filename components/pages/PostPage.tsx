@@ -34,15 +34,23 @@ const PostPage = ({ post, featuredReview }: Props) => {
         <Container>
           <div className="flex flex-col w-full sm:flex-row">
             <div className="w-full sm:w-2/3">
-              <h1 className="mb-4 text-3xl text-gray-600 sm:leading-loose sm:text-5xl md:text-6xl">
+              <h1 className="mb-4 text-3xl text-forrest sm:text-5xl md:text-6xl">
                 {post?.post_title[0]?.text}
               </h1>
               <div className="flex flex-row w-full mb-4 text-stone-600">
                 <p>
-                  <strong> Author: </strong> {post?.author?.name[0]?.text}
-                  <span className="mx-4">|</span>
-                  <strong>Publish date: </strong>
-                  {format(new Date(post?.publish_date), 'LLLL M, yyyy')}
+                  <span className="mr-1 font-bold leading-snug text-stone-400">
+                    Date:{' '}
+                  </span>
+                  <span className="mr-3 text-base text-stone-500">
+                    {format(new Date(post?.publish_date), 'LLLL M, yyyy')}
+                  </span>
+                  <span className="mr-1 font-bold leading-snug text-stone-400">
+                    Author:
+                  </span>
+                  <span className="text-base text-stone-500">
+                    {post?.author?.name[0]?.text}
+                  </span>
                 </p>
               </div>
               {post?.featured_image && (

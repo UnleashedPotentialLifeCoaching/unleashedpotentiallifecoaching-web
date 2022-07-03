@@ -8,6 +8,8 @@ import { IFeaturedReview } from 'types/Review';
 import { Seo } from 'types/SEO';
 import Link from 'next/link';
 import Image from 'next/image';
+import { format } from 'date-fns';
+
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
 );
@@ -21,8 +23,8 @@ interface Props {
     title: string;
   };
 }
+
 const BlogPage = ({ featuredReview, posts, page }: Props) => {
-  console.log({ posts });
   return (
     <FadeInContainer>
       <SiteHead {...page?.seo} />
@@ -31,38 +33,38 @@ const BlogPage = ({ featuredReview, posts, page }: Props) => {
         bannerImage={page?.bannerImage || BANNER_URL}
       />
       <Container>
-        <main className="flex flex-col justify-center items-center">
+        <main className="flex flex-col items-center justify-center">
           {posts.map((post: any) => (
             <Link href={`/post/${post?.slug_text}`} key={JSON.stringify(post)}>
-              <a className="flex flex-col sm:flex-row border-b pb-12">
+              <a className="flex flex-col pb-12 border-b sm:flex-row">
                 <Image
                   src={post?.featured_image?.url}
                   alt={post?.post_title}
                   width={post?.featured_image?.dimensions?.width / 2}
                   height={post?.featured_image?.dimensions?.height / 2}
                 />
-                <div className=" mt-3 sm:mt-0 sm:ml-8 blog-post-excerpt">
+                <div className="mt-3 sm:mt-0 sm:ml-8 blog-post-excerpt">
                   <p className="text-2xl text-forrest">
                     {post?.post_title[0]?.text}
                   </p>
-                  <p className="my-2 flex flex-row items-center">
-                    <span className="font-bold leading-snug mr-1 text-stone-400">
+                  <p className="flex flex-row items-center my-2">
+                    <span className="mr-1 font-bold leading-snug text-stone-400">
                       Date:{' '}
                     </span>
-                    <span className="text-base text-stone-500 mr-3">
-                      September 2, 2020
+                    <span className="mr-3 text-base text-stone-500">
+                      {format(new Date(post?.publish_date), 'LLLL M, yyyy')}
                     </span>
-                    <span className="font-bold leading-snug mr-1 text-stone-400">
+                    <span className="mr-1 font-bold leading-snug text-stone-400">
                       Coach:
                     </span>
                     <span className="text-base text-stone-500">
                       {post?.author?.name[0]?.text}
                     </span>
                   </p>
-                  <p className="leading-7 font-serif text-base">
+                  <p className="font-serif text-base leading-7">
                     {post?.sub_title[0]?.text}
                   </p>
-                  <button className="my-6 px-6 py-3 rounded-sm text-xl bg-forrest text-white">
+                  <button className="px-6 py-3 my-6 text-xl text-white rounded-sm bg-forrest">
                     Read More
                   </button>
                 </div>

@@ -53,8 +53,8 @@ a {
 
 .blog-post-sub-title > h2 {
   @apply text-3xl;
-  @apply font-bold;
-  @apply leading-loose;
+  @apply leading-normal;
+  @apply font-serif;
   @apply my-6;
   @apply text-stone-500;
 }

@@ -128,7 +128,7 @@ export const allBlogsSchema: string = `query {
   }
 }`;
 
-export const blogPageSchema:string = `query {
+export const blogPageSchema: string = `query {
   allBlog_pages {
     edges {
       node {
@@ -140,7 +140,6 @@ export const blogPageSchema:string = `query {
     }
   }
 }`;
-
 
 export const blogPostSchema = (uid: string) => `query {
   blog_post(uid:"${uid}", lang:"en-us"){
