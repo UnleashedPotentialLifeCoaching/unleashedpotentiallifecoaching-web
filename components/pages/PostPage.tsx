@@ -3,12 +3,14 @@ import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
-import Image from "next/image";
+import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
-import {Post} from 'types/Post';
+import { Post } from 'types/Post';
 import { IFeaturedReview } from 'types/Review';
-import { SEO_DEFAULTS } from 'utils/constants';
-
+import { SEO_DEFAULTS, SITE_URL } from 'utils/constants';
+import { urlify } from 'utils/helpers';
+import { AiOutlineFacebook, AiOutlineInstagram } from 'react-icons/ai';
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
 );
@@ -19,32 +21,74 @@ interface Props {
 }
 
 const PostPage = ({ post, featuredReview }: Props) => {
-  const seoMetaDescription = post?.seo_meta_description || SEO_DEFAULTS.metaDescription;
+  const seoMetaDescription =
+    post?.seo_meta_description || SEO_DEFAULTS.metaDescription;
   const seoTitle = post?.seo_meta_title || SEO_DEFAULTS.title;
-  console.log({ seoTitle, seoMetaDescription})
-  console.log({ post })
+  console.log({ seoTitle, seoMetaDescription });
+  console.log({ post });
   return (
     <FadeInContainer>
       <SiteHead title={seoTitle} metaDescription={seoMetaDescription} />
       <main>
         <Container>
-
           <div className="flex flex-col w-full sm:flex-row">
-
-            <div className="w-full sm:w-3/4">
-              <h1 className="mb-12 text-3xl leading-loose text-gray-600 sm:text-5xl md:text-6xl">{post?.post_title[0]?.text}</h1>
+            <div className="w-full sm:w-2/3">
+              <h1 className="mb-12 text-3xl leading-loose text-gray-600 sm:text-5xl md:text-6xl">
+                {post?.post_title[0]?.text}
+              </h1>
               {post?.featured_image && (
-                 <Image
-                   src={post?.featured_image?.url}
-                   alt={post?.post_title[0]?.text}
-                   width={post?.featured_image?.dimensions?.width}
-                   height={post?.featured_image?.dimensions?.height}
-                   layout="intrinsic"
-               />
+                <Image
+                  src={post?.featured_image?.url}
+                  alt={post?.post_title[0]?.text}
+                  width={post?.featured_image?.dimensions?.width}
+                  height={post?.featured_image?.dimensions?.height}
+                  layout="intrinsic"
+                />
               )}
             </div>
-            <div className="w-full border-2 sm:w-1/4 sm:px-4">
-               Sidebar..
+            <div className="w-full sm:w-1/3 sm:px-12">
+              <div className="flex flex-col w-full pb-3 mb-4 border-b-2">
+                <Link
+                  href={`/coach/${urlify(post?.author?.name[0]?.text || '')}`}
+                >
+                  <a>
+                    <div className="relative w-24 h-24">
+                      <Image
+                        src={post?.author?.profile_image?.url}
+                        alt={post?.author?.name[0]?.text}
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-full"
+                      />
+                    </div>
+                    <p className="mt-3 text-gray-600">
+                      <strong className="block">Meet our coach</strong>{' '}
+                      {post?.author?.name[0]?.text}
+                    </p>
+                  </a>
+                </Link>
+              </div>
+              <div className="p-2 bg-gray-100 rounded">
+                <p className="text-sm font-bold text-center">Follow us</p>
+                <div className="flex flex-row items-center justify-center my-3">
+                  <a
+                    href="https://www.facebook.com/unleashedpotentiallifecoaching/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <AiOutlineFacebook size={36} className="text-forrest" />
+                    <span className="sr-only">Facebook</span>
+                  </a>
+                  <a
+                    href="https://www.instagram.com/unleashedpotentiallifecoaching/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <AiOutlineInstagram size={36} className="text-forrest" />
+                    <span className="sr-only">Instagram</span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </Container>
@@ -54,4 +98,4 @@ const PostPage = ({ post, featuredReview }: Props) => {
   );
 };
 
-export default PostPage
+export default PostPage;
