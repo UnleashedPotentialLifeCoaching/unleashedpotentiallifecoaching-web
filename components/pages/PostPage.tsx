@@ -27,8 +27,6 @@ const PostPage = ({ post, featuredReview }: Props) => {
   const seoMetaDescription =
     post?.seo_meta_description || SEO_DEFAULTS.metaDescription;
   const seoTitle = post?.seo_meta_title || SEO_DEFAULTS.title;
-  console.log({ seoTitle, seoMetaDescription });
-  console.log({ post });
   return (
     <FadeInContainer>
       <SiteHead title={seoTitle} metaDescription={seoMetaDescription} />
