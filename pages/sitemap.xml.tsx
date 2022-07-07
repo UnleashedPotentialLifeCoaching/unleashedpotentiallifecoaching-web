@@ -9,7 +9,7 @@ export default Sitemap;
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const fetchPosts = await allBlogsQuery();
   const postLinks = fetchPosts
-    .map(({ node }) => {
+    .map(({ node }: any) => {
       return `
       <url>
         <loc>${SITE_URL}/post/${node?.slug_text}</loc>
