@@ -12,8 +12,8 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     .map(({ node }) => {
       return `
       <url>
-        <loc>${SITE_URL}/blog/${node?.slug_text}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
+        <loc>${SITE_URL}/post/${node?.slug_text}</loc>
+        <lastmod>${new Date(node?.publish_date).toISOString()}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
       </url> 
@@ -21,6 +21,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     `;
     })
     .join(', ');
+
   const siteLinks = SITE_NAVS.map(({ slug, children }) =>
     slug
       ? `
@@ -35,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
           ({ slug }) =>
             `
       <url>
-        <loc>${SITE_URL}${removeSlashFromSlug(slug)}</loc>
+        <loc>${SITE_URL}/${removeSlashFromSlug(slug)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
