@@ -1,16 +1,31 @@
 import { GetServerSideProps } from 'next';
 import { SITE_URL, SITE_NAVS } from 'utils/constants';
 import { removeSlashFromSlug } from 'utils/helpers';
+import { allBlogsQuery } from 'utils/api';
 
 const Sitemap = () => null;
 export default Sitemap;
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+  const fetchPosts = await allBlogsQuery();
+  const postLinks = fetchPosts
+    .map(({ node }) => {
+      return `
+      <url>
+        <loc>${SITE_URL}/blog/${node?.slug_text}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+      </url> 
+
+    `;
+    })
+    .join(', ');
   const siteLinks = SITE_NAVS.map(({ slug, children }) =>
     slug
       ? `
       <url>
-        <loc>${SITE_URL}${removeSlashFromSlug(slug)}</loc>
+        <loc>${SITE_URL}/${removeSlashFromSlug(slug)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
@@ -31,7 +46,8 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">      
-      ${siteLinks} 
+      ${siteLinks}
+      ${postLinks}
   </urlset>`;
 
   res.setHeader(
