@@ -27,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const fetchPosts = await allBlogsQuery();
   const fetchBlogPage = await blogPageQuery();
   const posts = fetchPosts?.map(({ node }: any) => node);
-  console.log({ posts });
+  ({ posts });
   const page = fetchBlogPage.map(({ node }: { node: any }) => ({
     seo: {
       title: node?.seo_title || '',

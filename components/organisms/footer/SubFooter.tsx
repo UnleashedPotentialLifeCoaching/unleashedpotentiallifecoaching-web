@@ -19,18 +19,28 @@ const SubFooter = () => {
   const year = new Date().getFullYear();
 
   return (
-    <div className="border-t border-black mt-12 h-4 flex flex-col sm:flex-row sm:justify-between">
+    <div className="flex flex-col h-4 mt-12 border-t border-black sm:flex-row sm:justify-between">
       <p className="mt-4 text-forrest">Unleashed Potential ©️ {year}</p>
-      <ul className="mt-4 flex">
-        {FOOTER_LINKS.map(({ slug, label }) => (
-          <li key={label}>
-            <Link href={slug}>
-              <a className="font-serif text-forrest italic mx-4 hover:underline text-lg">
-                {label}
-              </a>
-            </Link>
-          </li>
-        ))}
+      <ul className="flex mt-4">
+        {FOOTER_LINKS.map(({ slug, label }) =>
+          slug !== FOOTER_LINKS[2].slug ? (
+            <li key={label}>
+              <Link href={slug}>
+                <a className="mx-4 font-serif text-lg italic text-forrest hover:underline">
+                  {label}
+                </a>
+              </Link>
+            </li>
+          ) : (
+            <a
+              href={slug}
+              key={label}
+              className="mx-4 font-serif text-lg italic text-forrest hover:underline"
+            >
+              {label}
+            </a>
+          )
+        )}
       </ul>
     </div>
   );

@@ -27,7 +27,6 @@ const PodCast = ({ featuredReview, page }: Props) => {
       })
         .then((data) => data.json())
         .catch((err) => err);
-      console.log({ request });
       if (request.items.length > 0) {
         if (request?.nextPageToken) {
           setNextPageToken(request?.nextPageToken);
