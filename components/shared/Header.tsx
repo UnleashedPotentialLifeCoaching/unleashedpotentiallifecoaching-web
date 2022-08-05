@@ -39,10 +39,10 @@ const Header = () => (
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="origin-top-right absolute w-48 rounded-md shadow-lg py-1 bg-offwhite ring-1 ring-black ring-opacity-5 focus:outline-none z-40">
-                          {children?.map(({ id, slug, label, open }) => (
+                          {children?.map(({ id, slug, label, open } :any ) => (
                             <Menu.Item key={id}>
                               {open ? (
-                                  <a target="_blank" href={slug} className="block px-4 py-2 text-base text-forrest hover:bg-gray-200 hover:text-gray-700">
+                                  <a target="_blank" rel="noreferrer" href={slug} className="block px-4 py-2 text-base text-forrest hover:bg-gray-200 hover:text-gray-700">
                                     {label}
                                   </a>
                               ) : (
