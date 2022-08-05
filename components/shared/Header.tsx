@@ -15,9 +15,6 @@ const Header = () => (
                 <p className="font-bold italic m-1 text-xl sm:text-3xl p-0 font-serif text-cream">
                   Unleashed Potential: Life Coaching
                 </p>
-                <p className="italic mb-2 text-lg sm:text-xl p-0 font-serif text-forrest">
-                  We help you find your vibe
-                </p>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8 h-12">
                 {SITE_NAVS.map(({ id, slug, children, label }) =>
@@ -42,13 +39,19 @@ const Header = () => (
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="origin-top-right absolute w-48 rounded-md shadow-lg py-1 bg-offwhite ring-1 ring-black ring-opacity-5 focus:outline-none z-40">
-                          {children?.map(({ id, slug, label }) => (
+                          {children?.map(({ id, slug, label, open }) => (
                             <Menu.Item key={id}>
-                              <Link href={slug}>
-                                <a className="block px-4 py-2 text-base text-forrest hover:bg-gray-200 hover:text-gray-700">
-                                  {label}
-                                </a>
-                              </Link>
+                              {open ? (
+                                  <a target="_blank" href={slug} className="block px-4 py-2 text-base text-forrest hover:bg-gray-200 hover:text-gray-700">
+                                    {label}
+                                  </a>
+                              ) : (
+                                  <Link href={slug}>
+                                    <a className="block px-4 py-2 text-base text-forrest hover:bg-gray-200 hover:text-gray-700">
+                                      {label}
+                                    </a>
+                                  </Link>
+                              )}
                             </Menu.Item>
                           ))}
                         </Menu.Items>

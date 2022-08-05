@@ -39,22 +39,31 @@ export const SITE_NAVS = [
   {
     id: 2,
     slug: null,
-    label: 'Coaches',
+    label: 'Our Team',
     children: [
       {
         id: 1,
         slug: '/coach/jessica-rebelo',
         label: 'Jessica Rebelo',
+        open: false
       },
       {
         id: 2,
         slug: '/coach/ron-lombardi',
         label: 'Ron Lombardi',
+        open: false
       },
       {
         id: 3,
         slug: '/coach/ché-greeff',
         label: 'Ché Greeff',
+        open: false
+      },
+      {
+        id: 4,
+        slug: 'https://themendwellness.com/',
+        label: 'Kristin Brien',
+        open: true
       },
     ],
   },
@@ -63,12 +72,6 @@ export const SITE_NAVS = [
     slug: '/services',
     label: 'Services',
   },
-  {
-    id: 4,
-    slug: '/our-story',
-    label: 'Our Story',
-  },
-
   {
     id: 5,
     slug: null,
@@ -115,3 +118,8 @@ const YT_CHANNEL_BASE = `https://www.googleapis.com/youtube/v3/search?key=${proc
 export const YT_CHANNEL_URL = `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=4`;
 export const YT_CHANNEL_URL_NEXT_PAGE = (nextPageToken: string) =>
   `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=1&pageToken=${nextPageToken}`;
+
+  export const CONTACT_INFO = [
+    'Jessica: (631) 432-8897',
+    'Unleashedpotentiallifecoaching@gmail.com',
+  ];
