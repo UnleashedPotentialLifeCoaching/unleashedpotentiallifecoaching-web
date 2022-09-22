@@ -48,12 +48,6 @@ export const SITE_NAVS = [
         open: false
       },
       {
-        id: 2,
-        slug: '/coach/ron-lombardi',
-        label: 'Ron Lombardi',
-        open: false
-      },
-      {
         id: 3,
         slug: '/coach/ché-greeff',
         label: 'Ché Greeff',
