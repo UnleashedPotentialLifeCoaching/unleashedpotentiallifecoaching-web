@@ -4,8 +4,8 @@ import React from 'react';
 import { SITE_URL } from 'utils/constants';
 
 interface Props {
-  title: string;
-  metaDescription: string;
+  title: string | undefined;
+  metaDescription: string | undefined;
 }
 
 const SiteHead = ({ title, metaDescription }: Props) => {

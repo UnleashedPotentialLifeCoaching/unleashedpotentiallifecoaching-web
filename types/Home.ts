@@ -12,8 +12,7 @@ export interface FeaturedContent {
 }
 
 export interface BlockWidget {
-  id?: number;
-  description: string;
-  title: RichTextBlock[];
+  description: string | undefined;
+  title: string | undefined;
   imageUrl: string | null;
 }

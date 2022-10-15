@@ -1,4 +1,10 @@
-import { Banner } from 'types/Home';
+import React from 'react';
+
+interface Banner {
+  imageUrl: string | undefined;
+  lineOne: string | undefined;
+  lineTwo: string | undefined;
+}
 
 const HomeBanner = ({ imageUrl, lineOne, lineTwo }: Banner) => {
   return (
