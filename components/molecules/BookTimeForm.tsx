@@ -8,6 +8,7 @@ import InputText from 'components/atoms/InputText';
 import useFormHook from 'hooks/useFormHook';
 import { BOOLEAN_CHOICE } from 'utils/constants';
 import { urlify } from 'utils/helpers';
+import { ICoachFields } from 'types/contentful';
 
 const FormResponse = dynamic(() => import('components/atoms/FormResponse'));
 
@@ -32,14 +33,15 @@ const BookTimeForm = ({ setOpen }: Props) => {
       if (router?.query?.coach) {
         const addACheckedCoach = coaches.map(({ name }) => ({
           name,
-          checked: urlify(name) === router?.query?.coach ? true : false,
+          checked:
+            urlify(name as string) === router?.query?.coach ? true : false,
         }));
 
-        setCoachOptions(addACheckedCoach);
+        setCoachOptions(addACheckedCoach as any);
       } else {
         setCoachOptions(
-          coaches.map(({ name }) => ({
-            name,
+          coaches.map((coach: ICoachFields) => ({
+            name: coach?.name as string,
             checked: false,
           }))
         );
