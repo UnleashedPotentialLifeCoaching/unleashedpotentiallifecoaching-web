@@ -84,7 +84,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     ?.items[0] as IReviewFields;
   const posts = blogPostsData?.data?.blogPostCollection
     ?.items as IBlogPostFields[];
-  console.log({ posts });
 
   return {
     props: {
