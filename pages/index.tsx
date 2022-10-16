@@ -56,7 +56,9 @@ const coachesQuery = `query coachCollectionQuery {
 }`;
 
 const featuredReview = `query reviewCollectionQuery {
-  reviewCollection(where:{
+  reviewCollection(
+    limit: 1,
+    where:{
     featuredReview: true
   }) {
     items {

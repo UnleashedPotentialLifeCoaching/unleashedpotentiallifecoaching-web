@@ -50,7 +50,9 @@ query blogPostCollectionQuery {
 }`;
 
 const featuredReview = `query reviewCollectionQuery {
-  reviewCollection(where:{
+  reviewCollection(
+    limit: 1,
+    where:{
     featuredReview: true
   }) {
     items {
@@ -70,11 +72,7 @@ interface Props {
 
 const Blog = ({ page, review, posts }: Props) => {
   const blogPageProps = { page, review, posts };
-
-  console.log({ posts });
-
   return <BlogPage {...blogPageProps} />;
-  return null;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {

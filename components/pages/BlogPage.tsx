@@ -39,7 +39,7 @@ const BlogPage = ({ review, posts, page }: Props) => {
       <Container>
         <main className="flex flex-col items-center justify-center">
           {posts.map((post: IBlogPostFields) => (
-            <Link href={`/posts/${post?.slugText}`} key={JSON.stringify(post)}>
+            <Link href={`/post/${post?.slugText}`} key={JSON.stringify(post)}>
               <a className="flex flex-col pb-12 border-b sm:flex-row">
                 <Image
                   src={post?.featuredImage?.url}
