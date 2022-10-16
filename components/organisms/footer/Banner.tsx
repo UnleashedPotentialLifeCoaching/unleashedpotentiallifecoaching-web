@@ -1,3 +1,4 @@
+import React from 'react';
 const Banner = () => (
   <>
     <p className="text-center  text-2xl text-forrest font-serif mb-2">

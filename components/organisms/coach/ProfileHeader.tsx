@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button';
 import ImageWrapper from 'components/atoms/ImageWrapper';

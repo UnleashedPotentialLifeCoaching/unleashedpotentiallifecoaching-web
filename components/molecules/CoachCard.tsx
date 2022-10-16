@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import ImageWrapper from 'components/atoms/ImageWrapper';
-import { Coach } from 'types/Coach';
 import { urlify } from 'utils/helpers';
 
 const CoachCard = ({
@@ -18,10 +17,10 @@ const CoachCard = ({
       <Link href={coachUrl}>
         <a>
           <ImageWrapper
-            src={url}
+            url={url}
             width={420}
             height={420}
-            alt={name as string}
+            name={name as string}
           />
           <div className="flex flex-col my-6">
             <p className="font-bold mb-0 text-2xl">1 hour coaching with</p>

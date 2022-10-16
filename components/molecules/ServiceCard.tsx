@@ -2,7 +2,6 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Button from 'components/atoms/Button';
 import Image from 'next/image';
-import { Coach } from 'types/Coach';
 
 const BookTimeUp = dynamic(() => import('components/shared/BookTimePopup'));
 

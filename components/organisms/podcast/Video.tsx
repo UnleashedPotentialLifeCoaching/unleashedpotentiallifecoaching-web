@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { VIDEO_PROPS } from 'types/Podcast';
+
+interface VIDEO_PROPS {
+  description: string;
+  title: string;
+  url: string;
+}
 
 const Video = ({ url, title, description }: VIDEO_PROPS) => (
   <VideoContainer>

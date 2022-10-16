@@ -1,4 +1,3 @@
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import ContentWrapper from 'layouts/ContentWrapper';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
