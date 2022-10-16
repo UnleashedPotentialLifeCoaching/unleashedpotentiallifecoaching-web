@@ -1,6 +1,11 @@
 export const REPOSITORY: string | unknown = process.env.PRISMIC_REPOSITORY_NAME;
 export const REF_API_URL: string = `https://${REPOSITORY}.cdn.prismic.io/api/v2`;
 export const GRAPHQL_API_URL: string = `https://${REPOSITORY}.cdn.prismic.io/graphql`;
+export const CONTENTFUL_GRAPHQL_API_URL: string | unknown =
+  process.env.CONTENTFUL_GRAPHQL_API;
+export const CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN: string | unknown =
+  process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN;
+
 export const API_TOKEN: string | unknown = process.env.PRISMIC_API_TOKEN;
 export const API_LOCALE: string | unknown =
   process.env.PRISMIC_REPOSITORY_LOCALE;
@@ -45,19 +50,19 @@ export const SITE_NAVS = [
         id: 1,
         slug: '/coach/jessica-rebelo',
         label: 'Jessica Rebelo',
-        open: false
+        open: false,
       },
       {
         id: 3,
         slug: '/coach/ché-greeff',
         label: 'Ché Greeff',
-        open: false
+        open: false,
       },
       {
         id: 4,
         slug: 'https://themendwellness.com/',
         label: 'Kristin Brien',
-        open: true
+        open: true,
       },
     ],
   },
@@ -111,9 +116,11 @@ export const SITE_URL =
 const YT_CHANNEL_BASE = `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YT_API_KEY}&channelId=${process.env.NEXT_PUBLIC_CHANNEL_ID}`;
 export const YT_CHANNEL_URL = `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=4`;
 export const YT_CHANNEL_URL_NEXT_PAGE = (nextPageToken: string) =>
-  `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=1&pageToken=${nextPageToken}`;
+  `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=4&pageToken=${nextPageToken}`;
 
-  export const CONTACT_INFO = [
-    'Jessica: (631) 432-8897',
-    'Unleashedpotentiallifecoaching@gmail.com',
-  ];
+export const CONTACT_INFO = [
+  'Jessica: (631) 432-8897',
+  'Unleashedpotentiallifecoaching@gmail.com',
+];
+
+export const SITE_TITLE = 'Unleashed Potential';

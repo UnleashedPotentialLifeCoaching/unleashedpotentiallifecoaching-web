@@ -1,20 +1,24 @@
 import ImageWrapper from 'components/atoms/ImageWrapper';
-import { RichText } from 'prismic-reactjs';
 import React from 'react';
 import styled from 'styled-components';
-import { FeaturedContent } from 'types/Home';
+import { SITE_TITLE } from 'utils/constants';
 
-const FeaturedMessage = ({ imageUrl, header, body }: FeaturedContent) => (
+interface Props {
+  imageUrl: string | undefined;
+  header: string | undefined;
+  body: string | undefined;
+}
+const FeaturedMessage = ({ imageUrl, header, body }: Props) => (
   <div className="flex flex-col my-24 mx-0 lg:flex-row lg:justify-between">
     <TextContainer>
-      <RichText render={header} />
-      <RichText render={body} />
+      <h2>{header}</h2>
+      <p>{body}</p>
     </TextContainer>
     <ImageWrapper
-      src={imageUrl}
+      url={imageUrl as string}
       width={450}
       height={450}
-      alt="Unleashed Potential"
+      name={SITE_TITLE}
     />
   </div>
 );

@@ -4,44 +4,52 @@ import Container from 'layouts/Container';
 import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
 import { BANNER_URL } from 'utils/constants';
-import { VIDEO_PROPS, PAGE } from 'types/Podcast';
-import { IFeaturedReview } from 'types/Review';
 import ButtonGroup from 'components/organisms/podcast/ButtonGroup';
+import { IReviewFields, ISimplePageFields } from 'types/contentful';
 
 const Video = dynamic(() => import('components/organisms/podcast/Video'));
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
 );
 
+interface VIDEO_PROPS {
+  description: string;
+  title: string;
+  url: string;
+}
+
 interface Props {
   videos: VIDEO_PROPS[];
-  page: PAGE;
-  featuredReview: IFeaturedReview;
+  page: ISimplePageFields;
+  review: IReviewFields;
   setTriggerNextPage: (e: boolean) => void;
   nextPageToken: string;
 }
 const PodcastPage = ({
   videos,
   page,
-  featuredReview,
+  review,
   setTriggerNextPage,
   nextPageToken,
 }: Props) => (
   <FadeInContainer>
-    <SiteHead {...page?.seo} />
+    <SiteHead
+      title={page?.seoTitle}
+      metaDescription={page?.seoMetaDescription}
+    />
     <PageBanner
-      title="Podcast"
-      bannerImage={page?.banner_image || BANNER_URL}
+      title={page?.pageTitle as string}
+      bannerImage={page?.banner?.url || BANNER_URL}
     />
     <Container>
-     <main className="flex flex-col items-center justify-center">
-        {videos.length > 0 &&
-          videos.map(({ url, title, description }: VIDEO_PROPS) => (
+      <main className="flex flex-col items-center justify-center">
+        {videos?.length > 0 &&
+          videos.map(({ snippet, id }: any) => (
             <Video
-              url={url}
-              title={title}
-              description={description}
-              key={title}
+              url={`https://www.youtube.com/embed/${id?.videoId}`}
+              title={snippet?.title}
+              description={snippet?.description}
+              key={snippet?.title}
             />
           ))}
       </main>
@@ -49,9 +57,8 @@ const PodcastPage = ({
         setTriggerNextPage={setTriggerNextPage}
         nextPageToken={nextPageToken}
       />
-    
     </Container>
-    <FeaturedReview {...featuredReview} />
+    <FeaturedReview name={review?.name} quote={review?.quote} />
   </FadeInContainer>
 );
 

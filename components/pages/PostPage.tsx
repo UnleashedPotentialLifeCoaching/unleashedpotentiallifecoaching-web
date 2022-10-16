@@ -6,36 +6,38 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { Post } from 'types/Post';
-import { IFeaturedReview } from 'types/Review';
 import { SEO_DEFAULTS, SITE_URL } from 'utils/constants';
 import { urlify } from 'utils/helpers';
 import { AiOutlineFacebook, AiOutlineInstagram } from 'react-icons/ai';
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import { format } from 'date-fns';
+import { IBlogPostFields, IReviewFields } from 'types/contentful';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
 );
 
 interface Props {
-  post: Post;
-  featuredReview: IFeaturedReview;
+  post: IBlogPostFields;
+  review: IReviewFields;
+  postContent: any;
 }
 
-const PostPage = ({ post, featuredReview }: Props) => {
-  const seoMetaDescription =
-    post?.seo_meta_description || SEO_DEFAULTS.metaDescription;
-  const seoTitle = post?.seo_meta_title || SEO_DEFAULTS.title;
+const PostPage = ({ post, review, postContent }: Props) => {
   return (
     <FadeInContainer>
-      <SiteHead title={seoTitle} metaDescription={seoMetaDescription} />
+      <SiteHead
+        title={post?.seoTitle || SEO_DEFAULTS.title}
+        metaDescription={
+          post?.seoMetaDescription || SEO_DEFAULTS.metaDescription
+        }
+      />
       <main>
         <Container>
           <div className="flex flex-col w-full sm:flex-row">
             <div className="w-full sm:w-2/3">
               <h1 className="mb-4 text-3xl text-forrest sm:text-5xl md:text-6xl">
-                {post?.post_title[0]?.text}
+                {post?.postTItle}
               </h1>
               <div className="flex flex-row w-full mb-4 text-stone-600">
                 <p>
@@ -43,30 +45,31 @@ const PostPage = ({ post, featuredReview }: Props) => {
                     Date:{' '}
                   </span>
                   <span className="mr-3 text-base text-stone-500">
-                    {format(new Date(post?.publish_date), 'LLLL M, yyyy')}
+                    {format(
+                      new Date(post?.publishDate as string),
+                      'LLLL M, yyyy'
+                    )}
                   </span>
                   <span className="mr-1 font-bold leading-snug text-stone-400">
                     Author:
                   </span>
                   <span className="text-base text-stone-500">
-                    {post?.author?.name[0]?.text}
+                    {post?.author?.name}
                   </span>
                 </p>
               </div>
-              {post?.featured_image && (
+              {post?.featuredImage && (
                 <Image
-                  src={post?.featured_image?.url}
-                  alt={post?.post_title[0]?.text}
-                  width={post?.featured_image?.dimensions?.width}
-                  height={post?.featured_image?.dimensions?.height}
+                  src={post?.featuredImage?.url}
+                  alt={post?.postTItle}
+                  width={post?.featuredImage?.width}
+                  height={post?.featuredImage?.height}
                   layout="intrinsic"
                 />
               )}
-              <div className="blog-post-sub-title">
-                <RichText render={post?.sub_title} />
-              </div>
+
               <div className="blog-post-content">
-                <RichText render={post?.post_content} />
+                {documentToReactComponents(postContent?.json)}
               </div>
             </div>
             <div className="w-full sm:w-1/3 sm:px-12">
@@ -77,8 +80,8 @@ const PostPage = ({ post, featuredReview }: Props) => {
                   <a>
                     <div className="relative w-24 h-24">
                       <Image
-                        src={post?.author?.profile_image?.url}
-                        alt={post?.author?.name[0]?.text}
+                        src={post?.author?.profileImage?.url}
+                        alt={post?.author?.name}
                         layout="fill"
                         objectFit="cover"
                         className="rounded-full"
@@ -86,7 +89,7 @@ const PostPage = ({ post, featuredReview }: Props) => {
                     </div>
                     <p className="mt-3 text-gray-600">
                       <strong className="block">Meet our coach</strong>{' '}
-                      {post?.author?.name[0]?.text}
+                      {post?.author?.name}
                     </p>
                   </a>
                 </Link>
@@ -116,7 +119,7 @@ const PostPage = ({ post, featuredReview }: Props) => {
           </div>
         </Container>
       </main>
-      <FeaturedReview {...featuredReview} />
+      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };

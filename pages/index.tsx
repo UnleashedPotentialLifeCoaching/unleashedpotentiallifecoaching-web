@@ -1,93 +1,102 @@
+import { IHomePageFields, ICoachFields, IReviewFields } from 'types/contentful';
 import HomePage from 'components/pages/HomePage';
 import { GetServerSideProps } from 'next';
-import { Coach } from 'types/Coach';
-import { Banner, BlockWidget, FeaturedContent } from 'types/Home';
-import { IFeaturedReview } from 'types/Review';
-import { Seo } from 'types/SEO';
-import { coachesQuery, homePageQuery, reviewsQuery } from 'utils/api';
-import { formatReview } from 'utils/helpers';
+import { fetchAPI } from 'utils/api';
+
+const homePageQuery = `
+  query homePageEntryQuery {
+    homePage(id: "6zvqa8rW0XXjmN5iYlUQ1V") {
+      # add the fields you want to query
+      seoTitle
+      seoMetaDescription
+      banner {
+        url
+      }
+      mainBannerText
+      subBannerText
+      featuredImage {
+        url
+      }
+      featuredMessageBody
+      featuredMessageHeader
+      widgetOneTitle
+      widgetOneImage {
+        url
+      }
+      widgetOneMessage
+      widgetTwoTitle
+      widgetTwoImage {
+        url
+      }
+      widgetTwoMessage
+      widgetThreeTitle
+      widgetThreeImage {
+        url
+      }
+      widgetThreeMessage
+      widgetFourMessage
+      widgetFourTitle
+      widgetFourImage {
+        url
+      }
+    }
+  }
+`;
+
+const coachesQuery = `query coachCollectionQuery {
+  coachCollection {
+    items {
+      name
+      appearanceOrder
+      bookTimePhoto {
+        url
+      }
+    }
+  }
+}`;
+
+const featuredReview = `query reviewCollectionQuery {
+  reviewCollection(
+    limit: 1,
+    where:{
+    featuredReview: true
+  }) {
+    items {
+      name
+      quote{
+        json
+      }
+    }
+  }
+}`;
 
 interface Props {
-  banner: Banner;
-  featuredContent: FeaturedContent;
-  blockWidgets: BlockWidget[];
-  seo: Seo;
-  coaches: Coach[];
-  featuredReview: IFeaturedReview;
+  page: IHomePageFields;
+  coaches: ICoachFields[];
+  review: IReviewFields;
 }
 
-const Home = ({
-  banner,
-  featuredContent,
-  blockWidgets,
-  seo,
-  coaches,
-  featuredReview,
-}: Props) => {
-  const HomePageProps = {
-    banner,
-    featuredContent,
-    blockWidgets,
-    seo,
-    coaches,
-    featuredReview,
-  };
-  return <HomePage {...HomePageProps} />;
+const Home = ({ page, coaches, review }: Props) => {
+  const homePageProps = { page, coaches, review };
+
+  return <HomePage {...homePageProps} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+  const homePageData = await fetchAPI(homePageQuery, {});
+  const coachesData = await fetchAPI(coachesQuery, {});
+  const featuredReviewData = await fetchAPI(featuredReview, {});
 
-  const page = await homePageQuery();
-  const coachesRequest = await coachesQuery();
-  const reviews = await reviewsQuery();
-  const blockWidgets = page.block_widgets.map((block: any, index: number) => ({
-    id: index,
-    description: block.widget_description[0].text,
-    title: block.widget_title,
-    imageUrl: block.widget_image.url,
-  }));
-
-  const coaches = coachesRequest
-    .map(({ node }: { node: any }) => ({
-      id: node.appearance_order,
-      name: node.name[0].text,
-      image: node.book_time_photo
-        ? {
-            src: node.book_time_photo.url,
-            width: node.book_time_photo.dimensions.width,
-            height: node.book_time_photo.dimensions.height,
-            alt: node.name[0].text,
-          }
-        : {
-            src: node.profile_image.url,
-            width: node.profile_image.dimensions.width,
-            height: node.profile_image.dimensions.height,
-            alt: node.name[0].text,
-          },
-    }))
-    .sort((a: any, b: any) => (a.id > b.id ? 1 : -1));
-
-  const featuredReview = formatReview(reviews);
+  const page = homePageData?.data?.homePage as IHomePageFields;
+  const coaches = coachesData?.data?.coachCollection?.items as ICoachFields[];
+  const review = featuredReviewData?.data?.reviewCollection
+    ?.items[0] as IReviewFields;
 
   return {
     props: {
-      seo: {
-        title: page.seo_title[0].text,
-        metaDescription: page.seo_meta_description[0].text,
-      },
-      banner: {
-        imageUrl: page.banner_background_image.url,
-        lineOne: page.banner_line_one[0].text,
-        lineTwo: page.banner_line_two[0].text,
-      },
-      featuredContent: {
-        imageUrl: page.featured_image.url,
-        header: page.featured_message_header,
-        body: page.featured_mesage_body,
-      },
-      blockWidgets,
+      page,
       coaches,
-      featuredReview: featuredReview ? featuredReview : null,
+      review,
     },
   };
 };

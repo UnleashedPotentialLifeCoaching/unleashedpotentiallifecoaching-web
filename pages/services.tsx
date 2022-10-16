@@ -1,64 +1,83 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
 import ServicesPage from 'components/pages/ServicesPage';
-import { CoachesContext } from 'contexts/CoachesContext';
 import { GetServerSideProps } from 'next';
-import React, { useContext, useEffect } from 'react';
-import { Coach } from 'types/Coach';
-import { IFeaturedReview } from 'types/Review';
-import { TServices } from 'types/Services';
-import { coachesQuery, reviewsQuery, servicesQuery } from 'utils/api';
-import { formatCoaches, formatReview } from 'utils/helpers';
+import { fetchAPI } from 'utils/api';
+
+const servicesPageQuery = `
+  query pageEntryQuery {
+  page(id: "crBLtmzvD0gln6LAC3NEV") {
+    pageTitle
+    seoTitle
+    seoMetaDescription
+    banner{
+      url
+    }
+    pageContent {
+      json
+    }
+  }
+}
+`;
+
+const coachesQuery = `query coachCollectionQuery {
+  coachCollection {
+    items {
+      name
+      appearanceOrder
+      bookTimePhoto {
+        url
+        width
+        height
+      }
+    }
+  }
+}`;
+
+const featuredReview = `query reviewCollectionQuery {
+  reviewCollection(where:{
+    featuredReview: true
+  }) {
+    items {
+      name
+      quote{
+        json
+      }
+    }
+  }
+}`;
 
 interface Props {
-  service: TServices;
-  featuredReview: IFeaturedReview;
-  coaches: Coach[];
+  page: IPageFields;
+  coaches: ICoachFields[];
+  review: IReviewFields;
 }
-const Services = ({ service, featuredReview, coaches }: Props) => {
-  const { seo, page_blocks, banner_image } = service;
-  const { coaches: contextCoaches, setCoaches } = useContext(CoachesContext);
-  useEffect(() => {
-    if (!contextCoaches) {
-      setCoaches(coaches);
-    }
-  }, [coaches]);
 
-  return (
-    <ServicesPage
-      page_blocks={page_blocks}
-      seo={seo}
-      coaches={coaches}
-      featuredReview={featuredReview}
-      bannerImage={banner_image}
-    />
-  );
+const Services = ({ page, coaches, review }: Props) => {
+  const servicesPageProps = {
+    page,
+    coaches,
+    review,
+    pageContent: page?.pageContent,
+  };
+  return <ServicesPage {...servicesPageProps} />;
+  //   return <HomePage {...homePageProps} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const services = await servicesQuery();
-  const reviews = await reviewsQuery();
-  const coachesRequest = await coachesQuery();
+  const servicesPageData = await fetchAPI(servicesPageQuery, {});
+  const coachesData = await fetchAPI(coachesQuery, {});
+  const featuredReviewData = await fetchAPI(featuredReview, {});
 
-  const page = services.map(({ node }: { node: any }) => ({
-    seo: {
-      title: node.seo_title[0].text,
-      metaDescription: node.seo_meta_description[0].text,
-    },
-    page_blocks: node.page_content,
-    banner_image: node.banner_image.url,
-  }));
-
-  const featuredReview = formatReview(reviews);
-
-  const coaches = coachesRequest
-    .map(({ node }: { node: any }) => formatCoaches(node))
-    .sort((a: any, b: any) => (a.id > b.id ? 1 : -1));
+  const page = servicesPageData?.data?.page as IPageFields;
+  const coaches = coachesData?.data?.coachCollection?.items as ICoachFields[];
+  const review = featuredReviewData?.data?.reviewCollection
+    ?.items[0] as IReviewFields;
 
   return {
     props: {
-      service: page[0],
-      featuredReview: featuredReview ? featuredReview : null,
+      page,
       coaches,
+      review,
     },
   };
 };

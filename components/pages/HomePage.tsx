@@ -6,45 +6,75 @@ import FeaturedMessage from 'components/organisms/home/FeaturedMessage';
 import WidgetWrapper from 'components/organisms/home/WidgetWrapper';
 import Coaches from 'components/organisms/home/Coaches';
 import Container from 'layouts/Container';
-import { Coach } from 'types/Coach';
-import { Banner, BlockWidget, FeaturedContent } from 'types/Home';
-import { IFeaturedReview } from 'types/Review';
-import { Seo } from 'types/SEO';
+import { ICoachFields, IHomePageFields, IReviewFields } from 'types/contentful';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
 );
 
 interface Props {
-  banner: Banner;
-  featuredContent: FeaturedContent;
-  blockWidgets: BlockWidget[];
-  seo: Seo;
-  coaches: Coach[];
-  featuredReview: IFeaturedReview;
+  page: IHomePageFields;
+  coaches: ICoachFields[];
+  review: IReviewFields;
 }
 
-const HomePage = ({
-  banner,
-  featuredContent,
-  blockWidgets,
-  seo,
-  coaches,
-  featuredReview,
-}: Props) => (
+const HomePage = ({ page, coaches, review }: Props) => (
   <FadeInContainer>
-    <SiteHead {...seo} />
+    <SiteHead
+      title={page?.seoTitle}
+      metaDescription={page?.seoMetaDescription}
+    />
     <main>
-      <HomeBanner {...banner} />
+      <HomeBanner
+        imageUrl={page?.banner?.url}
+        lineOne={page?.mainBannerText}
+        lineTwo={page?.subBannerText}
+      />
       <Container>
-        <FeaturedMessage {...featuredContent} />
+        <FeaturedMessage
+          imageUrl={page?.featuredImage?.url}
+          header={page?.featuredMessageHeader}
+          body={page?.featuredMessageBody}
+        />
       </Container>
       <Coaches coaches={coaches} />
+      <Container>
+        <WidgetWrapper
+          widgets={[
+            {
+              title: page?.widgetOneTitle,
+              imageUrl: page?.widgetOneImage?.url,
+              description: page?.widgetOneMessage,
+            },
+            {
+              title: page?.widgetTwoTitle,
+              imageUrl: page?.widgetTwoImage?.url,
+              description: page?.widgetTwoMessage,
+            },
+            {
+              title: page?.widgetThreeTitle,
+              imageUrl: page?.widgetThreeImage?.url,
+              description: page?.widgetThreeMessage,
+            },
+            {
+              title: page?.widgetFourTitle,
+              imageUrl: page?.widgetFourImage?.url,
+              description: page?.widgetFourMessage,
+            },
+          ]}
+        />
+      </Container>
+      <FeaturedReview name={review?.name} quote={review?.quote} />
+    </main>
+    {/* <main>
+      
+
+      
       <Container>
         <WidgetWrapper widgets={blockWidgets} />
       </Container>
       <FeaturedReview {...featuredReview} />
-    </main>
+    </main> */}
   </FadeInContainer>
 );
 

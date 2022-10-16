@@ -1,31 +1,80 @@
 import React from 'react';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { Post } from 'types/Post';
 import PostPage from 'components/pages/PostPage';
-import { IFeaturedReview } from 'types/Review';
-import { blogPostQuery, reviewsQuery } from 'utils/api';
-import { formatReview } from 'utils/helpers';
+import { IBlogPostFields, IReviewFields } from 'types/contentful';
+import { fetchAPI } from 'utils/api';
+
+const blogPostsQuery = (slug: string) => `
+query blogPostCollectionQuery {
+  blogPostCollection(where:{
+    slugText: "${slug}"
+  }, limit: 1) {
+    items {
+      postTItle
+      publishDate
+      postContent {
+        json
+      }
+      featuredImage {
+        url
+        width
+        height
+      }
+      seoTitle
+      seoMetaDescription
+      author {
+        ... on Coach {
+          name
+          profileImage {
+            url
+            width
+            height
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+const featuredReview = `query reviewCollectionQuery {
+  reviewCollection(
+    limit: 1,
+    where:{
+    featuredReview: true
+  }) {
+    items {
+      name
+      quote{
+        json
+      }
+    }
+  }
+}`;
 
 interface Props {
-  post: Post;
-  featuredReview: IFeaturedReview;
+  review: IReviewFields;
+  post: IBlogPostFields;
 }
 
-const Post = ({ post, featuredReview }: Props) => (
-  <PostPage featuredReview={featuredReview} post={post} />
+const Post = ({ review, post }: Props) => (
+  <PostPage review={review} post={post} postContent={post?.postContent} />
 );
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const request = await blogPostQuery(context?.params?.slug);
-  const reviews = await reviewsQuery();
-  const featuredReview = formatReview(reviews);
+  const slug = context?.params?.slug as string;
+  const featuredReviewData = await fetchAPI(featuredReview, {});
+  const postData = await fetchAPI(blogPostsQuery(slug));
+  const review = featuredReviewData?.data?.reviewCollection
+    ?.items[0] as IReviewFields;
+  const post = postData?.data?.blogPostCollection?.items[0] as IBlogPostFields;
 
   return {
     props: {
-      post: request,
-      featuredReview: featuredReview ? featuredReview : null,
+      post,
+      review,
     },
   };
 };

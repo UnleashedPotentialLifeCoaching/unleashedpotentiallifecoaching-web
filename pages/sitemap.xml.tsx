@@ -1,19 +1,52 @@
 import { GetServerSideProps } from 'next';
+import { IBlogPostFields } from 'types/contentful';
+import { fetchAPI } from 'utils/api';
 import { SITE_URL, SITE_NAVS } from 'utils/constants';
 import { removeSlashFromSlug } from 'utils/helpers';
-import { allBlogsQuery } from 'utils/api';
+
+const blogPostsQuery = `
+query blogPostCollectionQuery {
+  blogPostCollection {
+    items {
+      postTItle
+      publishDate
+      slugText
+      subTitle
+      author {
+        ...on Coach {
+          name
+          profileImage {
+            url
+            width
+            height
+          }
+        }
+      }
+      featuredImage {
+        url
+        width
+        height
+      }
+    }
+  }
+}`;
 
 const Sitemap = () => null;
 export default Sitemap;
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const fetchPosts = await allBlogsQuery();
-  const postLinks = fetchPosts
-    .map(({ node }: any) => {
+  const blogPostsData = await fetchAPI(blogPostsQuery, {});
+  const posts = blogPostsData?.data?.blogPostCollection
+    ?.items as IBlogPostFields[];
+
+  const postLinks = posts
+    .map((post: IBlogPostFields) => {
       return `
       <url>
-        <loc>${SITE_URL}/post/${node?.slug_text}</loc>
-        <lastmod>${new Date(node?.publish_date).toISOString()}</lastmod>
+        <loc>${SITE_URL}/post/${post?.slugText}</loc>
+        <lastmod>${new Date(
+          post?.publishDate as string
+        ).toISOString()}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
       </url> 
@@ -22,9 +55,12 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     })
     .join(', ');
 
-  const siteLinks = SITE_NAVS.map(({ slug, children }) =>
-    slug
-      ? `
+  const siteLinks = SITE_NAVS.filter(
+    (link) => link?.slug !== 'https:/themendwellness.com/'
+  )
+    .map(({ slug, children }) =>
+      slug
+        ? `
       <url>
         <loc>${SITE_URL}/${removeSlashFromSlug(slug)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
@@ -32,9 +68,9 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
         <priority>1.0</priority>
       </url> 
   `
-      : children?.map(
-          ({ slug }) =>
-            `
+        : children?.map(
+            ({ slug }) =>
+              `
       <url>
         <loc>${SITE_URL}/${removeSlashFromSlug(slug)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
@@ -42,8 +78,9 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
         <priority>1.0</priority>
       </url> 
       `
-        )
-  ).join(', ');
+          )
+    )
+    .join(', ');
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">      

@@ -1,6 +1,36 @@
-import { ReviewForm } from 'types/Review';
-import { ContactForm } from 'types/Contact';
-import { BookingForm } from 'types/Booking';
+interface ContactForm {
+  fullName: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+interface ReviewForm {
+  fullName: string;
+  email: string;
+  phone: string;
+  ratings: string;
+  explanation: string;
+  improvements: string;
+  recommend: string;
+  comments: string;
+}
+
+interface BookingForm {
+  time: string;
+  date: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  ratings: string;
+  explanation: string;
+  improvements: string;
+  comments: string;
+  subject: string;
+  message: string;
+  selectCoach: string;
+  previousCoaching: string;
+}
 
 export const reviewTemplate = (review: ReviewForm) => {
   const {

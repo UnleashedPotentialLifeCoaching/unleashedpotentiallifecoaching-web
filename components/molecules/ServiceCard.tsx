@@ -2,19 +2,24 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Button from 'components/atoms/Button';
 import Image from 'next/image';
-import { Coach } from 'types/Coach';
 
 const BookTimeUp = dynamic(() => import('components/shared/BookTimePopup'));
 
-const ServiceCard = ({ name, image }: Coach) => {
+const ServiceCard = ({
+  name,
+  bookTimePhoto,
+}: {
+  name: string;
+  bookTimePhoto: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="mb-12 flex flex-col items-center justify-center space-y-4 lg:space-y-2 lg:flex-row">
       <div className="w-full sm:max-w-md lg:w-1/2 lg:inline ">
         <Image
-          {...image}
-          alt={image?.alt}
+          src={bookTimePhoto}
+          alt={name}
           width={500}
           height={500}
           layout="intrinsic"

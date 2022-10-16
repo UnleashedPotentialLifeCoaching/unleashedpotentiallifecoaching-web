@@ -1,8 +1,13 @@
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { IFeaturedReview } from 'types/Review';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-const FeaturedReview = ({ name, quote }: IFeaturedReview) => (
+const FeaturedReview = ({
+  name,
+  quote,
+}: {
+  name: string | undefined;
+  quote: any;
+}) => (
   <div className="bg-forrest py-12 lg:mb-12">
     {name && quote && (
       <>
@@ -10,9 +15,7 @@ const FeaturedReview = ({ name, quote }: IFeaturedReview) => (
           Client Love
         </p>
         <div className="px-12 py-8 lg:py-0 lg:px-48">
-          <Message>
-            <RichText render={quote} />
-          </Message>
+          <Message>{documentToReactComponents(quote?.json)}</Message>
           <Name id="contact">
             - <p>{name}</p>
           </Name>
@@ -30,6 +33,7 @@ const Message = styled.span`
     font-family: 'Playfair Display', serif;
     text-align: center;
     font-weight: 400;
+    font-style: italic;
   }
 `;
 

@@ -1,13 +1,10 @@
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import ContentWrapper from 'layouts/ContentWrapper';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-interface Props {
-  biography: RichTextBlock[] | undefined;
-}
-const Biography = ({ biography }: Props) => {
+const Biography = ({ biography }: { biography: any }) => {
   return (
     <ContentWrapper>
-      <RichText render={biography} />
+      {documentToReactComponents(biography?.json)}
     </ContentWrapper>
   );
 };

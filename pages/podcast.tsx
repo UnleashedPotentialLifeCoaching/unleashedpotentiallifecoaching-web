@@ -1,68 +1,74 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PodcastPage from 'components/pages/PodcastPage';
 import { GetServerSideProps } from 'next';
 import { YT_CHANNEL_URL, YT_CHANNEL_URL_NEXT_PAGE } from 'utils/constants';
-import { YTProps, VIDEO_PROPS, PAGE } from 'types/Podcast';
-import { IFeaturedReview } from 'types/Review';
-import { reviewsQuery, podcastQuery } from 'utils/api';
-import { formatReview } from 'utils/helpers';
+import { useQuery } from '@tanstack/react-query';
+import { IReviewFields, ISimplePageFields } from 'types/contentful';
+import { fetchAPI } from 'utils/api';
+
+const featuredReview = `query reviewCollectionQuery {
+  reviewCollection(
+    limit: 1,
+    where:{
+    featuredReview: true
+  }) {
+    items {
+      name
+      quote{
+        json
+      }
+    }
+  }
+}`;
+
+const podcastPageQuery = `
+  query simplePageEntryQuery {
+  simplePage(id: "2TrjFekCNc6OGZAsLLB7WK") {
+    pageTitle
+    seoTitle
+    seoMetaDescription
+    banner {
+      url
+    }
+  }
+}
+`;
 
 interface Props {
-  featuredReview: IFeaturedReview;
-  page: PAGE;
+  review: IReviewFields;
+  page: ISimplePageFields;
 }
 
-const PodCast = ({ featuredReview, page }: Props) => {
-  const [videos, setVideos] = useState<VIDEO_PROPS[]>([]);
+const PodCast = ({ review, page }: Props) => {
   const [nextPageToken, setNextPageToken] = useState<string>('');
   const [triggerNextPage, setTriggerNextPage] = useState<boolean>(false);
+  const videoFetcher = async () => {
+    const url =
+      nextPageToken.length > 0
+        ? YT_CHANNEL_URL_NEXT_PAGE(nextPageToken)
+        : YT_CHANNEL_URL;
 
-  useEffect(() => {
-    const getVideos = async (channelUrl: string) => {
-      const request = await fetch(channelUrl, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
-        .then((data) => data.json())
-        .catch((err) => err);
-      if (request.items.length > 0) {
-        if (request?.nextPageToken) {
-          setNextPageToken(request?.nextPageToken);
-        }
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res?.json();
 
-      const videoData: VIDEO_PROPS[] = request.items.map(
-          ({ id, snippet }: YTProps) => ({
-            url: `https://www.youtube.com/embed/${id.videoId}`,
-            title: snippet.title,
-            description: snippet.description,
-          })
-        );
-        if(videos.length > 1) {
-          setVideos(prev => [...prev, ...videoData])
-         }else{
-          setVideos(videoData)
-         }
-      }
-    };
-
-    if (videos.length <= 0) {
-      getVideos(YT_CHANNEL_URL);
+    if (data?.nextPageToken) {
+      setNextPageToken(data?.nextPageToken);
     }
 
-    if (triggerNextPage) {
-      const nextPageUrl = YT_CHANNEL_URL_NEXT_PAGE(nextPageToken);
-      getVideos(nextPageUrl);
-      setTriggerNextPage(false);
-    }
-   
-  }, [videos, triggerNextPage, nextPageToken]);
+    return data;
+  };
+
+  const { data } = useQuery(['videos'], videoFetcher);
 
   const podcastPageProps = {
-    featuredReview,
+    review,
     page,
-    videos,
+    videos: data?.items,
     setTriggerNextPage,
     nextPageToken,
   };
@@ -71,22 +77,18 @@ const PodCast = ({ featuredReview, page }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const reviews = await reviewsQuery();
-  const request = await podcastQuery();
-  const featuredReview = formatReview(reviews);
+  const podcastPageData = await fetchAPI(podcastPageQuery, {});
+  const featuredReviewData = await fetchAPI(featuredReview, {});
+  const review = featuredReviewData?.data?.reviewCollection
+    ?.items[0] as IReviewFields;
+  const page = podcastPageData?.data?.simplePage;
 
-  const formatPage = request.map(({ node }: { node: any }) => ({
-    seo: {
-      title: node.seo_title[0].text,
-      metaDescription: node.seo_meta_description[0].text,
-    },
-    banner_image: node.banner_image.url,
-  }));
+  console.log({ p: podcastPageData?.data?.simplePage });
 
   return {
     props: {
-      featuredReview: featuredReview ? featuredReview : null,
-      page: formatPage[0],
+      review,
+      page,
     },
   };
 };

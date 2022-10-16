@@ -1,3 +1,4 @@
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import ServiceCard from 'components/molecules/ServiceCard';
 import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
@@ -5,54 +6,52 @@ import Container from 'layouts/Container';
 import ContentWrapper from 'layouts/ContentWrapper';
 import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import React from 'react';
-import { Coach } from 'types/Coach';
-import { IFeaturedReview } from 'types/Review';
-import { Seo } from 'types/SEO';
+import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
 );
 
 interface Props {
-  seo: Seo;
-  page_blocks: {
-    section_content: RichTextBlock[];
-    section_title: RichTextBlock[];
-  }[];
-  featuredReview: IFeaturedReview;
-  coaches: Coach[];
-  bannerImage?: string;
+  review: IReviewFields;
+  coaches: ICoachFields[];
+  page: IPageFields;
+  pageContent: any;
 }
 
-const CoachPage = ({
-  page_blocks,
-  seo,
-  coaches,
-  featuredReview,
-  bannerImage,
-}: Props) => (
+const ServicesPage = ({ page, pageContent, coaches, review }: Props) => (
   <FadeInContainer>
-    <SiteHead {...seo} />
-    <PageBanner title="Services" bannerImage={bannerImage} />
+    <SiteHead
+      title={page?.seoTitle}
+      metaDescription={page?.seoMetaDescription}
+    />
+    <PageBanner
+      title={page?.pageTitle as string}
+      bannerImage={page?.banner?.url}
+    />
     <Container>
       <ContentWrapper>
-        {page_blocks.map(({ section_content, section_title }) => (
-          <div key={section_title[0].text}>
-            <RichText render={section_title} />
-            <RichText render={section_content} />
-          </div>
-        ))}
+        {documentToReactComponents(pageContent?.json)}
       </ContentWrapper>
       <div className="mx-auto max-w-full lg:max-w-6xl">
-        {coaches.map(({ name, image }) => (
-          <ServiceCard name={name} image={image} key={name} />
-        ))}
+        {coaches
+          .sort((a, b) =>
+            (a.appearanceOrder as number) > (b.appearanceOrder as number)
+              ? 1
+              : -1
+          )
+          .map(({ name, bookTimePhoto }) => (
+            <ServiceCard
+              name={name as string}
+              bookTimePhoto={bookTimePhoto?.url}
+              key={name}
+            />
+          ))}
       </div>
     </Container>
-    <FeaturedReview {...featuredReview} />
+    <FeaturedReview name={review?.name} quote={review?.quote} />
   </FadeInContainer>
 );
 
-export default CoachPage;
+export default ServicesPage;

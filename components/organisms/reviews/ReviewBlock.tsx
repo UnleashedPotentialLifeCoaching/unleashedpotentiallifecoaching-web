@@ -1,17 +1,19 @@
-import { RichText } from 'prismic-reactjs';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import styled from 'styled-components';
-import { Review } from 'types/Review';
 
-const ReviewBlock = ({ name, quote }: Review) => (
+interface Props {
+  name: string;
+  quote: any;
+}
+
+const ReviewBlock = ({ name, quote }: Props) => (
   <div
     className="flex flex-col justify-center items-end mb-24"
     style={{ maxWidth: '520px' }}
   >
-    <Quote>
-      <RichText render={quote} />
-    </Quote>
+    <Quote>{documentToReactComponents(quote?.json)}</Quote>
     <Name>
-      <RichText render={name} />
+      <h5>{name}</h5>
     </Name>
   </div>
 );
@@ -35,6 +37,7 @@ const Name = styled.div`
     line-height: 1.75rem;
     color: #506967;
     font-weight: bold;
+    margin-top: 8px;
   }
 `;
 

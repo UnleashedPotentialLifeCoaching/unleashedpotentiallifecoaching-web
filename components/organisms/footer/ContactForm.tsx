@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from 'components/atoms/Button';
 import InputText from 'components/atoms/InputText';
 import dynamic from 'next/dynamic';
