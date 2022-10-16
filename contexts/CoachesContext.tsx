@@ -1,9 +1,9 @@
 import React, { createContext, useState } from 'react';
-import { Coach } from 'types/Coach';
+import { ICoachFields } from 'types/contentful';
 
 interface ContextProps {
-  coaches: Coach[];
-  setCoaches: (e: Coach[]) => void;
+  coaches: ICoachFields[];
+  setCoaches: (e: ICoachFields[]) => void;
 }
 
 const defaultProps = {
@@ -18,7 +18,7 @@ export const CoachesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [coaches, setCoaches] = useState<unknown | Coach[]>();
+  const [coaches, setCoaches] = useState<unknown | ICoachFields[]>();
   const values = { coaches, setCoaches } as ContextProps;
 
   return (

@@ -3,18 +3,25 @@ import Image from 'next/image';
 import React from 'react';
 
 interface Props {
-  src: string;
+  url: string;
   width: number | string;
   height: number | string;
   radius?: number | string;
-  alt: string;
+  name: string;
 }
 
-const ImageWrapper = ({ src, width, height, alt }: Props) => {
-  const imageProps = { src, width, height, alt };
+const ImageWrapper = ({ url, width, height, name }: Props) => {
+  const imageProps = { url, width, height, name };
   return (
     <div>
-      <Image {...imageProps} layout="intrinsic" className="rounded z-20" />
+      <Image
+        src={url}
+        alt={name}
+        width={width}
+        height={height}
+        layout="intrinsic"
+        className="rounded z-20"
+      />
     </div>
   );
 };

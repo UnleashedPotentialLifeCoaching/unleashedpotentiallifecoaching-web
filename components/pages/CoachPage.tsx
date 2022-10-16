@@ -5,6 +5,7 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { Coach } from 'types/Coach';
+import { ICoachFields, IReviewFields } from 'types/contentful';
 import { IFeaturedReview } from 'types/Review';
 import { SEO_DEFAULTS } from 'utils/constants';
 
@@ -14,32 +15,38 @@ const FeaturedReview = dynamic(
 const Biography = dynamic(() => import('components/organisms/coach/Biography'));
 
 interface Props {
-  coach: Coach;
-  featuredReview: IFeaturedReview;
+  coach: ICoachFields;
+  review: IReviewFields;
 }
 
-const CoachPage = ({ coach, featuredReview }: Props) => {
-  const { name, image, welcomeMessage, biography, seo } = coach;
-  const seoTitle = seo?.title ? seo.title : SEO_DEFAULTS.title;
-  const seoMetaDescription = seo?.metaDescription
-    ? seo.metaDescription
-    : SEO_DEFAULTS.metaDescription;
+const CoachPage = ({ coach, review }: Props) => {
+  const {
+    name,
+    profileImage,
+    welcomeMessage,
+    biography,
+    seoTitle,
+    seoMetaDescription,
+  } = coach;
 
   return (
     <FadeInContainer>
-      <SiteHead title={seoTitle} metaDescription={seoMetaDescription} />
+      <SiteHead
+        title={seoTitle || SEO_DEFAULTS.title}
+        metaDescription={seoMetaDescription || SEO_DEFAULTS.metaDescription}
+      />
       <main>
         <Container>
           <ProfileHeader
-            name={name}
-            image={image}
+            name={name as string}
+            profileImage={profileImage}
             welcomeMessage={welcomeMessage}
           />
           <br />
           <Biography biography={biography} />
         </Container>
       </main>
-      <FeaturedReview {...featuredReview} />
+      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };
