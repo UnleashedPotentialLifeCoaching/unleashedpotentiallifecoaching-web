@@ -18,6 +18,7 @@ interface Props {
 
 const Blog = ({ featuredReview, posts, page }: Props) => {
   const pageProps = { featuredReview, posts, page };
+  console.log({ posts });
   return <BlogPage {...pageProps} />;
 };
 
