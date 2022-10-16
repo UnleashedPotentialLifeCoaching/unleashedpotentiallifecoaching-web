@@ -83,8 +83,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
     ?.items[0] as IReviewFields;
   const page = podcastPageData?.data?.simplePage;
 
-  console.log({ p: podcastPageData?.data?.simplePage });
-
   return {
     props: {
       review,

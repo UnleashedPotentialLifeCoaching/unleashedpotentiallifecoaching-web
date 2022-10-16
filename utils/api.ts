@@ -17,8 +17,6 @@ export async function fetchAPI(query: string, { variables }: any = {}) {
       headers.Authorization = `Bearer ${CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN}`;
     }
 
-    console.log({ CONTENTFUL_GRAPHQL_API_URL });
-
     const res = await fetch(CONTENTFUL_GRAPHQL_API_URL as string, {
       method: 'POST',
       headers,
