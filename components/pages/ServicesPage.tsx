@@ -6,12 +6,8 @@ import Container from 'layouts/Container';
 import ContentWrapper from 'layouts/ContentWrapper';
 import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import React from 'react';
-import { Coach } from 'types/Coach';
 import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
-import { IFeaturedReview } from 'types/Review';
-import { Seo } from 'types/SEO';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')

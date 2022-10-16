@@ -1,4 +1,8 @@
-import { Email } from 'types/Email';
+interface Email {
+  body: string;
+  subject: string;
+  type?: string;
+}
 
 const sendClientEmail = async (props: Email) => {
   const request = await fetch('/api/send-email', {

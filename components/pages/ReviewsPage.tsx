@@ -3,8 +3,6 @@ import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
 import PageBanner from 'components/shared/PageBanner';
-import { IFeaturedReview, Review } from 'types/Review';
-import { Seo } from 'types/SEO';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { SEO_DEFAULTS } from 'utils/constants';
 
@@ -43,7 +41,11 @@ const ReviewsPage = ({ review, page, allReviews }: Props) => {
           <div className="lg:grid lg:grid-cols-2 lg:grid-flow-col lg:gap-4">
             <div>
               {allReviews.map((review) => (
-                <ReviewBlock {...review} key={review.name[0].text} />
+                <ReviewBlock
+                  name={review?.name as string}
+                  quote={review?.quote}
+                  key={review?.name as string}
+                />
               ))}
             </div>
             <div>

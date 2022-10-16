@@ -4,7 +4,7 @@ import styled from 'styled-components';
 interface Props {
   description: string | undefined;
   title: string | undefined;
-  imageUrl: string | null;
+  imageUrl: string | undefined;
 }
 
 const Widget = ({ description, title, imageUrl }: Props) => {
@@ -13,7 +13,12 @@ const Widget = ({ description, title, imageUrl }: Props) => {
 
   return (
     <div className="flex flex-col mb-32 p-4 lg:flex-row lg:justify-between lg:p-0 lg:odd:flex-row-reverse">
-      <ImageWrapper src={srcUrl} width={525} height={525} alt={altText} />
+      <ImageWrapper
+        url={srcUrl as string}
+        width={525}
+        height={525}
+        name={altText}
+      />
       <div style={{ maxWidth: '500px' }} className="my-24 mx-0">
         <Header>
           <h3>{title}</h3>

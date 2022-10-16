@@ -6,7 +6,8 @@
     "prettier": "prettier --write .",
     "lint": "next lint && yarn prettier",
     "build": "next build",
-    "codegen": "contentful-typescript-codegen --output types/contentful.d.ts"
+    "codegen": "contentful-typescript-codegen --output types/contentful.d.ts",
+    "prod": "yarn lint && yarn build"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.12.1",

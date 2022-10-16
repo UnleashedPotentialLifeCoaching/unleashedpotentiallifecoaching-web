@@ -1,6 +1,11 @@
 import fetch from 'node-fetch';
-import { Email } from 'types/Email';
 const SENDGRID_API = 'https://api.sendgrid.com/v3/mail/send';
+
+interface Email {
+  body: string;
+  subject: string;
+  type?: string;
+}
 
 const sendSeverEmail = async (contents: Email) => {
   const { subject, body } = contents;

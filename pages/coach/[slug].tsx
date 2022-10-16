@@ -8,7 +8,6 @@ import React, { useContext, useEffect } from 'react';
 import { ICoachFields, IReviewFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
 import { urlify } from 'utils/helpers';
-import { formatReview } from 'utils/helpers';
 
 const coachesQuery = `
 query coachCollectionQuery {

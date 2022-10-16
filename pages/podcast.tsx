@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PodcastPage from 'components/pages/PodcastPage';
 import { GetServerSideProps } from 'next';
 import { YT_CHANNEL_URL, YT_CHANNEL_URL_NEXT_PAGE } from 'utils/constants';
-import { formatReview } from 'utils/helpers';
 import { useQuery } from '@tanstack/react-query';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';

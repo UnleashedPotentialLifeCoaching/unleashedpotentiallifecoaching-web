@@ -4,8 +4,6 @@ import Container from 'layouts/Container';
 import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
 import { BANNER_URL } from 'utils/constants';
-import { IFeaturedReview } from 'types/Review';
-import { Seo } from 'types/SEO';
 import Link from 'next/link';
 import Image from 'next/image';
 import { format } from 'date-fns';

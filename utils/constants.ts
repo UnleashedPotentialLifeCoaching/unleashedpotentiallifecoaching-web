@@ -122,3 +122,5 @@ export const CONTACT_INFO = [
   'Jessica: (631) 432-8897',
   'Unleashedpotentiallifecoaching@gmail.com',
 ];
+
+export const SITE_TITLE = 'Unleashed Potential';

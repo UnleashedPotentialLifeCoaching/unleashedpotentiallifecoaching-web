@@ -1,6 +1,4 @@
-import { RichText, RichTextBlock } from 'prismic-reactjs';
 import styled from 'styled-components';
-import { IFeaturedReview } from 'types/Review';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 const FeaturedReview = ({

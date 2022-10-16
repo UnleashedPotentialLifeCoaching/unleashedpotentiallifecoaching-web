@@ -1,6 +1,7 @@
 import ImageWrapper from 'components/atoms/ImageWrapper';
 import React from 'react';
 import styled from 'styled-components';
+import { SITE_TITLE } from 'utils/constants';
 
 interface Props {
   imageUrl: string | undefined;
@@ -14,10 +15,10 @@ const FeaturedMessage = ({ imageUrl, header, body }: Props) => (
       <p>{body}</p>
     </TextContainer>
     <ImageWrapper
-      src={imageUrl as string}
+      url={imageUrl as string}
       width={450}
       height={450}
-      alt="Unleashed Potential"
+      name={SITE_TITLE}
     />
   </div>
 );
