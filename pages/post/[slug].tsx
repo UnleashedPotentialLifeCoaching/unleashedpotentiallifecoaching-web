@@ -71,6 +71,11 @@ export const getServerSideProps: GetServerSideProps = async (
     ?.items[0] as IReviewFields;
   const post = postData?.data?.blogPostCollection?.items[0] as IBlogPostFields;
 
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=864000, stale-while-revalidate=59'
+  );
+
   return {
     props: {
       post,

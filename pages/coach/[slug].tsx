@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CoachPage from 'components/pages/CoachPage';
 import { CoachesContext } from 'contexts/CoachesContext';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
@@ -75,8 +75,10 @@ const CoachProfile = ({
   return null;
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const slug = params?.slug;
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const slug = context?.params?.slug;
   const featuredReviewData = await fetchAPI(featuredReview, {});
   const coachesData = await fetchAPI(coachesQuery, {});
   const coaches = coachesData?.data?.coachCollection.items as ICoachFields[];
@@ -85,6 +87,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   ) as ICoachFields;
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
+
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=864000, stale-while-revalidate=59'
+  );
 
   return {
     props: {

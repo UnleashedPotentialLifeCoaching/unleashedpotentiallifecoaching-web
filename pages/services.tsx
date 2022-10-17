@@ -63,7 +63,9 @@ const Services = ({ page, coaches, review }: Props) => {
   //   return <HomePage {...homePageProps} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const servicesPageData = await fetchAPI(servicesPageQuery, {});
   const coachesData = await fetchAPI(coachesQuery, {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
@@ -72,6 +74,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const coaches = coachesData?.data?.coachCollection?.items as ICoachFields[];
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
+
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=864000, stale-while-revalidate=59'
+  );
 
   return {
     props: {

@@ -76,12 +76,19 @@ const PodCast = ({ review, page }: Props) => {
   return <PodcastPage {...podcastPageProps} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const podcastPageData = await fetchAPI(podcastPageQuery, {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
   const page = podcastPageData?.data?.simplePage;
+
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=864000, stale-while-revalidate=59'
+  );
 
   return {
     props: {

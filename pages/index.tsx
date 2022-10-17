@@ -1,6 +1,6 @@
 import { IHomePageFields, ICoachFields, IReviewFields } from 'types/contentful';
 import HomePage from 'components/pages/HomePage';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { fetchAPI } from 'utils/api';
 
 const homePageQuery = `
@@ -82,7 +82,9 @@ const Home = ({ page, coaches, review }: Props) => {
   return <HomePage {...homePageProps} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const homePageData = await fetchAPI(homePageQuery, {});
   const coachesData = await fetchAPI(coachesQuery, {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
@@ -91,6 +93,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const coaches = coachesData?.data?.coachCollection?.items as ICoachFields[];
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
+
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=864000, stale-while-revalidate=59'
+  );
 
   return {
     props: {

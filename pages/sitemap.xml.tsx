@@ -34,7 +34,10 @@ query blogPostCollectionQuery {
 const Sitemap = () => null;
 export default Sitemap;
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const { res } = context;
   const blogPostsData = await fetchAPI(blogPostsQuery, {});
   const posts = blogPostsData?.data?.blogPostCollection
     ?.items as IBlogPostFields[];
