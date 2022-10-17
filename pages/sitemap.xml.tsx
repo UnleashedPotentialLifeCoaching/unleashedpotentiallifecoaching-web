@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { IBlogPostFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
 import { SITE_URL, SITE_NAVS } from 'utils/constants';
@@ -95,6 +95,7 @@ export const getServerSideProps: GetServerSideProps = async (
     'Cache-Control',
     'public, s-maxage=864000, stale-while-revalidate=59'
   );
+
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);
   res.end();

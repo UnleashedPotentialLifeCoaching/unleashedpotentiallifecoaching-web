@@ -1,6 +1,6 @@
 import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
 import ServicesPage from 'components/pages/ServicesPage';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { fetchAPI } from 'utils/api';
 
 const servicesPageQuery = `
