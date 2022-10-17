@@ -12,25 +12,23 @@ const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
 );
 
-interface VIDEO_PROPS {
-  description: string;
-  title: string;
-  url: string;
-}
-
 interface Props {
-  videos: VIDEO_PROPS[];
+  videos: any;
   page: ISimplePageFields;
   review: IReviewFields;
-  setTriggerNextPage: (e: boolean) => void;
-  nextPageToken: string;
+  fetchNextPage: any;
+  message: string;
+  hasNextPage: boolean | undefined;
+  isFetchingNextPage: boolean;
 }
 const PodcastPage = ({
   videos,
   page,
   review,
-  setTriggerNextPage,
-  nextPageToken,
+  fetchNextPage,
+  message,
+  hasNextPage,
+  isFetchingNextPage,
 }: Props) => (
   <FadeInContainer>
     <SiteHead
@@ -43,8 +41,8 @@ const PodcastPage = ({
     />
     <Container>
       <main className="flex flex-col items-center justify-center">
-        {videos?.length > 0 &&
-          videos.map(({ snippet, id }: any) => (
+        {videos?.pages[0]?.items?.length > 0 &&
+          videos?.pages[0]?.items?.map(({ snippet, id }: any) => (
             <Video
               url={`https://www.youtube.com/embed/${id?.videoId}`}
               title={snippet?.title}
@@ -53,11 +51,18 @@ const PodcastPage = ({
             />
           ))}
       </main>
-      <ButtonGroup
-        setTriggerNextPage={setTriggerNextPage}
-        nextPageToken={nextPageToken}
-      />
     </Container>
+    <div className="flex flex-row justify-center w-full mb-8">
+      <button
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+        className={` ${
+          Boolean(!hasNextPage || isFetchingNextPage) ? 'opacity-25' : ''
+        } mb-4 sm:mb-0 font-bold w-full sm:w-2/4 text-center py-3 rounded bg-forrest text-white text-2xl`}
+      >
+        {message}
+      </button>
+    </div>
     <FeaturedReview name={review?.name} quote={review?.quote} />
   </FadeInContainer>
 );

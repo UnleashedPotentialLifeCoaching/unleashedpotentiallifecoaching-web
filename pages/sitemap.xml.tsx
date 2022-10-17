@@ -58,12 +58,9 @@ export const getServerSideProps: GetServerSideProps = async (
     })
     .join(', ');
 
-  const siteLinks = SITE_NAVS.filter(
-    (link) => link?.slug !== 'https:/themendwellness.com/'
-  )
-    .map(({ slug, children }) =>
-      slug
-        ? `
+  const siteLinks = SITE_NAVS.map(({ slug, children }) =>
+    slug
+      ? `
       <url>
         <loc>${SITE_URL}/${removeSlashFromSlug(slug)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
@@ -71,7 +68,9 @@ export const getServerSideProps: GetServerSideProps = async (
         <priority>1.0</priority>
       </url> 
   `
-        : children?.map(
+      : children
+          ?.filter((link) => !link?.slug?.includes('themendwellness'))
+          .map(
             ({ slug }) =>
               `
       <url>
@@ -82,8 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (
       </url> 
       `
           )
-    )
-    .join(', ');
+  ).join(', ');
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">      

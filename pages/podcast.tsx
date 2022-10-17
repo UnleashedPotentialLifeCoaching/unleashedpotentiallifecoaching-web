@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PodcastPage from 'components/pages/PodcastPage';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { YT_CHANNEL_URL, YT_CHANNEL_URL_NEXT_PAGE } from 'utils/constants';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
+import { isCompositeType } from 'graphql';
 
 const featuredReview = `query reviewCollectionQuery {
   reviewCollection(
@@ -39,14 +40,11 @@ interface Props {
   page: ISimplePageFields;
 }
 
+interface VIDEO_PROPS {}
+
 const PodCast = ({ review, page }: Props) => {
-  const [nextPageToken, setNextPageToken] = useState<string>('');
-  const [triggerNextPage, setTriggerNextPage] = useState<boolean>(false);
-  const videoFetcher = async () => {
-    const url =
-      nextPageToken.length > 0
-        ? YT_CHANNEL_URL_NEXT_PAGE(nextPageToken)
-        : YT_CHANNEL_URL;
+  const videoFetcher = async ({ pageParam = '' }) => {
+    const url = YT_CHANNEL_URL_NEXT_PAGE(pageParam);
 
     const res = await fetch(url, {
       headers: {
@@ -56,21 +54,35 @@ const PodCast = ({ review, page }: Props) => {
     });
     const data = await res?.json();
 
-    if (data?.nextPageToken) {
-      setNextPageToken(data?.nextPageToken);
-    }
-
     return data;
   };
 
-  const { data } = useQuery(['videos'], videoFetcher);
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery(['videos'], videoFetcher, {
+    getNextPageParam: (_, pages) => {
+      return pages[0].nextPageToken;
+    },
+  });
 
   const podcastPageProps = {
     review,
     page,
-    videos: data?.items,
-    setTriggerNextPage,
-    nextPageToken,
+    videos: data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    message: isFetchingNextPage
+      ? 'Loading more...'
+      : hasNextPage
+      ? 'Load More'
+      : 'Nothing more to load',
   };
 
   return <PodcastPage {...podcastPageProps} />;
