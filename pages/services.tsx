@@ -60,7 +60,6 @@ const Services = ({ page, coaches, review }: Props) => {
     pageContent: page?.pageContent,
   };
   return <ServicesPage {...servicesPageProps} />;
-  //   return <HomePage {...homePageProps} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (
