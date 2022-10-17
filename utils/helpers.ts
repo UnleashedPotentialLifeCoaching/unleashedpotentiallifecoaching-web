@@ -50,3 +50,11 @@ export const formatDate = (date: string): string | undefined => {
 
   return results;
 };
+
+
+// concat youtube video list
+export const buildYTVideoList = (videosPages) => {
+  return videoPages.map((video) => {
+      return video
+  })
+};
