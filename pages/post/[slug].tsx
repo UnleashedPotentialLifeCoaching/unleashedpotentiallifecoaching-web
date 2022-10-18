@@ -12,6 +12,7 @@ query blogPostCollectionQuery {
     items {
       postTItle
       publishDate
+      slugText
       postContent {
         json
       }
@@ -69,7 +70,9 @@ export const getServerSideProps: GetServerSideProps = async (
   const postData = await fetchAPI(blogPostsQuery(slug));
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
-  const post = postData?.data?.blogPostCollection?.items[0] as IBlogPostFields;
+  const post = postData?.data?.blogPostCollection?.items.find(
+    ({ slugText }: { slugText: string }) => slugText === slug
+  ) as IBlogPostFields;
 
   context.res.setHeader(
     'Cache-Control',

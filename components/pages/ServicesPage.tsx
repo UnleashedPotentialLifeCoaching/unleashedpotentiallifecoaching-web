@@ -7,7 +7,12 @@ import ContentWrapper from 'layouts/ContentWrapper';
 import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
+import {
+  ICoachFields,
+  IReviewFields,
+  IPageFields,
+  IServicePageFields,
+} from 'types/contentful';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
@@ -16,7 +21,7 @@ const FeaturedReview = dynamic(
 interface Props {
   review: IReviewFields;
   coaches: ICoachFields[];
-  page: IPageFields;
+  page: IServicePageFields;
   pageContent: any;
 }
 
@@ -27,7 +32,7 @@ const ServicesPage = ({ page, pageContent, coaches, review }: Props) => (
       metaDescription={page?.seoMetaDescription}
     />
     <PageBanner
-      title={page?.pageTitle as string}
+      title={(page?.pageTitle as string) || (page?.serviceTitle as string)}
       bannerImage={page?.banner?.url}
     />
     <Container>
@@ -41,11 +46,11 @@ const ServicesPage = ({ page, pageContent, coaches, review }: Props) => (
               ? 1
               : -1
           )
-          .map(({ name, bookTimePhoto }) => (
+          .map((coach: ICoachFields) => (
             <ServiceCard
-              name={name as string}
-              bookTimePhoto={bookTimePhoto?.url}
-              key={name}
+              name={coach?.name as string}
+              bookTimePhoto={coach?.bookTimePhoto?.url}
+              key={coach?.name}
             />
           ))}
       </div>

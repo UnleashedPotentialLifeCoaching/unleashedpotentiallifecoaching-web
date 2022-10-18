@@ -4,11 +4,11 @@ import { Asset, Entry } from 'contentful';
 import { Document } from '@contentful/rich-text-types';
 
 export interface IBlogPostFields {
-  /** Slug Text */
-  slugText?: string | undefined;
-
   /** Post TItle */
   postTItle?: string | undefined;
+
+  /** Slug Text */
+  slugText?: string | undefined;
 
   /** Publish Date */
   publishDate?: string | undefined;
@@ -236,6 +236,43 @@ export interface IReview extends Entry<IReviewFields> {
   };
 }
 
+export interface IServicePageFields {
+  /** Service Title */
+  serviceTitle?: string | undefined;
+
+  /** slugText */
+  slugText?: string | undefined;
+
+  /** SEO Title */
+  seoTitle?: string | undefined;
+
+  /** SEO Meta Description */
+  seoMetaDescription?: string | undefined;
+
+  /** Service Content */
+  serviceContent?: Document | undefined;
+
+  /** Coach */
+  coach?: Entry<{ [fieldId: string]: unknown }> | undefined;
+}
+
+export interface IServicePage extends Entry<IServicePageFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'servicePage';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface ISimplePageFields {
   /** Page Title */
   pageTitle?: string | undefined;
@@ -273,6 +310,7 @@ export type CONTENT_TYPE =
   | 'homePage'
   | 'page'
   | 'review'
+  | 'servicePage'
   | 'simplePage';
 
 export type LOCALE_CODE = 'en-US';
