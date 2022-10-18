@@ -237,11 +237,14 @@ export interface IReview extends Entry<IReviewFields> {
 }
 
 export interface IServicePageFields {
-  /** Service Title */
-  serviceTitle?: string | undefined;
+  /** Page Title */
+  pageTitle?: string | undefined;
 
   /** slugText */
   slugText?: string | undefined;
+
+  /** Banner */
+  banner?: Asset | undefined;
 
   /** SEO Title */
   seoTitle?: string | undefined;
@@ -249,8 +252,8 @@ export interface IServicePageFields {
   /** SEO Meta Description */
   seoMetaDescription?: string | undefined;
 
-  /** Service Content */
-  serviceContent?: Document | undefined;
+  /** Page Content */
+  pageContent?: Document | undefined;
 
   /** Coach */
   coach?: Entry<{ [fieldId: string]: unknown }> | undefined;

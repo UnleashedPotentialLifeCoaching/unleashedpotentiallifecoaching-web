@@ -21,7 +21,7 @@ const FeaturedReview = dynamic(
 interface Props {
   review: IReviewFields;
   coaches: ICoachFields[];
-  page: IServicePageFields;
+  page: IPageFields;
   pageContent: any;
 }
 
@@ -32,7 +32,7 @@ const ServicesPage = ({ page, pageContent, coaches, review }: Props) => (
       metaDescription={page?.seoMetaDescription}
     />
     <PageBanner
-      title={(page?.pageTitle as string) || (page?.serviceTitle as string)}
+      title={page?.pageTitle as string}
       bannerImage={page?.banner?.url}
     />
     <Container>
