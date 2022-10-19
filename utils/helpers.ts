@@ -50,3 +50,18 @@ export const formatDate = (date: string): string | undefined => {
 
   return results;
 };
+
+export const organizeVideos = (videos: any) => {
+  const results: any = [];
+
+  for (let i = 0; i < videos?.pages?.length; i++) {
+    const page = videos?.pages[i];
+
+    for (let j = 0; j < page?.items.length; j++) {
+      const item = page?.items[j];
+      results.push(item);
+    }
+  }
+
+  return results;
+};
