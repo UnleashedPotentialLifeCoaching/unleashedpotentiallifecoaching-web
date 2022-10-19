@@ -6,6 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
 import { isCompositeType } from 'graphql';
+import { organizeVideos } from 'utils/helpers';
 
 const featuredReview = `query reviewCollectionQuery {
   reviewCollection(
@@ -40,11 +41,11 @@ interface Props {
   page: ISimplePageFields;
 }
 
-interface VIDEO_PROPS {}
-
 const PodCast = ({ review, page }: Props) => {
+  const [amount, setAmount] = useState<string>('4');
+
   const videoFetcher = async ({ pageParam = '' }) => {
-    const url = YT_CHANNEL_URL_NEXT_PAGE(pageParam);
+    const url = YT_CHANNEL_URL_NEXT_PAGE(pageParam, amount);
 
     const res = await fetch(url, {
       headers: {
@@ -67,17 +68,26 @@ const PodCast = ({ review, page }: Props) => {
     status,
   } = useInfiniteQuery(['videos'], videoFetcher, {
     getNextPageParam: (_, pages) => {
-      return pages[0].nextPageToken;
+      return pages[pages.length - 1].nextPageToken;
     },
   });
+
+  const handleAmountChange = async () => {
+    if (amount === '4') {
+      await setAmount('1');
+    }
+
+    await fetchNextPage();
+  };
 
   const podcastPageProps = {
     review,
     page,
-    videos: data,
+    videos: organizeVideos(data),
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    handleAmountChange,
     message: isFetchingNextPage
       ? 'Loading more...'
       : hasNextPage

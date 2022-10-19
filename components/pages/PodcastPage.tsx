@@ -16,19 +16,19 @@ interface Props {
   videos: any;
   page: ISimplePageFields;
   review: IReviewFields;
-  fetchNextPage: any;
   message: string;
   hasNextPage: boolean | undefined;
   isFetchingNextPage: boolean;
+  handleAmountChange: () => void;
 }
 const PodcastPage = ({
   videos,
   page,
   review,
-  fetchNextPage,
   message,
   hasNextPage,
   isFetchingNextPage,
+  handleAmountChange,
 }: Props) => (
   <FadeInContainer>
     <SiteHead
@@ -41,8 +41,8 @@ const PodcastPage = ({
     />
     <Container>
       <main className="flex flex-col items-center justify-center">
-        {videos?.pages[0]?.items?.length > 0 &&
-          videos?.pages[0]?.items?.map(({ snippet, id }: any) => (
+        {videos?.length > 0 &&
+          videos?.map(({ snippet, id }: any) => (
             <Video
               url={`https://www.youtube.com/embed/${id?.videoId}`}
               title={snippet?.title}
@@ -54,7 +54,7 @@ const PodcastPage = ({
     </Container>
     <div className="flex flex-row justify-center w-full mb-8">
       <button
-        onClick={() => fetchNextPage()}
+        onClick={() => handleAmountChange()}
         disabled={!hasNextPage || isFetchingNextPage}
         className={` ${
           Boolean(!hasNextPage || isFetchingNextPage) ? 'opacity-25' : ''
