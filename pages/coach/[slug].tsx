@@ -82,9 +82,17 @@ export const getServerSideProps: GetServerSideProps = async (
   const featuredReviewData = await fetchAPI(featuredReview, {});
   const coachesData = await fetchAPI(coachesQuery, {});
   const coaches = coachesData?.data?.coachCollection.items as ICoachFields[];
+
   const coach = coaches?.find(
     (coach) => urlify(coach?.name as string) === slug
   ) as ICoachFields;
+
+  if (!coach) {
+    return {
+      notFound: true,
+    };
+  }
+
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
 

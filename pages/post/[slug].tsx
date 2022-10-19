@@ -68,6 +68,13 @@ export const getServerSideProps: GetServerSideProps = async (
   const slug = context?.params?.slug as string;
   const featuredReviewData = await fetchAPI(featuredReview, {});
   const postData = await fetchAPI(blogPostsQuery(slug));
+
+  if (postData?.data?.blogPostCollection?.items.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
+
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
   const post = postData?.data?.blogPostCollection?.items.find(

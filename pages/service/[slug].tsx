@@ -75,6 +75,12 @@ export const getServerSideProps: GetServerSideProps = async (
   const servicesPageData = await fetchAPI(servicePageQuery(slug), {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
 
+  if (!servicesPageData?.servicePageCollection) {
+    return {
+      notFound: true,
+    };
+  }
+
   //   const page = servicesPageData?.data?.page as IPageFields;
   const page = servicesPageData?.data.servicePageCollection?.items?.find(
     ({ slugText }: { slugText: string }) => slugText === slug
