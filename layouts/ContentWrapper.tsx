@@ -38,6 +38,19 @@ const Container = styled.div`
     margin-bottom: 16px;
   }
 
+  ul {
+    margin-left: 1.5em;
+
+    li {
+      list-style-type: disc;
+    }
+  }
+
+  hr {
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+  }
+
   .block-img {
     @media (min-width: 768px) {
       float: right;
