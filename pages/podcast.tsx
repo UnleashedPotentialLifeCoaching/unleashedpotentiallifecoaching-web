@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PodcastPage from 'components/pages/PodcastPage';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { YT_CHANNEL_URL, YT_CHANNEL_URL_NEXT_PAGE } from 'utils/constants';
+import { GetStaticProps } from 'next';
+import { YT_CHANNEL_URL_NEXT_PAGE } from 'utils/constants';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { isCompositeType } from 'graphql';
 import { organizeVideos } from 'utils/helpers';
 
 const featuredReview = `query reviewCollectionQuery {
@@ -98,19 +97,12 @@ const PodCast = ({ review, page }: Props) => {
   return <PodcastPage {...podcastPageProps} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getStaticProps: GetStaticProps = async () => {
   const podcastPageData = await fetchAPI(podcastPageQuery, {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
   const page = podcastPageData?.data?.simplePage;
-
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=864000, stale-while-revalidate=59'
-  );
 
   return {
     props: {
