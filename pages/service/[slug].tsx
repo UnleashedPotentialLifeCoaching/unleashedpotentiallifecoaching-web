@@ -74,8 +74,9 @@ export const getServerSideProps: GetServerSideProps = async (
   const slug = context?.params?.slug as string;
   const servicesPageData = await fetchAPI(servicePageQuery(slug), {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
+  console.log({ servicesPageData });
 
-  if (!servicesPageData?.servicePageCollection) {
+  if (servicesPageData?.servicePageCollection?.items.length <= 0) {
     return {
       notFound: true,
     };
@@ -88,6 +89,8 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
+
+  console.log({ page });
 
   context.res.setHeader(
     'Cache-Control',
