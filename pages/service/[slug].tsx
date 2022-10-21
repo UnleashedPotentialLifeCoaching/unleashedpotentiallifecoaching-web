@@ -90,8 +90,6 @@ export const getServerSideProps: GetServerSideProps = async (
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
 
-  console.log({ page });
-
   context.res.setHeader(
     'Cache-Control',
     'public, s-maxage=864000, stale-while-revalidate=59'

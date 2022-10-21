@@ -14,6 +14,10 @@ const Container = styled.div`
   color: #506967;
   margin-bottom: 64px;
 
+  a {
+    text-decoration: underline;
+    color: rgb(22 163 74);
+  }
   p {
     margin-bottom: 12px;
 
@@ -49,6 +53,11 @@ const Container = styled.div`
   hr {
     margin-top: 2.5em;
     margin-bottom: 2.5em;
+  }
+
+  img {
+    width: 100%;
+    height: 200px;
   }
 
   .block-img {
