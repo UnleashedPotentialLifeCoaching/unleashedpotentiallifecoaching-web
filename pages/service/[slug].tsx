@@ -31,7 +31,22 @@ const servicePageQuery = (slug: string) => `
       }
     }
     pageContent {
-      json
+      json,
+      links {
+        assets {
+          block {
+             sys {
+                  id
+                }
+                url
+                title
+                width
+                height
+                description
+                contentType 
+          }
+        }
+      }
     }
   }
     }
@@ -74,7 +89,6 @@ export const getServerSideProps: GetServerSideProps = async (
   const slug = context?.params?.slug as string;
   const servicesPageData = await fetchAPI(servicePageQuery(slug), {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
-  console.log({ servicesPageData });
 
   if (servicesPageData?.servicePageCollection?.items.length <= 0) {
     return {
@@ -86,7 +100,6 @@ export const getServerSideProps: GetServerSideProps = async (
   const page = servicesPageData?.data.servicePageCollection?.items?.find(
     ({ slugText }: { slugText: string }) => slugText === slug
   ) as IServicePageFields;
-
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
 

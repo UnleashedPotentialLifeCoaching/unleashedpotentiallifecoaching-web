@@ -26,6 +26,11 @@ const Quote = styled.span`
     margin: 0;
     padding: 0;
   }
+
+  a {
+    text-decoration: underline;
+    color: rgb(22 163 74);
+  }
 `;
 
 const Name = styled.div`

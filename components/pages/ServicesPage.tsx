@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import ServiceCard from 'components/molecules/ServiceCard';
 import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
@@ -8,12 +9,7 @@ import ContentWrapper from 'layouts/ContentWrapper';
 import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
 import React from 'react';
-import {
-  ICoachFields,
-  IReviewFields,
-  IPageFields,
-  IServicePageFields,
-} from 'types/contentful';
+import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
@@ -42,46 +38,102 @@ const BorderMessage = styled.div`
   margin: auto;
 `;
 
-const ServicesPage = ({ page, pageContent, coaches, review }: Props) => (
-  <FadeInContainer>
-    <SiteHead
-      title={page?.seoTitle}
-      metaDescription={page?.seoMetaDescription}
-    />
-    <PageBanner
-      title={page?.pageTitle as string}
-      bannerImage={page?.banner?.url}
-    />
-    <Container>
-      <ContentWrapper>
-        {documentToReactComponents(pageContent?.json)}
-      </ContentWrapper>
-      <br />
-      <BorderRight />
-      <BorderMessage>
-        <h5 className="text-5xl text-center font-serif text-forrest">
-          Learn more
-        </h5>
-      </BorderMessage>
-      <br />
-      <div className="mx-auto max-w-full lg:max-w-6xl">
-        {coaches
-          .sort((a, b) =>
-            (a.appearanceOrder as number) > (b.appearanceOrder as number)
-              ? 1
-              : -1
-          )
-          .map((coach: ICoachFields) => (
-            <ServiceCard
-              name={coach?.name as string}
-              bookTimePhoto={coach?.bookTimePhoto?.url}
-              key={coach?.name}
-            />
-          ))}
-      </div>
-    </Container>
-    <FeaturedReview name={review?.name} quote={review?.quote} />
-  </FadeInContainer>
-);
+function renderOptions(links: any) {
+  if (!links?.assets?.block) {
+    return {};
+  }
+  // create an asset map
+  const assetMap = new Map();
+
+  // loop through the linked assets and add them to a map
+  for (const asset of links?.assets?.block) {
+    assetMap.set(asset?.sys?.id, asset);
+  }
+
+  return {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: (node: any, next: any) => {
+        // find the asset in the assetMap by ID
+        const asset = assetMap.get(node.data.target.sys.id);
+
+        switch (asset.contentType) {
+          case 'video/mp4':
+            return (
+              <video width="100%" height="100%" controls>
+                <source src={asset.url} type="video/mp4" />
+              </video>
+            );
+          case 'image/png':
+            return (
+              <img
+                src={asset.url}
+                height={asset.height}
+                width={asset.width}
+                alt={asset.description}
+              />
+            );
+          case 'image/jpeg':
+            return (
+              <img
+                src={asset.url}
+                height={asset.height}
+                width={asset.width}
+                alt={asset.description}
+              />
+            );
+          default:
+            return 'Nothing to see here...';
+        }
+      },
+    },
+  };
+}
+
+const ServicesPage = ({ page, pageContent, coaches, review }: Props) => {
+  return (
+    <FadeInContainer>
+      <SiteHead
+        title={page?.seoTitle}
+        metaDescription={page?.seoMetaDescription}
+      />
+      <PageBanner
+        title={page?.pageTitle as string}
+        bannerImage={page?.banner?.url}
+      />
+      <Container>
+        <ContentWrapper>
+          {documentToReactComponents(
+            pageContent?.json,
+            renderOptions(pageContent?.links)
+          )}
+        </ContentWrapper>
+        <br />
+        <BorderRight />
+        <BorderMessage>
+          <h5 className="text-5xl text-center font-serif text-forrest">
+            Learn more
+          </h5>
+        </BorderMessage>
+        <br />
+        <div className="mx-auto max-w-full lg:max-w-6xl">
+          {coaches
+            .sort((a, b) =>
+              (a.appearanceOrder as number) > (b.appearanceOrder as number)
+                ? 1
+                : -1
+            )
+            .map((coach: ICoachFields) => (
+              <ServiceCard
+                name={coach?.name as string}
+                bookTimePhoto={coach?.bookTimePhoto?.url}
+                key={coach?.name}
+              />
+            ))}
+        </div>
+      </Container>
+      <FeaturedReview name={review?.name} quote={review?.quote} />
+    </FadeInContainer>
+  );
+};
 
 export default ServicesPage;

@@ -57,7 +57,16 @@ const Container = styled.div`
 
   img {
     width: 100%;
-    height: 200px;
+    max-width: 250px;
+    display: block;
+    margin: auto;
+    margin-bottom: 1em;
+
+    @media (min-width: 768px) {
+      display: inline;
+      float: right;
+      margin-left: 2em;
+    }
   }
 
   .block-img {
