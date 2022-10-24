@@ -19,6 +19,11 @@ const servicePageQuery = (slug: string) => `
         seoTitle
         seoMetaDescription
         slugText
+        banner{
+          url
+          width
+          height
+        }
         coach{
         ... on Coach {
             name
