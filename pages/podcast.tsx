@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PodcastPage from 'components/pages/PodcastPage';
-import { GetStaticProps } from 'next';
+import {
+  GetStaticProps,
+  InferGetServerSidePropsType,
+  InferGetStaticPropsType,
+} from 'next';
 import { YT_CHANNEL_URL_NEXT_PAGE } from 'utils/constants';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
@@ -35,12 +39,10 @@ const podcastPageQuery = `
 }
 `;
 
-interface Props {
-  review: IReviewFields;
-  page: ISimplePageFields;
-}
-
-const PodCast = ({ review, page }: Props) => {
+const PodCast = ({
+  review,
+  page,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [amount, setAmount] = useState<string>('4');
 
   const videoFetcher = async ({ pageParam = '' }) => {

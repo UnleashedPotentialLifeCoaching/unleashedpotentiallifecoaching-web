@@ -1,7 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CoachPage from 'components/pages/CoachPage';
 import { CoachesContext } from 'contexts/CoachesContext';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
@@ -52,12 +56,7 @@ const CoachProfile = ({
   coaches,
   review,
   slug,
-}: {
-  coach: ICoachFields;
-  coaches: ICoachFields[];
-  review: IReviewFields;
-  slug: string;
-}) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { coaches: contextCoaches, setCoaches } = useContext(CoachesContext);
   useEffect(() => {
@@ -98,7 +97,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=864000, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59'
   );
 
   return {

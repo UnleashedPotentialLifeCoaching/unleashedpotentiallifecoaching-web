@@ -1,5 +1,9 @@
 import ReviewsPage from 'components/pages/ReviewsPage';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import React from 'react';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
@@ -42,13 +46,11 @@ const reviewPageQuery = `query simplePageEntryQuery {
   }
 }`;
 
-interface Props {
-  review: IReviewFields;
-  page: ISimplePageFields;
-  allReviews: IReviewFields[];
-}
-
-const Reviews = ({ review, page, allReviews }: Props) => {
+const Reviews = ({
+  review,
+  page,
+  allReviews,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const pageProps = { review, page, allReviews };
   return <ReviewsPage {...pageProps} />;
 };
@@ -68,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=864000, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59'
   );
 
   return {

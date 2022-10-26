@@ -1,6 +1,10 @@
 import { IHomePageFields, ICoachFields, IReviewFields } from 'types/contentful';
 import HomePage from 'components/pages/HomePage';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import { fetchAPI } from 'utils/api';
 
 const homePageQuery = `
@@ -76,7 +80,11 @@ interface Props {
   review: IReviewFields;
 }
 
-const Home = ({ page, coaches, review }: Props) => {
+const Home = ({
+  page,
+  coaches,
+  review,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const homePageProps = { page, coaches, review };
 
   return <HomePage {...homePageProps} />;
@@ -96,7 +104,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=864000, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59'
   );
 
   return {

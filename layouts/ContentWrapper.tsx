@@ -55,9 +55,17 @@ const Container = styled.div`
     margin-bottom: 2.5em;
   }
 
+  .services-1180x1573 {
+    max-width: 420px;
+  }
+
+  .daniel-castellon-ievtpifod0a-unsplash {
+    max-width: 300px;
+  }
+
   img {
     width: 100%;
-    max-width: 250px;
+
     display: block;
     margin: auto;
     margin-bottom: 1em;

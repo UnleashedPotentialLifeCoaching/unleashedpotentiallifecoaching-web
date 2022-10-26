@@ -5,7 +5,11 @@ import {
   IServicePageFields,
 } from 'types/contentful';
 import ServicesPage from 'components/pages/ServicesPage';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import { fetchAPI } from 'utils/api';
 
 const servicePageQuery = (slug: string) => `
@@ -72,13 +76,11 @@ const featuredReview = `query reviewCollectionQuery {
   }
 }`;
 
-interface Props {
-  page: IPageFields;
-  coaches: ICoachFields[];
-  review: IReviewFields;
-}
-
-const Service = ({ page, coaches, review }: Props) => {
+const Service = ({
+  page,
+  coaches,
+  review,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const servicesPageProps = {
     page,
     coaches,
@@ -110,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=864000, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59'
   );
 
   return {

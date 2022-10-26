@@ -1,5 +1,9 @@
 import React from 'react';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import PostPage from 'components/pages/PostPage';
 import { IBlogPostFields, IReviewFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
@@ -58,7 +62,10 @@ interface Props {
   post: IBlogPostFields;
 }
 
-const Post = ({ review, post }: Props) => (
+const Post = ({
+  review,
+  post,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => (
   <PostPage review={review} post={post} postContent={post?.postContent} />
 );
 
@@ -83,7 +90,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=864000, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59'
   );
 
   return {

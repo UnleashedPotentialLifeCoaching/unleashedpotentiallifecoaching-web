@@ -6,7 +6,11 @@ import {
   IBlogPostFields,
 } from 'types/contentful';
 import BlogPage from 'components/pages/BlogPage';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  InferGetServerSidePropsType,
+} from 'next';
 import { fetchAPI } from 'utils/api';
 
 const blogPageQuery = `
@@ -70,7 +74,11 @@ interface Props {
   posts: IBlogPostFields[];
 }
 
-const Blog = ({ page, review, posts }: Props) => {
+const Blog = ({
+  page,
+  review,
+  posts,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const blogPageProps = { page, review, posts };
   return <BlogPage {...blogPageProps} />;
 };
@@ -89,7 +97,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=864000, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59'
   );
 
   return {

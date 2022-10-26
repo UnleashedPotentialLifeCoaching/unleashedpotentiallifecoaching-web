@@ -10,6 +10,7 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
+import { urlify } from 'utils/helpers';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
@@ -70,6 +71,7 @@ function renderOptions(links: any) {
                 height={asset.height}
                 width={asset.width}
                 alt={asset.description}
+                className={urlify(asset.title)}
               />
             );
           case 'image/jpeg':
@@ -79,6 +81,17 @@ function renderOptions(links: any) {
                 height={asset.height}
                 width={asset.width}
                 alt={asset.description}
+                className={urlify(asset.title)}
+              />
+            );
+          case 'image/webp':
+            return (
+              <img
+                src={asset.url}
+                height={asset.height}
+                width={asset.width}
+                alt={asset.description}
+                className={urlify(asset.title)}
               />
             );
           default:
