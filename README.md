@@ -14,7 +14,7 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 - [Framer Motion](https://motion.io)
 - [GraphQL](https://graphql.org/)
 - [Next.js](https://nextjs.org/)
-- [Prismic.io](https://prismic.io/)
+- [Contentful](https://contentful.com/)
 - [Styled Components](https://styled-components.com/)
 - [Tailwind.css](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
