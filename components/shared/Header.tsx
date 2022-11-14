@@ -19,10 +19,12 @@ const Header = () => (
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8 h-12">
                 {SITE_NAVS.map(({ id, slug, children, label }) =>
                   slug ? (
-                    <Link key={id} href={slug}>
-                      <a className="border-transparent text-forrest hover:border-forrest hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-4 text-lg font-medium ease-in duration-200">
-                        {label}
-                      </a>
+                    <Link
+                      key={id}
+                      href={slug}
+                      className="border-transparent text-forrest hover:border-forrest hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-4 text-lg font-medium ease-in duration-200"
+                    >
+                      {label}
                     </Link>
                   ) : (
                     <Menu as="div" key={id}>
@@ -51,10 +53,11 @@ const Header = () => (
                                   {label}
                                 </a>
                               ) : (
-                                <Link href={slug}>
-                                  <a className="block px-4 py-2 text-base text-forrest hover:bg-gray-200 hover:text-gray-700">
-                                    {label}
-                                  </a>
+                                <Link
+                                  href={slug}
+                                  className="block px-4 py-2 text-base text-forrest hover:bg-gray-200 hover:text-gray-700"
+                                >
+                                  {label}
                                 </Link>
                               )}
                             </Menu.Item>
@@ -108,8 +111,8 @@ const Header = () => (
                   <ul className="ml-4 mt-3 -mb-3">
                     {children?.map(({ id, slug, label }) => (
                       <li key={id} className="mb-3">
-                        <Link href={slug}>
-                          <a className="hover:underline">{label}</a>
+                        <Link href={slug} className="hover:underline">
+                          {label}
                         </Link>
                       </li>
                     ))}

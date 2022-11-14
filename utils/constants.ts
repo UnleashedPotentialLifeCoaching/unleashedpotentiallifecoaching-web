@@ -52,14 +52,14 @@ export const SITE_NAVS = [
         label: 'Jessica Rebelo',
         open: false,
       },
+      // {
+      //   id: 3,
+      //   slug: '/coach/ché-greeff',
+      //   label: 'Ché Greeff',
+      //   open: false,
+      // },
       {
         id: 3,
-        slug: '/coach/ché-greeff',
-        label: 'Ché Greeff',
-        open: false,
-      },
-      {
-        id: 4,
         slug: 'https://themendwellness.com/',
         label: 'Kristin Brien',
         open: true,

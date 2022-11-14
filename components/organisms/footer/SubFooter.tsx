@@ -26,10 +26,11 @@ const SubFooter = () => {
         {FOOTER_LINKS.map(({ slug, label }) =>
           slug !== FOOTER_LINKS[2].slug ? (
             <li key={label}>
-              <Link href={slug}>
-                <a className="mx-4 font-serif text-lg italic text-forrest hover:underline">
-                  {label}
-                </a>
+              <Link
+                href={slug}
+                className="mx-4 font-serif text-lg italic text-forrest hover:underline"
+              >
+                {label}
               </Link>
             </li>
           ) : (

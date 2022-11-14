@@ -4,14 +4,13 @@ import React from 'react';
 
 interface Props {
   url: string;
-  width: number | string;
-  height: number | string;
+  width: number;
+  height: number;
   radius?: number | string;
   name: string;
 }
 
 const ImageWrapper = ({ url, width, height, name }: Props) => {
-  const imageProps = { url, width, height, name };
   return (
     <div>
       <Image

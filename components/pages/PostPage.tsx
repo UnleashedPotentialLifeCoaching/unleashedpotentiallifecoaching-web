@@ -61,7 +61,7 @@ const PostPage = ({ post, review, postContent }: Props) => {
               {post?.featuredImage && (
                 <Image
                   src={post?.featuredImage?.url}
-                  alt={post?.postTItle}
+                  alt={post?.postTItle as string}
                   width={post?.featuredImage?.width}
                   height={post?.featuredImage?.height}
                   layout="intrinsic"
