@@ -13,7 +13,7 @@ const Header = () => (
             <div className="mt-2">
               <div className="text-left sm:text-center">
                 <p className="font-bold italic m-1 text-xl sm:text-3xl p-0 font-serif text-cream">
-                  Unleashed Potential: Life Coaching
+                  Unleashed Potential: Life Coaching & Counseling
                 </p>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8 h-12">

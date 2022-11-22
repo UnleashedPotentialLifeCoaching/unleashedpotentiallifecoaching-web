@@ -12,7 +12,7 @@ const FeaturedReview = ({
     {name && quote && (
       <>
         <p className="text-white font-serif italic font-bold text-center text-5xl mb-12">
-          Client Love
+          Client Review
         </p>
         <div className="px-12 py-8 lg:py-0 lg:px-48">
           <Message>{documentToReactComponents(quote?.json)}</Message>

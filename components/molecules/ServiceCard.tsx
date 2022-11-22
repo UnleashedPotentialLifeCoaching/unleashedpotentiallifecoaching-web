@@ -26,12 +26,9 @@ const ServiceCard = ({
         />
       </div>
       <div className="bg-white shadow-xl rounded border z-30 w-full sm:max-w-md lg:-ml-12">
-        <div className="mx-3 my-4 rounded border border-black lg:h-52">
+        <div className="mx-3 my-4 flex flex-col items-center rounded border border-black">
           <p className="uppercase text-forrest text-base font-bold text-center mt-8">
-            Online coaching with {name}
-          </p>
-          <p className="uppercase text-forrest-900 text-base font-bold text-center my-3">
-            1 Hour
+            1 Hour Session with {name}
           </p>
           <div className="mx-auto text-center py-5">
             <Button handlePress={() => setIsOpen(!isOpen)} label="Book now" />

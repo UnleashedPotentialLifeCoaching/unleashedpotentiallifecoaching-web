@@ -83,10 +83,6 @@ const Services = ({
     pageContent: page?.pageContent,
   };
 
-  console.log({
-    servicesPageProps,
-    page,
-  });
   return <ServicesPage {...servicesPageProps} />;
 };
 
