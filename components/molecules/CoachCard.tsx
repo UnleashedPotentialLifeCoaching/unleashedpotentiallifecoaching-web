@@ -22,8 +22,9 @@ const CoachCard = ({
           name={name as string}
         />
         <div className="flex flex-col my-6">
-          <p className="font-bold mb-0 text-2xl">1 hour coaching with</p>
-          <p className="text-forrest-900 text-2xl mt-0">{name}</p>
+          <p className="font-bold mb-0 text-2xl text-center">
+            1 Hour Session with {name}
+          </p>
         </div>
       </Link>
     </div>
