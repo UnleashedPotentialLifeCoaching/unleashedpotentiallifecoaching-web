@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 interface VIDEO_PROPS {
-  description: string;
-  title: string;
-  url: string;
+  description?: string;
+  title?: string;
+  url?: string;
 }
 
 const Video = ({ url, title, description }: VIDEO_PROPS) => (

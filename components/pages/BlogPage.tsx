@@ -20,10 +20,9 @@ const FeaturedReview = dynamic(
 interface Props {
   review: IReviewFields;
   page: ISimplePageFields;
-  posts: IBlogPostFields[];
 }
 
-const BlogPage = ({ review, posts, page }: Props) => {
+const BlogPage = ({ review, page }: Props) => {
   return (
     <FadeInContainer>
       <SiteHead
@@ -36,7 +35,7 @@ const BlogPage = ({ review, posts, page }: Props) => {
       />
       <Container>
         <main className="flex flex-col items-center justify-center">
-          {posts.map((post: IBlogPostFields) => (
+          {/* {posts.map((post: IBlogPostFields) => (
             <Link
               href={`/post/${post?.slugText}`}
               key={JSON.stringify(post)}
@@ -76,7 +75,7 @@ const BlogPage = ({ review, posts, page }: Props) => {
                 </button>
               </div>
             </Link>
-          ))}
+          ))} */}
         </main>
       </Container>
       <FeaturedReview name={review?.name} quote={review?.quote} />

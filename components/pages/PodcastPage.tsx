@@ -74,16 +74,10 @@ const PodcastPage = ({ page, review }: Props) => {
       setVariables({
         limit: updateLimit,
       });
-      console.log(updateLimit);
     } else {
       setDisableBtn(true);
     }
   };
-
-  console.log({
-    isLoading,
-    disableBtn,
-  });
 
   return (
     <FadeInContainer>
