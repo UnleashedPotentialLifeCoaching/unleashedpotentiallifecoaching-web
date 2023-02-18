@@ -108,13 +108,6 @@ export const SITE_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://www.unleashedpotentiallifecoaching.com/'
     : 'http://localhost:3000';
-const YT_CHANNEL_BASE = `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YT_API_KEY}&channelId=${process.env.NEXT_PUBLIC_CHANNEL_ID}`;
-export const YT_CHANNEL_URL = `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=4`;
-export const YT_CHANNEL_URL_NEXT_PAGE = (
-  nextPageToken: string,
-  amount: string
-) =>
-  `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=${amount}&pageToken=${nextPageToken}`;
 
 export const CONTACT_INFO = [
   'Jessica: (631) 432-8897',

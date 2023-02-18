@@ -3,7 +3,7 @@ import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import React from 'react';
 import { SEO_DEFAULTS, SITE_URL } from 'utils/constants';

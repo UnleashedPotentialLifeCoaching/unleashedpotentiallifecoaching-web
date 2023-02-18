@@ -36,8 +36,8 @@ interface Props {
 }
 
 const podcastPageQuery = gql`
-  query Podcasts($skip: Int, $limit: Int) {
-    podcastsCollection(skip: $skip, limit: $limit) {
+  query Podcasts($limit: Int) {
+    podcastsCollection(limit: $limit) {
       total
       items {
         isAVideoLink
@@ -61,26 +61,29 @@ function useGetPodcasts(variables: any) {
 }
 
 const PodcastPage = ({ page, review }: Props) => {
-  const [skip, setSkip] = useState(0);
   const [variables, setVariables] = useState({
-    skip,
     limit: 4,
   });
+  const [disableBtn, setDisableBtn] = useState(false);
 
-  const { status, isLoading, isError, data, isPreviousData } =
-    useGetPodcasts(variables);
+  const { isLoading, data } = useGetPodcasts(variables);
 
   const handleAmountChange = () => {
-    if (skip === 0) {
-      setSkip(4);
+    if (data?.podcastsCollection?.total !== variables?.limit) {
+      let updateLimit = variables?.limit + 1;
+      setVariables({
+        limit: updateLimit,
+      });
+      console.log(updateLimit);
     } else {
-      setSkip(skip + 1);
+      setDisableBtn(true);
     }
-    setVariables({
-      skip: skip,
-      limit: skip + 2,
-    });
   };
+
+  console.log({
+    isLoading,
+    disableBtn,
+  });
 
   return (
     <FadeInContainer>
@@ -119,17 +122,9 @@ const PodcastPage = ({ page, review }: Props) => {
       <div className="flex flex-row justify-center w-full mb-8">
         <button
           onClick={() => handleAmountChange()}
-          disabled={
-            data?.podcastsCollection?.items.length ===
-            data?.podcastsCollection?.total
-          }
+          disabled={disableBtn || isLoading}
           className={` ${
-            Boolean(
-              data?.podcastsCollection?.items.length ===
-                data?.podcastsCollection?.total || isLoading
-            )
-              ? 'opacity-25'
-              : ''
+            Boolean(disableBtn || isLoading) ? 'opacity-25' : ''
           } mb-4 sm:mb-0 font-bold w-full sm:w-2/4 text-center py-3 rounded bg-forrest text-white text-2xl`}
         >
           Load More

@@ -5,7 +5,7 @@ import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
 import { BANNER_URL } from 'utils/constants';
 import Link from 'next/link';
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image';
 import { format } from 'date-fns';
 import {
   IBlogPostFields,
@@ -41,6 +41,7 @@ const BlogPage = ({ review, posts, page }: Props) => {
               href={`/post/${post?.slugText}`}
               key={JSON.stringify(post)}
               className="flex flex-col pb-12 border-b sm:flex-row"
+              passHref
             >
               <Image
                 src={post?.featuredImage?.url}

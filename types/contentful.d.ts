@@ -208,6 +208,37 @@ export interface IPage extends Entry<IPageFields> {
   };
 }
 
+export interface IPodcastsFields {
+  /** Title */
+  title?: string | undefined;
+
+  /** Excerpt */
+  excerpt?: string | undefined;
+
+  /** Link */
+  link?: string | undefined;
+
+  /** Is a video link */
+  isAVideoLink?: boolean | undefined;
+}
+
+export interface IPodcasts extends Entry<IPodcastsFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'podcasts';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IReviewFields {
   /** Name */
   name?: string | undefined;
@@ -312,6 +343,7 @@ export type CONTENT_TYPE =
   | 'coach'
   | 'homePage'
   | 'page'
+  | 'podcasts'
   | 'review'
   | 'servicePage'
   | 'simplePage';
