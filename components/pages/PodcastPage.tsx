@@ -8,7 +8,6 @@ import {
   NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL,
   NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
 } from 'utils/constants';
-import ButtonGroup from 'components/organisms/podcast/ButtonGroup';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { useQuery } from 'react-query';
 import { gql, GraphQLClient } from 'graphql-request';
@@ -78,6 +77,12 @@ const PodcastPage = ({ page, review }: Props) => {
       setDisableBtn(true);
     }
   };
+
+  useEffect(() => {
+    if (data?.podcastsCollection?.total < 4) {
+      setDisableBtn(true);
+    }
+  }, []);
 
   return (
     <FadeInContainer>

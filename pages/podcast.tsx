@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PodcastPage from 'components/pages/PodcastPage';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { IReviewFields, ISimplePageFields } from 'types/contentful';
+import { IReviewFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { organizeVideos } from 'utils/helpers';
 
 const featuredReview = `query reviewCollectionQuery {
   reviewCollection(

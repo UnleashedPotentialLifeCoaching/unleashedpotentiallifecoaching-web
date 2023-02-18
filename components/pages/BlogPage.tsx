@@ -18,7 +18,7 @@ import {
 } from 'types/contentful';
 import { useQuery } from 'react-query';
 import { gql, GraphQLClient } from 'graphql-request';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview')
@@ -44,6 +44,7 @@ const graphQLClient = new GraphQLClient(endpoint as string, {
 const blogPostsQuery = gql`
   query blogPostCollectionQuery($limit: Int) {
     blogPostCollection(order: publishDate_DESC, limit: $limit) {
+      total
       items {
         postTItle
         publishDate
@@ -99,6 +100,12 @@ const BlogPage = ({ review, page }: Props) => {
       setDisableBtn(true);
     }
   };
+
+  useEffect(() => {
+    if (data?.blogPostCollection?.total < 4) {
+      setDisableBtn(true);
+    }
+  }, []);
 
   return (
     <FadeInContainer>
@@ -198,6 +205,17 @@ const BlogPage = ({ review, page }: Props) => {
           )}
         </main>
       </Container>
+      <div className="flex flex-row justify-center w-full mb-8">
+        <button
+          onClick={() => handleAmountChange()}
+          disabled={disableBtn || isLoading}
+          className={` ${
+            Boolean(disableBtn || isLoading) ? 'opacity-25' : ''
+          } mb-4 sm:mb-0 font-bold w-full sm:w-2/4 text-center py-3 rounded bg-forrest text-white text-2xl`}
+        >
+          Load More
+        </button>
+      </div>
       <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
