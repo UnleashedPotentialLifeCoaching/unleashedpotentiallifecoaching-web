@@ -1,6 +1,6 @@
 import {
-  CONTENTFUL_GRAPHQL_API_URL,
-  CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
+  NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL,
+  NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
 } from 'utils/constants';
 
 export const headers = {
@@ -13,11 +13,11 @@ export const headers = {
 
 export async function fetchAPI(query: string, { variables }: any = {}) {
   try {
-    if (CONTENTFUL_GRAPHQL_API_URL) {
-      headers.Authorization = `Bearer ${CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN}`;
+    if (NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL) {
+      headers.Authorization = `Bearer ${NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN}`;
     }
 
-    const res = await fetch(CONTENTFUL_GRAPHQL_API_URL as string, {
+    const res = await fetch(NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL as string, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -27,6 +27,7 @@ export async function fetchAPI(query: string, { variables }: any = {}) {
     });
 
     const json = await res.json();
+
     return json;
   } catch (error) {
     console.error(error);

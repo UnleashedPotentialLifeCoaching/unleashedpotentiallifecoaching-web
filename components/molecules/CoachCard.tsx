@@ -14,7 +14,7 @@ const CoachCard = ({
 
   return (
     <div className="bg-white rounded p-4 flex flex-col md:mx-16 my-0 mb-20 xl:mx-4 2xl:mx-8 items-center hover:shadow-xl hover:scale-105 ease-in duration-200">
-      <Link href={coachUrl}>
+      <Link href={coachUrl} passHref>
         <ImageWrapper
           url={url}
           width={420}

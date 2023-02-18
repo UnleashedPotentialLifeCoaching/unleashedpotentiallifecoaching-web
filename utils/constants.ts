@@ -1,14 +1,9 @@
-export const REPOSITORY: string | unknown = process.env.PRISMIC_REPOSITORY_NAME;
-export const REF_API_URL: string = `https://${REPOSITORY}.cdn.prismic.io/api/v2`;
-export const GRAPHQL_API_URL: string = `https://${REPOSITORY}.cdn.prismic.io/graphql`;
-export const CONTENTFUL_GRAPHQL_API_URL: string | unknown =
-  process.env.CONTENTFUL_GRAPHQL_API;
-export const CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN: string | unknown =
-  process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN;
+export const NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL: string | unknown =
+  process.env.NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL;
+export const NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN:
+  | string
+  | unknown = process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN;
 
-export const API_TOKEN: string | unknown = process.env.PRISMIC_API_TOKEN;
-export const API_LOCALE: string | unknown =
-  process.env.PRISMIC_REPOSITORY_LOCALE;
 export const BOOLEAN_CHOICE = [
   {
     name: 'Yes',
@@ -113,13 +108,6 @@ export const SITE_URL =
   process.env.NODE_ENV === 'production'
     ? 'https://www.unleashedpotentiallifecoaching.com/'
     : 'http://localhost:3000';
-const YT_CHANNEL_BASE = `https://www.googleapis.com/youtube/v3/search?key=${process.env.NEXT_PUBLIC_YT_API_KEY}&channelId=${process.env.NEXT_PUBLIC_CHANNEL_ID}`;
-export const YT_CHANNEL_URL = `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=4`;
-export const YT_CHANNEL_URL_NEXT_PAGE = (
-  nextPageToken: string,
-  amount: string
-) =>
-  `${YT_CHANNEL_BASE}&part=snippet,id&order=date&maxResults=${amount}&pageToken=${nextPageToken}`;
 
 export const CONTACT_INFO = [
   'Jessica: (631) 432-8897',
