@@ -19,3 +19,8 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 - [Tailwind.css](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Twilio/Send Grid](https://www.twilio.com/sendgrid/email-api)
+
+## Upcoming Items
+
+- Build out bio to advertise Women Lead Podcast & article
+- Redo Blog Post page

@@ -1,14 +1,9 @@
-export const REPOSITORY: string | unknown = process.env.PRISMIC_REPOSITORY_NAME;
-export const REF_API_URL: string = `https://${REPOSITORY}.cdn.prismic.io/api/v2`;
-export const GRAPHQL_API_URL: string = `https://${REPOSITORY}.cdn.prismic.io/graphql`;
-export const CONTENTFUL_GRAPHQL_API_URL: string | unknown =
-  process.env.CONTENTFUL_GRAPHQL_API;
-export const CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN: string | unknown =
-  process.env.CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN;
+export const NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL: string | unknown =
+  process.env.NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL;
+export const NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN:
+  | string
+  | unknown = process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN;
 
-export const API_TOKEN: string | unknown = process.env.PRISMIC_API_TOKEN;
-export const API_LOCALE: string | unknown =
-  process.env.PRISMIC_REPOSITORY_LOCALE;
 export const BOOLEAN_CHOICE = [
   {
     name: 'Yes',
