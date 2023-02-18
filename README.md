@@ -23,4 +23,8 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 ## Upcoming Items
 
 - Build out bio to advertise Women Lead Podcast & article
-- Redo Blog Post page
+
+.5 set up the podcast models in contentful & update robot.txt to ignore ron and archiver site
+2 set up the podcast page to pull from the contentful podcasts
+1 set up the blog post page to pull from the contentful blogs with pagtination
+1 set up site with WomenLead content
