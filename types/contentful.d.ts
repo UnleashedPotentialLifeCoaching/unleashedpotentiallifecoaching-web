@@ -30,6 +30,9 @@ export interface IBlogPostFields {
 
   /** Post Content */
   postContent?: Document | undefined;
+
+  /** Outside Link */
+  outsideLink?: string | undefined;
 }
 
 export interface IBlogPost extends Entry<IBlogPostFields> {

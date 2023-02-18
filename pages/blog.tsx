@@ -1,16 +1,11 @@
-import {
-  IHomePageFields,
-  ICoachFields,
-  IReviewFields,
-  ISimplePageFields,
-  IBlogPostFields,
-} from 'types/contentful';
+import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import BlogPage from 'components/pages/BlogPage';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { fetchAPI } from 'utils/api';
 
 const blogPageQuery = `
@@ -25,33 +20,6 @@ const blogPageQuery = `
   }
 }
 `;
-
-const blogPostsQuery = `
-query blogPostCollectionQuery {
-  blogPostCollection {
-    items {
-      postTItle
-      publishDate
-      slugText
-      subTitle
-      author {
-        ...on Coach {
-          name
-          profileImage {
-            url
-            width
-            height
-          }
-        }
-      }
-      featuredImage {
-        url
-        width
-        height
-      }
-    }
-  }
-}`;
 
 const featuredReview = `query reviewCollectionQuery {
   reviewCollection(
@@ -68,32 +36,29 @@ const featuredReview = `query reviewCollectionQuery {
   }
 }`;
 
-interface Props {
-  page: ISimplePageFields;
-  review: IReviewFields;
-  posts: IBlogPostFields[];
-}
+const queryClient = new QueryClient();
 
 const Blog = ({
   page,
   review,
-  posts,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const blogPageProps = { page, review, posts };
-  return <BlogPage {...blogPageProps} />;
+  const blogPageProps = { page, review };
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <BlogPage {...blogPageProps} />
+    </QueryClientProvider>
+  );
 };
 
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const blogPageData = await fetchAPI(blogPageQuery, {});
-  const blogPostsData = await fetchAPI(blogPostsQuery, {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
   const page = blogPageData?.data?.simplePage as ISimplePageFields;
   const review = featuredReviewData?.data?.reviewCollection
     ?.items[0] as IReviewFields;
-  const posts = blogPostsData?.data?.blogPostCollection
-    ?.items as IBlogPostFields[];
 
   context.res.setHeader(
     'Cache-Control',
@@ -104,7 +69,6 @@ export const getServerSideProps: GetServerSideProps = async (
     props: {
       page,
       review,
-      posts,
     },
   };
 };
