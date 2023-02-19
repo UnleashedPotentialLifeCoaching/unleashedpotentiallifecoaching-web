@@ -86,7 +86,7 @@ const BlogPage = ({ review, page }: Props) => {
   const [variables, setVariables] = useState({
     limit: 4,
   });
-  const [disableBtn, setDisableBtn] = useState(false);
+  const [disableBtn, setDisableBtn] = useState(true);
 
   const { isLoading, data } = useGetPosts(variables);
 
@@ -102,10 +102,10 @@ const BlogPage = ({ review, page }: Props) => {
   };
 
   useEffect(() => {
-    if (data?.blogPostCollection?.total < 4) {
-      setDisableBtn(true);
+    if (data?.blogPostCollection?.total > 4) {
+      setDisableBtn(false);
     }
-  }, []);
+  }, [data?.blogPostCollection?.total]);
 
   return (
     <FadeInContainer>

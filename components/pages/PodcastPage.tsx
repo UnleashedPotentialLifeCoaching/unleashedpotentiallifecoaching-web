@@ -36,7 +36,7 @@ interface Props {
 
 const podcastPageQuery = gql`
   query Podcasts($limit: Int) {
-    podcastsCollection(limit: $limit) {
+    podcastsCollection(order: published_DESC, limit: $limit) {
       total
       items {
         isAVideoLink
@@ -79,10 +79,10 @@ const PodcastPage = ({ page, review }: Props) => {
   };
 
   useEffect(() => {
-    if (data?.podcastsCollection?.total < 4) {
-      setDisableBtn(true);
+    if (data?.podcastsCollection?.total > 4) {
+      setDisableBtn(false);
     }
-  }, []);
+  }, [data?.podcastsCollection?.total]);
 
   return (
     <FadeInContainer>
