@@ -68,6 +68,7 @@ const PodcastPage = ({ page, review }: Props) => {
   const { isLoading, data } = useGetPodcasts(variables);
 
   const handleAmountChange = () => {
+    // @ts-ignore
     if (data?.podcastsCollection?.total !== variables?.limit) {
       let updateLimit = variables?.limit + 1;
       setVariables({
@@ -79,9 +80,11 @@ const PodcastPage = ({ page, review }: Props) => {
   };
 
   useEffect(() => {
+    // @ts-ignore
     if (data?.podcastsCollection?.total > 4) {
       setDisableBtn(false);
     }
+    // @ts-ignore
   }, [data?.podcastsCollection?.total]);
 
   return (
@@ -96,26 +99,26 @@ const PodcastPage = ({ page, review }: Props) => {
       />
       <Container>
         <main className="flex flex-col items-center justify-center">
-          {data?.podcastsCollection?.items &&
-            data?.podcastsCollection?.items.map((podcast: any) =>
-              podcast?.isAVideoLink ? (
-                <Video
-                  url={podcast?.link}
-                  title={podcast?.title}
-                  description={podcast?.excerpt}
-                  key={podcast?.title}
-                />
-              ) : (
-                <a
-                  key={podcast?.title}
-                  href={podcast?.link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {podcast?.title}
-                </a>
-              )
-            )}
+          {/** @ts-ignore */}
+          {data?.podcastsCollection?.items.map((podcast: any) =>
+            podcast?.isAVideoLink ? (
+              <Video
+                url={podcast?.link}
+                title={podcast?.title}
+                description={podcast?.excerpt}
+                key={podcast?.title}
+              />
+            ) : (
+              <a
+                key={podcast?.title}
+                href={podcast?.link}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {podcast?.title}
+              </a>
+            )
+          )}
         </main>
       </Container>
       <div className="flex flex-row justify-center w-full mb-8">

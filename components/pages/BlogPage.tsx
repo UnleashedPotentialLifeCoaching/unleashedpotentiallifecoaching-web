@@ -91,7 +91,8 @@ const BlogPage = ({ review, page }: Props) => {
   const { isLoading, data } = useGetPosts(variables);
 
   const handleAmountChange = () => {
-    if (data?.blogPostCollection?.total !== variables?.limit) {
+    // @ts-ignore
+    if (data.blogPostCollection?.total !== variables?.limit) {
       let updateLimit = variables?.limit + 1;
       setVariables({
         limit: updateLimit,
@@ -102,9 +103,11 @@ const BlogPage = ({ review, page }: Props) => {
   };
 
   useEffect(() => {
+    // @ts-ignore
     if (data?.blogPostCollection?.total > 4) {
       setDisableBtn(false);
     }
+    // @ts-ignore
   }, [data?.blogPostCollection?.total]);
 
   return (
@@ -119,6 +122,7 @@ const BlogPage = ({ review, page }: Props) => {
       />
       <Container>
         <main className="flex flex-col items-center justify-center">
+          {/** @ts-ignore */}
           {data?.blogPostCollection?.items.map((post: IBlogPostFields) =>
             post?.slugText ? (
               <Link
