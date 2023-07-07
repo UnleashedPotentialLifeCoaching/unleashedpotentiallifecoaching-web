@@ -124,7 +124,7 @@ const BlogPage = ({ review, page }: Props) => {
               <Link
                 href={`/post/${post?.slugText}`}
                 key={JSON.stringify(post)}
-                className="flex flex-col pb-12 border-b sm:flex-row"
+                className="flex flex-col pb-12 my-8 border-b sm:flex-row"
                 passHref
               >
                 <Image
@@ -164,7 +164,7 @@ const BlogPage = ({ review, page }: Props) => {
               <a
                 href={post?.outsideLink}
                 key={JSON.stringify(post)}
-                className="flex flex-col pb-12 border-b sm:flex-row"
+                className="flex flex-col pb-12 my-8 border-b sm:flex-row"
                 target="_blank"
                 rel="noreferrer"
               >

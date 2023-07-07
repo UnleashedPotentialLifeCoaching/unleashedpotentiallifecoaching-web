@@ -223,6 +223,9 @@ export interface IPodcastsFields {
 
   /** Is a video link */
   isAVideoLink?: boolean | undefined;
+
+  /** Published */
+  published?: string | undefined;
 }
 
 export interface IPodcasts extends Entry<IPodcastsFields> {
@@ -350,6 +353,16 @@ export type CONTENT_TYPE =
   | 'review'
   | 'servicePage'
   | 'simplePage';
+
+export type IEntry =
+  | IBlogPost
+  | ICoach
+  | IHomePage
+  | IPage
+  | IPodcasts
+  | IReview
+  | IServicePage
+  | ISimplePage;
 
 export type LOCALE_CODE = 'en-US';
 
