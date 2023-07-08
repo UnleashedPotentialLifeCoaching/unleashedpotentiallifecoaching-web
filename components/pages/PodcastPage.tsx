@@ -48,11 +48,26 @@ const podcastPageQuery = gql`
   }
 `;
 
+interface PodCasts {
+  podcastsCollection: {
+    total: number;
+    items: {
+      isVideoLink: boolean;
+      title: string;
+      excerpt: string;
+      link: string;
+    }[];
+  };
+}
+
 function useGetPodcasts(variables: any) {
-  return useQuery(
+  return useQuery<PodCasts>(
     ['podcasts', variables],
     async () => {
-      const data = await graphQLClient.request(podcastPageQuery, variables);
+      const data = await graphQLClient.request<PodCasts>(
+        podcastPageQuery,
+        variables
+      );
       return data;
     },
     { keepPreviousData: true }
@@ -68,7 +83,6 @@ const PodcastPage = ({ page, review }: Props) => {
   const { isLoading, data } = useGetPodcasts(variables);
 
   const handleAmountChange = () => {
-    // @ts-ignore
     if (data?.podcastsCollection?.total !== variables?.limit) {
       let updateLimit = variables?.limit + 1;
       setVariables({

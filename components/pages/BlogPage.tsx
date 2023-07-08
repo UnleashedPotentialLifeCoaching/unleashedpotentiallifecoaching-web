@@ -71,11 +71,33 @@ const blogPostsQuery = gql`
   }
 `;
 
+interface BlogPosts {
+  blogPostCollection: {
+    total: number;
+    items: {
+      postTitle: string;
+      publishDate: string;
+      slugText: string;
+      outsideLink: string;
+      subTitle: string;
+      author: any;
+      featuredImage: {
+        url: string;
+        width: string;
+        height: string;
+      };
+    }[];
+  };
+}
+
 function useGetPosts(variables: any) {
-  return useQuery(
+  return useQuery<BlogPosts>(
     ['posts', variables],
     async () => {
-      const data = await graphQLClient.request(blogPostsQuery, variables);
+      const data = await graphQLClient.request<BlogPosts>(
+        blogPostsQuery,
+        variables
+      );
       return data;
     },
     { keepPreviousData: true }
@@ -91,24 +113,27 @@ const BlogPage = ({ review, page }: Props) => {
   const { isLoading, data } = useGetPosts(variables);
 
   const handleAmountChange = () => {
-    // @ts-ignore
-    if (data.blogPostCollection?.total !== variables?.limit) {
-      let updateLimit = variables?.limit + 1;
-      setVariables({
-        limit: updateLimit,
-      });
-    } else {
-      setDisableBtn(true);
+    try {
+      if (data?.blogPostCollection.total !== variables?.limit) {
+        let updateLimit = variables?.limit + 1;
+        setVariables({
+          limit: updateLimit,
+        });
+      } else {
+        setDisableBtn(true);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
   useEffect(() => {
-    // @ts-ignore
-    if (data?.blogPostCollection?.total > 4) {
-      setDisableBtn(false);
+    if (data) {
+      if (data?.blogPostCollection?.total > 4) {
+        setDisableBtn(false);
+      }
     }
-    // @ts-ignore
-  }, [data?.blogPostCollection?.total]);
+  }, [data]);
 
   return (
     <FadeInContainer>
