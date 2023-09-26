@@ -6,15 +6,11 @@ import PageBanner from 'components/shared/PageBanner';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import { SEO_DEFAULTS } from 'utils/constants';
 
-const FeaturedReview = dynamic(
-  () => import('components/shared/FeaturedReview')
-);
-
 const ReviewBlock = dynamic(
-  () => import('components/organisms/reviews/ReviewBlock')
+  () => import('components/organisms/reviews/ReviewBlock'),
 );
 const ReviewForm = dynamic(
-  () => import('components/organisms/reviews/ReviewForm')
+  () => import('components/organisms/reviews/ReviewForm'),
 );
 
 interface Props {
@@ -54,7 +50,6 @@ const ReviewsPage = ({ review, page, allReviews }: Props) => {
           </div>
         </Container>
       </main>
-      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };

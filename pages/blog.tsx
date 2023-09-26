@@ -7,42 +7,14 @@ import {
 } from 'next';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { fetchAPI } from 'utils/api';
-
-const blogPageQuery = `
-  query simplePageEntryQuery {
-  simplePage(id: "6zowWUPrZmyZ0HjQXBnoye") {
-    pageTitle
-    seoTitle
-    seoMetaDescription
-    banner {
-      url
-    }
-  }
-}
-`;
-
-const featuredReview = `query reviewCollectionQuery {
-  reviewCollection(
-    limit: 1,
-    where:{
-    featuredReview: true
-  }) {
-    items {
-      name
-      quote{
-        json
-      }
-    }
-  }
-}`;
+import { blogPageQuery, featuredReview } from 'utils/queries';
 
 const queryClient = new QueryClient();
 
 const Blog = ({
   page,
-  review,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const blogPageProps = { page, review };
+  const blogPageProps = { page };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -52,7 +24,7 @@ const Blog = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
 ) => {
   const blogPageData = await fetchAPI(blogPageQuery, {});
   const featuredReviewData = await fetchAPI(featuredReview, {});
@@ -62,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59',
   );
 
   return {

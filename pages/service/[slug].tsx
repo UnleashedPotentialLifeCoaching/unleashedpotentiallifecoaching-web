@@ -1,9 +1,4 @@
-import {
-  ICoachFields,
-  IReviewFields,
-  IPageFields,
-  IServicePageFields,
-} from 'types/contentful';
+import { IServicePageFields } from 'types/contentful';
 import ServicesPage from 'components/pages/ServicesPage';
 import {
   GetServerSideProps,
@@ -11,91 +6,25 @@ import {
   InferGetServerSidePropsType,
 } from 'next';
 import { fetchAPI } from 'utils/api';
-
-const servicePageQuery = (slug: string) => `
-  query servicePageCollectionQuery {
-  servicePageCollection(
-    where:{
-    slugText:"${slug}"
-  }, limit: 1) {
-    items {
-        pageTitle
-        seoTitle
-        seoMetaDescription
-        slugText
-        banner{
-          url
-          width
-          height
-        }
-        coach{
-        ... on Coach {
-            name
-            appearanceOrder
-            bookTimePhoto {
-                url
-                width
-                height
-        } 
-      }
-    }
-    pageContent {
-      json,
-      links {
-        assets {
-          block {
-             sys {
-                  id
-                }
-                url
-                title
-                width
-                height
-                description
-                contentType 
-          }
-        }
-      }
-    }
-  }
-    }
-  }
-
-`;
-
-const featuredReview = `query reviewCollectionQuery {
-  reviewCollection(where:{
-    featuredReview: true
-  }) {
-    items {
-      name
-      quote{
-        json
-      }
-    }
-  }
-}`;
+import { servicePageQuery } from 'utils/queries';
 
 const Service = ({
   page,
   coaches,
-  review,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const servicesPageProps = {
     page,
     coaches,
-    review,
     pageContent: page?.pageContent,
   };
   return <ServicesPage {...servicesPageProps} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
 ) => {
   const slug = context?.params?.slug as string;
   const servicesPageData = await fetchAPI(servicePageQuery(slug), {});
-  const featuredReviewData = await fetchAPI(featuredReview, {});
 
   if (servicesPageData?.servicePageCollection?.items.length <= 0) {
     return {
@@ -105,21 +34,18 @@ export const getServerSideProps: GetServerSideProps = async (
 
   //   const page = servicesPageData?.data?.page as IPageFields;
   const page = servicesPageData?.data.servicePageCollection?.items?.find(
-    ({ slugText }: { slugText: string }) => slugText === slug
+    ({ slugText }: { slugText: string }) => slugText === slug,
   ) as IServicePageFields;
-  const review = featuredReviewData?.data?.reviewCollection
-    ?.items[0] as IReviewFields;
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59',
   );
 
   return {
     props: {
       page,
       coaches: page?.coach ? [page?.coach] : [],
-      review,
     },
   };
 };

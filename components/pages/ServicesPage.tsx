@@ -1,24 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import styled from 'styled-components';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { BLOCKS } from '@contentful/rich-text-types';
 import ServiceCard from 'components/molecules/ServiceCard';
 import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import ContentWrapper from 'layouts/ContentWrapper';
 import FadeInContainer from 'layouts/FadeInContainer';
-import dynamic from 'next/dynamic';
 import React from 'react';
-import { ICoachFields, IReviewFields, IPageFields } from 'types/contentful';
+import { ICoachFields, IPageFields } from 'types/contentful';
 import { urlify } from 'utils/helpers';
 
-const FeaturedReview = dynamic(
-  () => import('components/shared/FeaturedReview')
-);
-
 interface Props {
-  review: IReviewFields;
   coaches: ICoachFields[];
   page: IPageFields;
   pageContent: any;
@@ -103,7 +97,7 @@ function renderOptions(links: any) {
   };
 }
 
-const ServicesPage = ({ page, pageContent, coaches, review }: Props) => {
+const ServicesPage = ({ page, pageContent, coaches }: Props) => {
   return (
     <FadeInContainer>
       <SiteHead
@@ -118,7 +112,7 @@ const ServicesPage = ({ page, pageContent, coaches, review }: Props) => {
         <ContentWrapper>
           {documentToReactComponents(
             pageContent?.json,
-            renderOptions(pageContent?.links)
+            renderOptions(pageContent?.links),
           )}
         </ContentWrapper>
         <br />
@@ -134,7 +128,7 @@ const ServicesPage = ({ page, pageContent, coaches, review }: Props) => {
             .sort((a, b) =>
               (a.appearanceOrder as number) > (b.appearanceOrder as number)
                 ? 1
-                : -1
+                : -1,
             )
             .map((coach: ICoachFields) => (
               <ServiceCard
@@ -145,7 +139,6 @@ const ServicesPage = ({ page, pageContent, coaches, review }: Props) => {
             ))}
         </div>
       </Container>
-      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };

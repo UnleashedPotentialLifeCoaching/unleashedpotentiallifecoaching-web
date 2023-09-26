@@ -6,18 +6,13 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import { ICoachFields, IReviewFields } from 'types/contentful';
 import { SEO_DEFAULTS } from 'utils/constants';
-
-const FeaturedReview = dynamic(
-  () => import('components/shared/FeaturedReview')
-);
 const Biography = dynamic(() => import('components/organisms/coach/Biography'));
 
 interface Props {
   coach: ICoachFields;
-  review: IReviewFields;
 }
 
-const CoachPage = ({ coach, review }: Props) => {
+const CoachPage = ({ coach }: Props) => {
   const {
     name,
     profileImage,
@@ -44,7 +39,6 @@ const CoachPage = ({ coach, review }: Props) => {
           <Biography biography={biography} />
         </Container>
       </main>
-      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };

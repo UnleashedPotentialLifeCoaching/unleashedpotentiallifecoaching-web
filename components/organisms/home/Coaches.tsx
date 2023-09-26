@@ -13,7 +13,7 @@ const Coaches = ({ coaches }: { coaches: ICoachFields[] }) => {
           .sort((a, b) =>
             (a.appearanceOrder as number) > (b.appearanceOrder as number)
               ? 1
-              : -1
+              : -1,
           )
           .map((coach) => (
             <CoachCard

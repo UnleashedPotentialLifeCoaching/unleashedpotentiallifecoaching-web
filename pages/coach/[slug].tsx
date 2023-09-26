@@ -9,52 +9,14 @@ import {
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
-import { ICoachFields, IReviewFields } from 'types/contentful';
+import { ICoachFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
 import { urlify } from 'utils/helpers';
-
-const coachesQuery = `
-query coachCollectionQuery {
-  coachCollection {
-    items {
-      name
-      biography {
-        json
-      }
-      profileImage {
-        url
-        width
-        height
-      }
-      welcomeMessage {
-        json
-      }
-  	  seoTitle
-      seoMetaDescription
-      
-    }
-  }
-}`;
-
-const featuredReview = `query reviewCollectionQuery {
-  reviewCollection(
-    limit: 1,
-    where:{
-    featuredReview: true
-  }) {
-    items {
-      name
-      quote{
-        json
-      }
-    }
-  }
-}`;
+import { coachQuery } from 'utils/queries';
 
 const CoachProfile = ({
   coach,
   coaches,
-  review,
   slug,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
@@ -69,21 +31,20 @@ const CoachProfile = ({
     return <ErrorPage statusCode={404} />;
   }
 
-  return <CoachPage coach={coach} review={review} />;
+  return <CoachPage coach={coach} />;
 
   return null;
 };
 
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
 ) => {
   const slug = context?.params?.slug;
-  const featuredReviewData = await fetchAPI(featuredReview, {});
-  const coachesData = await fetchAPI(coachesQuery, {});
+  const coachesData = await fetchAPI(coachQuery, {});
   const coaches = coachesData?.data?.coachCollection.items as ICoachFields[];
 
   const coach = coaches?.find(
-    (coach) => urlify(coach?.name as string) === slug
+    (coach) => urlify(coach?.name as string) === slug,
   ) as ICoachFields;
 
   if (!coach) {
@@ -92,19 +53,15 @@ export const getServerSideProps: GetServerSideProps = async (
     };
   }
 
-  const review = featuredReviewData?.data?.reviewCollection
-    ?.items[0] as IReviewFields;
-
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59',
   );
 
   return {
     props: {
       coach,
       coaches,
-      review,
       slug,
     },
   };

@@ -3,73 +3,19 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import Container from 'layouts/Container';
 import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
-import {
-  BANNER_URL,
-  NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL,
-  NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
-} from 'utils/constants';
+import { BANNER_URL } from 'utils/constants';
 import Link from 'next/link';
 import Image from 'next/legacy/image';
 import { format } from 'date-fns';
-import {
-  IBlogPostFields,
-  IReviewFields,
-  ISimplePageFields,
-} from 'types/contentful';
+import { IBlogPostFields, ISimplePageFields } from 'types/contentful';
 import { useQuery } from 'react-query';
-import { gql, GraphQLClient } from 'graphql-request';
 import { useEffect, useState } from 'react';
-
-const FeaturedReview = dynamic(
-  () => import('components/shared/FeaturedReview')
-);
+import { fetchAPI } from 'utils/api';
+import { blogPostsQuery } from 'utils/queries';
 
 interface Props {
-  review: IReviewFields;
   page: ISimplePageFields;
 }
-
-const endpoint = NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL;
-
-const graphQLClient = new GraphQLClient(endpoint as string, {
-  headers: {
-    Authorization: `Bearer ${NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN}`,
-    'Content-Type': 'application/json',
-    'User-Agent':
-      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36',
-    Accept: 'application/json; charset=UTF-8',
-  },
-});
-
-const blogPostsQuery = gql`
-  query blogPostCollectionQuery($limit: Int) {
-    blogPostCollection(order: publishDate_DESC, limit: $limit) {
-      total
-      items {
-        postTItle
-        publishDate
-        slugText
-        outsideLink
-        subTitle
-        author {
-          ... on Coach {
-            name
-            profileImage {
-              url
-              width
-              height
-            }
-          }
-        }
-        featuredImage {
-          url
-          width
-          height
-        }
-      }
-    }
-  }
-`;
 
 interface BlogPosts {
   blogPostCollection: {
@@ -94,17 +40,14 @@ function useGetPosts(variables: any) {
   return useQuery<BlogPosts>(
     ['posts', variables],
     async () => {
-      const data = await graphQLClient.request<BlogPosts>(
-        blogPostsQuery,
-        variables
-      );
-      return data;
+      const request = await fetchAPI(blogPostsQuery, variables);
+      return request?.data;
     },
-    { keepPreviousData: true }
+    { keepPreviousData: true },
   );
 }
 
-const BlogPage = ({ review, page }: Props) => {
+const BlogPage = ({ page }: Props) => {
   const [variables, setVariables] = useState({
     limit: 4,
   });
@@ -171,7 +114,7 @@ const BlogPage = ({ review, page }: Props) => {
                     <span className="mr-3 text-base text-stone-500">
                       {format(
                         new Date(post?.publishDate as string),
-                        'MMMM dd, yyyy'
+                        'MMMM dd, yyyy',
                       )}
                     </span>
                     <span className="mr-1 font-bold leading-snug text-stone-400">
@@ -212,7 +155,7 @@ const BlogPage = ({ review, page }: Props) => {
                     <span className="mr-3 text-base text-stone-500">
                       {format(
                         new Date(post?.publishDate as string),
-                        'MMMM dd, yyyy'
+                        'MMMM dd, yyyy',
                       )}
                     </span>
                     <span className="mr-1 font-bold leading-snug text-stone-400">
@@ -230,7 +173,7 @@ const BlogPage = ({ review, page }: Props) => {
                   </button>
                 </div>
               </a>
-            )
+            ),
           )}
         </main>
       </Container>
@@ -245,7 +188,6 @@ const BlogPage = ({ review, page }: Props) => {
           Load More
         </button>
       </div>
-      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };

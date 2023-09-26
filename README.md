@@ -19,3 +19,10 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 - [Tailwind.css](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Twilio/Send Grid](https://www.twilio.com/sendgrid/email-api)
+
+## Todos
+
+- Create a highlight media section in bio
+- Updated outdated modules/ code cleanup - 7:30 - 8:30PM (09/26)
+- Create a Interview page to details on the recent interview
+- Move disclaimer content to contentful

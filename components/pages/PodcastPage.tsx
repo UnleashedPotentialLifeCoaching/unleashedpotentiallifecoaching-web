@@ -3,50 +3,17 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import Container from 'layouts/Container';
 import PageBanner from 'components/shared/PageBanner';
 import SiteHead from 'components/shared/SiteHead';
-import {
-  BANNER_URL,
-  NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL,
-  NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
-} from 'utils/constants';
-import { IReviewFields, ISimplePageFields } from 'types/contentful';
+import { BANNER_URL } from 'utils/constants';
+import { ISimplePageFields } from 'types/contentful';
 import { useQuery } from 'react-query';
-import { gql, GraphQLClient } from 'graphql-request';
 import { useEffect, useState } from 'react';
+import { fetchAPI } from 'utils/api';
+import { podcastPageQuery } from 'utils/queries';
 const Video = dynamic(() => import('components/organisms/podcast/Video'));
-const FeaturedReview = dynamic(
-  () => import('components/shared/FeaturedReview')
-);
-
-const endpoint = NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL;
-
-const graphQLClient = new GraphQLClient(endpoint as string, {
-  headers: {
-    Authorization: `Bearer ${NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN}`,
-    'Content-Type': 'application/json',
-    'User-Agent':
-      'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36',
-    Accept: 'application/json; charset=UTF-8',
-  },
-});
 
 interface Props {
   page: ISimplePageFields;
-  review: IReviewFields;
 }
-
-const podcastPageQuery = gql`
-  query Podcasts($limit: Int) {
-    podcastsCollection(order: published_DESC, limit: $limit) {
-      total
-      items {
-        isAVideoLink
-        title
-        excerpt
-        link
-      }
-    }
-  }
-`;
 
 interface PodCasts {
   podcastsCollection: {
@@ -64,17 +31,14 @@ function useGetPodcasts(variables: any) {
   return useQuery<PodCasts>(
     ['podcasts', variables],
     async () => {
-      const data = await graphQLClient.request<PodCasts>(
-        podcastPageQuery,
-        variables
-      );
-      return data;
+      const request = await fetchAPI(podcastPageQuery, variables);
+      return request?.data;
     },
-    { keepPreviousData: true }
+    { keepPreviousData: true },
   );
 }
 
-const PodcastPage = ({ page, review }: Props) => {
+const PodcastPage = ({ page }: Props) => {
   const [variables, setVariables] = useState({
     limit: 4,
   });
@@ -131,7 +95,7 @@ const PodcastPage = ({ page, review }: Props) => {
               >
                 {podcast?.title}
               </a>
-            )
+            ),
           )}
         </main>
       </Container>
@@ -146,7 +110,6 @@ const PodcastPage = ({ page, review }: Props) => {
           Load More
         </button>
       </div>
-      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };

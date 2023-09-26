@@ -1,7 +1,6 @@
 import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
-import dynamic from 'next/dynamic';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { SEO_DEFAULTS } from 'utils/constants';
@@ -12,17 +11,12 @@ import { IBlogPostFields, IReviewFields } from 'types/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { useRouter } from 'next/router';
 
-const FeaturedReview = dynamic(
-  () => import('components/shared/FeaturedReview')
-);
-
 interface Props {
   post: IBlogPostFields;
-  review: IReviewFields;
   postContent: any;
 }
 
-const PostPage = ({ post, review, postContent }: Props) => {
+const PostPage = ({ post, postContent }: Props) => {
   const router = useRouter();
   return (
     <FadeInContainer>
@@ -47,7 +41,7 @@ const PostPage = ({ post, review, postContent }: Props) => {
                   <span className="mr-3 text-base text-stone-500">
                     {format(
                       new Date(post?.publishDate as string),
-                      'LLLL M, yyyy'
+                      'LLLL M, yyyy',
                     )}
                   </span>
                   <span className="mr-1 font-bold leading-snug text-stone-400">
@@ -59,7 +53,7 @@ const PostPage = ({ post, review, postContent }: Props) => {
                 </p>
               </div>
               {router.asPath.includes(
-                'work-with-victims-of-domestic-violence'
+                'work-with-victims-of-domestic-violence',
               ) ? (
                 <>
                   <div
@@ -148,7 +142,6 @@ const PostPage = ({ post, review, postContent }: Props) => {
           </div>
         </Container>
       </main>
-      <FeaturedReview name={review?.name} quote={review?.quote} />
     </FadeInContainer>
   );
 };

@@ -5,46 +5,9 @@ import {
   InferGetServerSidePropsType,
 } from 'next';
 import React from 'react';
-import { IReviewFields, ISimplePageFields } from 'types/contentful';
+import { IReviewFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-
-const reviewsQuery = `
-query reviewCollectionQuery {
-  reviewCollection {
-    items {
-      name
-      quote {
-        json
-      }
-    }
-  }
-}`;
-
-const featuredReview = `query reviewCollectionQuery {
-  reviewCollection(
-    limit: 1,
-    where:{
-    featuredReview: true
-  }) {
-    items {
-      name
-      quote{
-        json
-      }
-    }
-  }
-}`;
-
-const reviewPageQuery = `query simplePageEntryQuery {
-  simplePage(id: "7M8IWPzBF60jrl0SiHgUsW") {
-    pageTitle
-    seoTitle
-    seoMetaDescription
-    banner {
-      url
-    }
-  }
-}`;
+import { reviewPageQuery, reviewsQuery } from 'utils/queries';
 
 const Reviews = ({
   review,
@@ -56,27 +19,24 @@ const Reviews = ({
 };
 
 export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
 ) => {
   const reviewsData = await fetchAPI(reviewsQuery, {});
-  const featuredReviewData = await fetchAPI(featuredReview, {});
   const reviewPageData = await fetchAPI(reviewPageQuery, {});
 
   const allReviews = reviewsData?.data?.reviewCollection
     ?.items as IReviewFields[];
-  const review = featuredReviewData?.data?.reviewCollection
-    ?.items[0] as IReviewFields;
+
   const page = reviewPageData?.data?.simplePage;
 
   context.res.setHeader(
     'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59'
+    'public, s-maxage=300, stale-while-revalidate=59',
   );
 
   return {
     props: {
       page,
-      review,
       allReviews,
     },
   };

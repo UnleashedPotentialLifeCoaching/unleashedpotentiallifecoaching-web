@@ -1,29 +1,48 @@
 import styled from 'styled-components';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { fetchAPI } from 'utils/api';
+import { featuredReview } from 'utils/queries';
+import { useQuery } from '@tanstack/react-query';
+import { IReviewFields } from 'types/contentful';
 
-const FeaturedReview = ({
-  name,
-  quote,
-}: {
-  name: string | undefined;
-  quote: any;
-}) => (
-  <div className="bg-forrest py-12 lg:mb-12">
-    {name && quote && (
-      <>
+const useGetReviews = () => {
+  return useQuery<IReviewFields[]>(
+    ['reviews'],
+    async () => {
+      const request = await fetchAPI(featuredReview, {});
+      console.log('request', request?.data?.reviewCollection?.items);
+      return request?.data?.reviewCollection?.items;
+    },
+    { keepPreviousData: true },
+  );
+};
+
+const FeaturedReview = () => {
+  const { isLoading, isError, data } = useGetReviews();
+
+  if (isLoading || isError) {
+    return null;
+  }
+
+  if (data && data.length > 0) {
+    const message = data?.[0]?.quote;
+    return (
+      <div className="bg-forrest py-12 lg:mb-12">
         <p className="text-white font-serif italic font-bold text-center text-5xl mb-12">
           Client Review
         </p>
         <div className="px-12 py-8 lg:py-0 lg:px-48">
-          <Message>{documentToReactComponents(quote?.json)}</Message>
+          <Message>{documentToReactComponents((message as any).json)}</Message>
           <Name id="contact">
-            - <p>{name}</p>
+            - <p>{data?.[0]?.name}</p>
           </Name>
         </div>
-      </>
-    )}
-  </div>
-);
+      </div>
+    );
+  }
+
+  return null;
+};
 
 const Message = styled.span`
   p {

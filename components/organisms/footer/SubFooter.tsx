@@ -41,7 +41,7 @@ const SubFooter = () => {
             >
               {label}
             </a>
-          )
+          ),
         )}
       </ul>
     </div>

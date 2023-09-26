@@ -10,6 +10,6 @@ module.exports = function () {
   return contentfulClient
     .getSpace(process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID)
     .then((space) =>
-      space.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT)
+      space.getEnvironment(process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT),
     );
 };

@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import FadeInContainer from 'layouts/FadeInContainer';
 import SiteHead from 'components/shared/SiteHead';
 import HomeBanner from 'components/organisms/home/Banner';
@@ -8,17 +7,12 @@ import Coaches from 'components/organisms/home/Coaches';
 import Container from 'layouts/Container';
 import { ICoachFields, IHomePageFields, IReviewFields } from 'types/contentful';
 
-const FeaturedReview = dynamic(
-  () => import('components/shared/FeaturedReview')
-);
-
 interface Props {
   page: IHomePageFields;
   coaches: ICoachFields[];
-  review: IReviewFields;
 }
 
-const HomePage = ({ page, coaches, review }: Props) => (
+const HomePage = ({ page, coaches }: Props) => (
   <FadeInContainer>
     <SiteHead
       title={page?.seoTitle}
@@ -64,17 +58,7 @@ const HomePage = ({ page, coaches, review }: Props) => (
           ]}
         />
       </Container>
-      <FeaturedReview name={review?.name} quote={review?.quote} />
     </main>
-    {/* <main>
-      
-
-      
-      <Container>
-        <WidgetWrapper widgets={blockWidgets} />
-      </Container>
-      <FeaturedReview {...featuredReview} />
-    </main> */}
   </FadeInContainer>
 );
 

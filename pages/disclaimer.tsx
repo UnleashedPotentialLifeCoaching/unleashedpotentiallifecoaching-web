@@ -8,7 +8,7 @@ const Disclaimer = () => (
       title="Disclaimer"
       metaDescription={`Disclaimer notice for user of ${SITE_URL.replace(
         'https://',
-        ''
+        '',
       )}`}
     />
     <h1 className="text-3xl mb-5">Disclaimer</h1>

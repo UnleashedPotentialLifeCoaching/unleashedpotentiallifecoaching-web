@@ -43,7 +43,7 @@ const BookTimeForm = ({ setOpen }: Props) => {
           coaches.map((coach: ICoachFields) => ({
             name: coach?.name as string,
             checked: false,
-          }))
+          })),
         );
       }
     }
