@@ -1,36 +1,12 @@
 import Container from 'layouts/Container';
 import { ISimplePageFields } from 'types/contentful';
-import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
-import { fetchAPI } from 'utils/api';
+import { useGetPosts } from 'utils/api';
 import { interviewCollectionQuery } from 'utils/queries';
-import PostsLayout from 'layouts/PostsLayout';
+import PostsLayout from 'layouts/SimplePageLayout';
 
 interface Props {
   page: ISimplePageFields;
-}
-
-interface PodCasts {
-  interviewsCollection: {
-    total: number;
-    items: {
-      isVideoLink: boolean;
-      title: string;
-      excerpt: string;
-      link: string;
-    }[];
-  };
-}
-
-function useGetPodcasts(variables: any) {
-  return useQuery<PodCasts>(
-    ['interviews', variables],
-    async () => {
-      const request = await fetchAPI(interviewCollectionQuery, variables);
-      return request?.data;
-    },
-    { keepPreviousData: true },
-  );
 }
 
 const InterviewsPage = ({ page }: Props) => {
@@ -39,7 +15,11 @@ const InterviewsPage = ({ page }: Props) => {
   });
   const [disableBtn, setDisableBtn] = useState(false);
 
-  const { isLoading, data } = useGetPodcasts(variables);
+  const { isLoading, data } = useGetPosts(
+    'interviews',
+    interviewCollectionQuery,
+    variables,
+  );
 
   const handleAmountChange = () => {
     if (data?.interviewsCollection?.total !== variables?.limit) {

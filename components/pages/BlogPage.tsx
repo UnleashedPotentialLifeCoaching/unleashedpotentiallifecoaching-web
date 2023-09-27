@@ -1,51 +1,15 @@
-import dynamic from 'next/dynamic';
-import FadeInContainer from 'layouts/FadeInContainer';
 import Container from 'layouts/Container';
-import PageBanner from 'components/shared/PageBanner';
-import SiteHead from 'components/shared/SiteHead';
-import { BANNER_URL } from 'utils/constants';
 import Link from 'next/link';
 import Image from 'next/legacy/image';
 import { format } from 'date-fns';
 import { IBlogPostFields, ISimplePageFields } from 'types/contentful';
-import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
-import { fetchAPI } from 'utils/api';
+import { useGetPosts } from 'utils/api';
+import PostsLayout from 'layouts/SimplePageLayout';
 import { blogPostsQuery } from 'utils/queries';
-import PostsLayout from 'layouts/PostsLayout';
 
 interface Props {
   page: ISimplePageFields;
-}
-
-interface BlogPosts {
-  blogPostCollection: {
-    total: number;
-    items: {
-      postTitle: string;
-      publishDate: string;
-      slugText: string;
-      outsideLink: string;
-      subTitle: string;
-      author: any;
-      featuredImage: {
-        url: string;
-        width: string;
-        height: string;
-      };
-    }[];
-  };
-}
-
-function useGetPosts(variables: any) {
-  return useQuery<BlogPosts>(
-    ['posts', variables],
-    async () => {
-      const request = await fetchAPI(blogPostsQuery, variables);
-      return request?.data;
-    },
-    { keepPreviousData: true },
-  );
 }
 
 const BlogPage = ({ page }: Props) => {
@@ -54,7 +18,7 @@ const BlogPage = ({ page }: Props) => {
   });
   const [disableBtn, setDisableBtn] = useState(true);
 
-  const { isLoading, data } = useGetPosts(variables);
+  const { isLoading, data } = useGetPosts('posts', blogPostsQuery, variables);
 
   const handleAmountChange = () => {
     try {

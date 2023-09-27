@@ -1,42 +1,14 @@
 import dynamic from 'next/dynamic';
-import FadeInContainer from 'layouts/FadeInContainer';
 import Container from 'layouts/Container';
-import PageBanner from 'components/shared/PageBanner';
-import SiteHead from 'components/shared/SiteHead';
-import { BANNER_URL } from 'utils/constants';
 import { ISimplePageFields } from 'types/contentful';
-import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
-import { fetchAPI } from 'utils/api';
+import { useGetPosts } from 'utils/api';
 import { podcastPageQuery } from 'utils/queries';
-import PostsLayout from 'layouts/PostsLayout';
+import PostsLayout from 'layouts/SimplePageLayout';
 const Video = dynamic(() => import('components/organisms/podcast/Video'));
 
 interface Props {
   page: ISimplePageFields;
-}
-
-interface PodCasts {
-  podcastsCollection: {
-    total: number;
-    items: {
-      isVideoLink: boolean;
-      title: string;
-      excerpt: string;
-      link: string;
-    }[];
-  };
-}
-
-function useGetPodcasts(variables: any) {
-  return useQuery<PodCasts>(
-    ['podcasts', variables],
-    async () => {
-      const request = await fetchAPI(podcastPageQuery, variables);
-      return request?.data;
-    },
-    { keepPreviousData: true },
-  );
 }
 
 const PodcastPage = ({ page }: Props) => {
@@ -45,7 +17,11 @@ const PodcastPage = ({ page }: Props) => {
   });
   const [disableBtn, setDisableBtn] = useState(false);
 
-  const { isLoading, data } = useGetPodcasts(variables);
+  const { isLoading, data } = useGetPosts(
+    'podcasts',
+    podcastPageQuery,
+    variables,
+  );
 
   const handleAmountChange = () => {
     if (data?.podcastsCollection?.total !== variables?.limit) {

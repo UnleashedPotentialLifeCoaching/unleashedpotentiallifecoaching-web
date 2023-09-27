@@ -31,7 +31,6 @@ export const getServerSideProps: GetServerSideProps = async (
     {},
   );
   const page = interviewsPageData?.data?.simplePage as ISimplePageFields;
-  console.log('interviewsPageData', interviewsPageData);
   context.res.setHeader(
     'Cache-Control',
     'public, s-maxage=300, stale-while-revalidate=59',

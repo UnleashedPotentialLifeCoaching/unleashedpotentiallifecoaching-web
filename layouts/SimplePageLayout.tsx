@@ -9,7 +9,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const PostsLayout = ({ page, children }: Props) => {
+const SimplePageLayout = ({ page, children }: Props) => {
   return (
     <FadeInContainer>
       <SiteHead
@@ -24,4 +24,4 @@ const PostsLayout = ({ page, children }: Props) => {
     </FadeInContainer>
   );
 };
-export default PostsLayout;
+export default SimplePageLayout;

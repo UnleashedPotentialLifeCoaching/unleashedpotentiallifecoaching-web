@@ -119,3 +119,11 @@ export const BLOG_PAGE_ID = '6zowWUPrZmyZ0HjQXBnoye';
 export const PODCAST_PAGE_ID = '2TrjFekCNc6OGZAsLLB7WK';
 export const REVIEWS_PAGE_ID = '7M8IWPzBF60jrl0SiHgUsW';
 export const INTERVIEWS_PAGE_ID = '3o5X9MvYCjNeqDdHOQSFZd';
+
+export const headers = {
+  'Content-Type': 'application/json',
+  'User-Agent':
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36',
+  Accept: 'application/json; charset=UTF-8',
+  Authorization: '',
+};
