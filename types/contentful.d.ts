@@ -208,6 +208,49 @@ export interface IHomePage extends Entry<IHomePageFields> {
   };
 }
 
+export interface IInterviewsFields {
+  /** isOutsideLink */
+  isOutsideLink?: boolean | undefined;
+
+  /** Description */
+  description?: string | undefined;
+
+  /** Publication */
+  publication?: string | undefined;
+
+  /** Link */
+  link?: string | undefined;
+
+  /** Publication Date */
+  publicationDate?: string | undefined;
+
+  /** publicationImage */
+  publicationImage?: Asset | undefined;
+
+  /** Secondary title */
+  secondaryTitle?: string | undefined;
+
+  /** Title */
+  title?: string | undefined;
+}
+
+export interface IInterviews extends Entry<IInterviewsFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'interviews';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IPageFields {
   /** Banner */
   banner?: Asset | undefined;
@@ -380,6 +423,7 @@ export type CONTENT_TYPE =
   | 'coach'
   | 'disclaimer'
   | 'homePage'
+  | 'interviews'
   | 'page'
   | 'podcasts'
   | 'review'
@@ -391,6 +435,7 @@ export type IEntry =
   | ICoach
   | IDisclaimer
   | IHomePage
+  | IInterviews
   | IPage
   | IPodcasts
   | IReview

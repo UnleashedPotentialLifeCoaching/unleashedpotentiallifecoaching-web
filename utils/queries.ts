@@ -159,9 +159,9 @@ export const blogPostSchema = (uid: string) => `query {
   }
 }`;
 
-export const blogPageQuery = `
+export const simplePageQuery = (pageId: string) => `
   query simplePageEntryQuery {
-  simplePage(id: "6zowWUPrZmyZ0HjQXBnoye") {
+  simplePage(id: "${pageId}") {
     pageTitle
     seoTitle
     seoMetaDescription
@@ -312,19 +312,6 @@ export const podcastPageQuery = `
   }
 `;
 
-export const podcastPageContentQuery = `
-  query simplePageEntryQuery {
-  simplePage(id: "2TrjFekCNc6OGZAsLLB7WK") {
-    pageTitle
-    seoTitle
-    seoMetaDescription
-    banner {
-      url
-    }
-  }
-}
-`;
-
 export const reviewsQuery = `
 query reviewCollectionQuery {
   reviewCollection {
@@ -333,17 +320,6 @@ query reviewCollectionQuery {
       quote {
         json
       }
-    }
-  }
-}`;
-
-export const reviewPageQuery = `query simplePageEntryQuery {
-  simplePage(id: "7M8IWPzBF60jrl0SiHgUsW") {
-    pageTitle
-    seoTitle
-    seoMetaDescription
-    banner {
-      url
     }
   }
 }`;
@@ -497,6 +473,26 @@ export const disclaimerPageQuery = `query disclaimerEntryQuery {
     lastUpdated
     pageContent {
       json
+    }
+  }
+}`;
+
+export const interviewCollectionQuery = `query interviewsEntryQuery {
+  interviewsCollection {
+    total
+    items {
+      isOutsideLink
+      description
+      secondaryTitle
+      title
+      publication
+      link
+      publicationDate
+      publicationImage {
+        url
+        width
+        height
+      }
     }
   }
 }`;

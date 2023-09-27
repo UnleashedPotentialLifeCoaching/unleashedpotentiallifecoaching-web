@@ -114,3 +114,8 @@ export const CONTACT_INFO = [
 ];
 
 export const SITE_TITLE = 'Unleashed Potential';
+
+export const BLOG_PAGE_ID = '6zowWUPrZmyZ0HjQXBnoye';
+export const PODCAST_PAGE_ID = '2TrjFekCNc6OGZAsLLB7WK';
+export const REVIEWS_PAGE_ID = '7M8IWPzBF60jrl0SiHgUsW';
+export const INTERVIEWS_PAGE_ID = '3o5X9MvYCjNeqDdHOQSFZd';

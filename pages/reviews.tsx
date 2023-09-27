@@ -7,7 +7,8 @@ import {
 import React from 'react';
 import { IReviewFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { reviewPageQuery, reviewsQuery } from 'utils/queries';
+import { REVIEWS_PAGE_ID } from 'utils/constants';
+import { reviewsQuery, simplePageQuery } from 'utils/queries';
 
 const Reviews = ({
   review,
@@ -22,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
   const reviewsData = await fetchAPI(reviewsQuery, {});
-  const reviewPageData = await fetchAPI(reviewPageQuery, {});
+  const reviewPageData = await fetchAPI(simplePageQuery(REVIEWS_PAGE_ID), {});
 
   const allReviews = reviewsData?.data?.reviewCollection
     ?.items as IReviewFields[];

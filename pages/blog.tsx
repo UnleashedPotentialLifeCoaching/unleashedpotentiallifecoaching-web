@@ -7,7 +7,8 @@ import {
 } from 'next';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { fetchAPI } from 'utils/api';
-import { blogPageQuery, featuredReview } from 'utils/queries';
+import { simplePageQuery } from 'utils/queries';
+import { BLOG_PAGE_ID } from 'utils/constants';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,7 @@ const Blog = ({
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
-  const blogPageData = await fetchAPI(blogPageQuery, {});
+  const blogPageData = await fetchAPI(simplePageQuery(BLOG_PAGE_ID), {});
   const page = blogPageData?.data?.simplePage as ISimplePageFields;
 
   context.res.setHeader(

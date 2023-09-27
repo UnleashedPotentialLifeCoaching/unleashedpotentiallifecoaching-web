@@ -1,19 +1,17 @@
-import dynamic from 'next/dynamic';
 import Container from 'layouts/Container';
 import { ISimplePageFields } from 'types/contentful';
 import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
 import { fetchAPI } from 'utils/api';
-import { podcastPageQuery } from 'utils/queries';
+import { interviewCollectionQuery } from 'utils/queries';
 import PostsLayout from 'layouts/PostsLayout';
-const Video = dynamic(() => import('components/organisms/podcast/Video'));
 
 interface Props {
   page: ISimplePageFields;
 }
 
 interface PodCasts {
-  podcastsCollection: {
+  interviewsCollection: {
     total: number;
     items: {
       isVideoLink: boolean;
@@ -26,9 +24,9 @@ interface PodCasts {
 
 function useGetPodcasts(variables: any) {
   return useQuery<PodCasts>(
-    ['podcasts', variables],
+    ['interviews', variables],
     async () => {
-      const request = await fetchAPI(podcastPageQuery, variables);
+      const request = await fetchAPI(interviewCollectionQuery, variables);
       return request?.data;
     },
     { keepPreviousData: true },
@@ -44,7 +42,7 @@ const InterviewsPage = ({ page }: Props) => {
   const { isLoading, data } = useGetPodcasts(variables);
 
   const handleAmountChange = () => {
-    if (data?.podcastsCollection?.total !== variables?.limit) {
+    if (data?.interviewsCollection?.total !== variables?.limit) {
       let updateLimit = variables?.limit + 1;
       setVariables({
         limit: updateLimit,
@@ -56,35 +54,29 @@ const InterviewsPage = ({ page }: Props) => {
 
   useEffect(() => {
     // @ts-ignore
-    if (data?.podcastsCollection?.total > 4) {
+    if (data?.interviewsCollection?.total > 4) {
       setDisableBtn(false);
     }
     // @ts-ignore
-  }, [data?.podcastsCollection?.total]);
+  }, [data?.interviewsCollection?.total]);
 
   return (
     <PostsLayout page={page}>
       <Container>
         <main className="flex flex-col items-center justify-center">
           {/** @ts-ignore */}
-          {data?.podcastsCollection?.items.map((podcast: any) =>
-            podcast?.isAVideoLink ? (
-              <Video
-                url={podcast?.link}
-                title={podcast?.title}
-                description={podcast?.excerpt}
-                key={podcast?.title}
-              />
-            ) : (
-              <a
-                key={podcast?.title}
-                href={podcast?.link}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {podcast?.title}
-              </a>
-            ),
+          {data?.interviewsCollection?.items.map(
+            (interview: any) =>
+              interview?.isOutsideLink && (
+                <a
+                  key={interview.title}
+                  href={interview?.link}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {interview?.title}
+                </a>
+              ),
           )}
         </main>
       </Container>

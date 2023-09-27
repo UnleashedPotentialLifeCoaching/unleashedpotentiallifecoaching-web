@@ -3,7 +3,8 @@ import PodcastPage from 'components/pages/PodcastPage';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { fetchAPI } from 'utils/api';
-import { podcastPageContentQuery } from 'utils/queries';
+import { simplePageQuery } from 'utils/queries';
+import { PODCAST_PAGE_ID } from 'utils/constants';
 
 const queryClient = new QueryClient();
 
@@ -19,7 +20,7 @@ const PodCast = ({ page }: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const podcastPageData = await fetchAPI(podcastPageContentQuery, {});
+  const podcastPageData = await fetchAPI(simplePageQuery(PODCAST_PAGE_ID), {});
   const page = podcastPageData?.data?.simplePage;
 
   return {
