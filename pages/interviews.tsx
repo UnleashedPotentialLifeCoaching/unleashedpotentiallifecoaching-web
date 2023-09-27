@@ -1,5 +1,4 @@
 import { ISimplePageFields } from 'types/contentful';
-import BlogPage from 'components/pages/BlogPage';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
@@ -8,18 +7,18 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchAPI } from 'utils/api';
 import { simplePageQuery } from 'utils/queries';
-import { BLOG_PAGE_ID } from 'utils/constants';
+import { INTERVIEWS_PAGE_ID } from 'utils/constants';
+import InterviewsPage from 'components/pages/InterviewsPage';
 
 const queryClient = new QueryClient();
 
-const Blog = ({
+const Interviews = ({
   page,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const blogPageProps = { page };
-
+  const interviewsPageProps = { page };
   return (
     <QueryClientProvider client={queryClient}>
-      <BlogPage {...blogPageProps} />
+      <InterviewsPage {...interviewsPageProps} />
     </QueryClientProvider>
   );
 };
@@ -27,9 +26,11 @@ const Blog = ({
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
-  const blogPageData = await fetchAPI(simplePageQuery(BLOG_PAGE_ID), {});
-  const page = blogPageData?.data?.simplePage as ISimplePageFields;
-
+  const interviewsPageData = await fetchAPI(
+    simplePageQuery(INTERVIEWS_PAGE_ID),
+    {},
+  );
+  const page = interviewsPageData?.data?.simplePage as ISimplePageFields;
   context.res.setHeader(
     'Cache-Control',
     'public, s-maxage=300, stale-while-revalidate=59',
@@ -42,4 +43,4 @@ export const getServerSideProps: GetServerSideProps = async (
   };
 };
 
-export default Blog;
+export default Interviews;

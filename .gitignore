@@ -38,3 +38,6 @@ yarn-error.log*
 *.tsbuildinfo
 
 coverage*
+.idea
+.vscode
+.swc

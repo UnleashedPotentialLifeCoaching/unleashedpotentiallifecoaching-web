@@ -1,15 +1,9 @@
 import {
   NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL,
   NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN,
+  headers,
 } from 'utils/constants';
-
-export const headers = {
-  'Content-Type': 'application/json',
-  'User-Agent':
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36',
-  Accept: 'application/json; charset=UTF-8',
-  Authorization: '',
-};
+import { useQuery } from '@tanstack/react-query';
 
 export async function fetchAPI(query: string, { variables }: any = {}) {
   try {
@@ -34,3 +28,14 @@ export async function fetchAPI(query: string, { variables }: any = {}) {
     throw new Error('Failed to fetch API');
   }
 }
+
+export const useGetPosts = (label: string, query: string, variables: any) => {
+  return useQuery(
+    [label, variables],
+    async () => {
+      const request = await fetchAPI(query, variables);
+      return request?.data;
+    },
+    { keepPreviousData: true },
+  );
+};

@@ -11,6 +11,7 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import React from 'react';
 import { ICoachFields, IPageFields } from 'types/contentful';
 import { urlify } from 'utils/helpers';
+import SimplePageLayout from 'layouts/SimplePageLayout';
 
 interface Props {
   coaches: ICoachFields[];
@@ -99,15 +100,7 @@ function renderOptions(links: any) {
 
 const ServicesPage = ({ page, pageContent, coaches }: Props) => {
   return (
-    <FadeInContainer>
-      <SiteHead
-        title={page?.seoTitle}
-        metaDescription={page?.seoMetaDescription}
-      />
-      <PageBanner
-        title={page?.pageTitle as string}
-        bannerImage={page?.banner?.url}
-      />
+    <SimplePageLayout page={page}>
       <Container>
         <ContentWrapper>
           {documentToReactComponents(
@@ -139,7 +132,7 @@ const ServicesPage = ({ page, pageContent, coaches }: Props) => {
             ))}
         </div>
       </Container>
-    </FadeInContainer>
+    </SimplePageLayout>
   );
 };
 

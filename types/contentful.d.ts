@@ -98,6 +98,37 @@ export interface ICoach extends Entry<ICoachFields> {
   };
 }
 
+export interface IDisclaimerFields {
+  /** Title */
+  title?: string | undefined;
+
+  /** Last updated */
+  lastUpdated?: string | undefined;
+
+  /** Secondary title */
+  secondaryTitle?: string | undefined;
+
+  /** Page Content */
+  pageContent?: Document | undefined;
+}
+
+export interface IDisclaimer extends Entry<IDisclaimerFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'disclaimer';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IHomePageFields {
   /** SEO Title */
   seoTitle?: string | undefined;
@@ -170,6 +201,49 @@ export interface IHomePage extends Entry<IHomePageFields> {
     contentType: {
       sys: {
         id: 'homePage';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
+export interface IInterviewsFields {
+  /** isOutsideLink */
+  isOutsideLink?: boolean | undefined;
+
+  /** Description */
+  description?: string | undefined;
+
+  /** Publication */
+  publication?: string | undefined;
+
+  /** Link */
+  link?: string | undefined;
+
+  /** Publication Date */
+  publicationDate?: string | undefined;
+
+  /** publicationImage */
+  publicationImage?: Asset | undefined;
+
+  /** Secondary title */
+  secondaryTitle?: string | undefined;
+
+  /** Title */
+  title?: string | undefined;
+}
+
+export interface IInterviews extends Entry<IInterviewsFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'interviews';
         linkType: 'ContentType';
         type: 'Link';
       };
@@ -347,7 +421,9 @@ export interface ISimplePage extends Entry<ISimplePageFields> {
 export type CONTENT_TYPE =
   | 'blogPost'
   | 'coach'
+  | 'disclaimer'
   | 'homePage'
+  | 'interviews'
   | 'page'
   | 'podcasts'
   | 'review'
@@ -357,7 +433,9 @@ export type CONTENT_TYPE =
 export type IEntry =
   | IBlogPost
   | ICoach
+  | IDisclaimer
   | IHomePage
+  | IInterviews
   | IPage
   | IPodcasts
   | IReview

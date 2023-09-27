@@ -10,7 +10,6 @@ const useGetReviews = () => {
     ['reviews'],
     async () => {
       const request = await fetchAPI(featuredReview, {});
-      console.log('request', request?.data?.reviewCollection?.items);
       return request?.data?.reviewCollection?.items;
     },
     { keepPreviousData: true },

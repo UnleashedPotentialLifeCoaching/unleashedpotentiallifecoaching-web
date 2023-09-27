@@ -1,14 +1,14 @@
 import type { AppProps } from 'next/app';
-import React, { useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CoachesProvider } from 'contexts/CoachesContext';
 import Header from 'components/shared/Header';
-
-const Footer = dynamic(() => import('components/shared/Footer'));
-
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'styles/globals.css';
+
+const queryClient = new QueryClient();
+const Footer = dynamic(() => import('components/shared/Footer'));
 
 const SiteHead = () => (
   <Head>
@@ -24,8 +24,6 @@ const SiteHead = () => (
     <meta name="theme-color" content="#ffffff" />
   </Head>
 );
-
-const queryClient = new QueryClient();
 
 const UnleashedPotentialApp = ({ Component, pageProps }: AppProps) => {
   return (
