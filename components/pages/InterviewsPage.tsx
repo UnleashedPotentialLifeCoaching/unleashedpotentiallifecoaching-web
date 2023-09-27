@@ -3,7 +3,7 @@ import { ISimplePageFields } from 'types/contentful';
 import { useEffect, useState } from 'react';
 import { useGetPosts } from 'utils/api';
 import { interviewCollectionQuery } from 'utils/queries';
-import PostsLayout from 'layouts/SimplePageLayout';
+import SimplePageLayout from 'layouts/SimplePageLayout';
 
 interface Props {
   page: ISimplePageFields;
@@ -41,7 +41,7 @@ const InterviewsPage = ({ page }: Props) => {
   }, [data?.interviewsCollection?.total]);
 
   return (
-    <PostsLayout page={page}>
+    <SimplePageLayout page={page}>
       <Container>
         <main className="flex flex-col items-center justify-center">
           {/** @ts-ignore */}
@@ -71,7 +71,7 @@ const InterviewsPage = ({ page }: Props) => {
           Load More
         </button>
       </div>
-    </PostsLayout>
+    </SimplePageLayout>
   );
 };
 

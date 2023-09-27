@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { IBlogPostFields, ISimplePageFields } from 'types/contentful';
 import { useEffect, useState } from 'react';
 import { useGetPosts } from 'utils/api';
-import PostsLayout from 'layouts/SimplePageLayout';
+import SimplePageLayout from 'layouts/SimplePageLayout';
 import { blogPostsQuery } from 'utils/queries';
 
 interface Props {
@@ -44,7 +44,7 @@ const BlogPage = ({ page }: Props) => {
   }, [data]);
 
   return (
-    <PostsLayout page={page}>
+    <SimplePageLayout page={page}>
       <Container>
         <main className="flex flex-col items-center justify-center">
           {/** @ts-ignore */}
@@ -145,7 +145,7 @@ const BlogPage = ({ page }: Props) => {
           Load More
         </button>
       </div>
-    </PostsLayout>
+    </SimplePageLayout>
   );
 };
 export default BlogPage;
