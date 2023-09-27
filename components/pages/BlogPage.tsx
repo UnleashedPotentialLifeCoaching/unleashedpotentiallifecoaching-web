@@ -90,46 +90,50 @@ const BlogPage = ({ page }: Props) => {
                 </div>
               </Link>
             ) : (
-              <a
-                href={post?.outsideLink}
+              <Link
+                href={post?.outsideLink as string}
                 key={JSON.stringify(post)}
-                className="flex flex-col pb-12 my-8 border-b sm:flex-row"
-                target="_blank"
-                rel="noreferrer"
+                legacyBehavior
               >
-                <Image
-                  src={post?.featuredImage?.url}
-                  alt={(post?.postTItle as string) || 'Image not found'}
-                  width={(post?.featuredImage?.width as number) / 2}
-                  height={(post?.featuredImage?.height as number) / 2}
-                />
-                <div className="mt-3 sm:mt-0 sm:ml-8 blog-post-excerpt">
-                  <p className="text-2xl text-forrest">{post?.postTItle}</p>
-                  <p className="flex flex-row items-center my-2">
-                    <span className="mr-1 font-bold leading-snug text-stone-400">
-                      Date:{' '}
-                    </span>
-                    <span className="mr-3 text-base text-stone-500">
-                      {format(
-                        new Date(post?.publishDate as string),
-                        'MMMM dd, yyyy',
-                      )}
-                    </span>
-                    <span className="mr-1 font-bold leading-snug text-stone-400">
-                      Coach:
-                    </span>
-                    <span className="text-base text-stone-500">
-                      {post?.author?.name}
-                    </span>
-                  </p>
-                  <p className="font-serif text-base leading-7">
-                    {post?.subTitle}
-                  </p>
-                  <button className="px-6 py-3 my-6 text-xl text-white rounded-sm bg-forrest">
-                    Read More
-                  </button>
-                </div>
-              </a>
+                <a
+                  className="flex flex-col pb-12 my-8 border-b sm:flex-row"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Image
+                    src={post?.featuredImage?.url}
+                    alt={(post?.postTItle as string) || 'Image not found'}
+                    width={(post?.featuredImage?.width as number) / 2}
+                    height={(post?.featuredImage?.height as number) / 2}
+                  />
+                  <div className="mt-3 sm:mt-0 sm:ml-8 blog-post-excerpt">
+                    <p className="text-2xl text-forrest">{post?.postTItle}</p>
+                    <p className="flex flex-row items-center my-2">
+                      <span className="mr-1 font-bold leading-snug text-stone-400">
+                        Date:{' '}
+                      </span>
+                      <span className="mr-3 text-base text-stone-500">
+                        {format(
+                          new Date(post?.publishDate as string),
+                          'MMMM dd, yyyy',
+                        )}
+                      </span>
+                      <span className="mr-1 font-bold leading-snug text-stone-400">
+                        Coach:
+                      </span>
+                      <span className="text-base text-stone-500">
+                        {post?.author?.name}
+                      </span>
+                    </p>
+                    <p className="font-serif text-base leading-7">
+                      {post?.subTitle}
+                    </p>
+                    <button className="px-6 py-3 my-6 text-xl text-white rounded-sm bg-forrest">
+                      Read More
+                    </button>
+                  </div>
+                </a>
+              </Link>
             ),
           )}
         </main>

@@ -4,7 +4,7 @@ import {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchAPI } from 'utils/api';
 import { simplePageQuery } from 'utils/queries';
 import { INTERVIEWS_PAGE_ID } from 'utils/constants';
