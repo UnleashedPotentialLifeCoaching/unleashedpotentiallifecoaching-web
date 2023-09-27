@@ -11,7 +11,7 @@ import { blogPageQuery, featuredReview } from 'utils/queries';
 
 const queryClient = new QueryClient();
 
-const Blog = ({
+const Interviews = ({
   page,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const blogPageProps = { page };
@@ -41,4 +41,4 @@ export const getServerSideProps: GetServerSideProps = async (
   };
 };
 
-export default Blog;
+export default Interviews;

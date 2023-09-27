@@ -486,3 +486,17 @@ query coachCollectionQuery {
     }
   }
 }`;
+
+export const disclaimerPageQuery = `query disclaimerEntryQuery {
+  disclaimer(id: "269coiWLwTnA1MgCxtsfHd") {
+    sys {
+      id
+    }
+    title
+    secondaryTitle
+    lastUpdated
+    pageContent {
+      json
+    }
+  }
+}`;

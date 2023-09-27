@@ -47,12 +47,6 @@ export const SITE_NAVS = [
         label: 'Jessica Rebelo',
         open: false,
       },
-      // {
-      //   id: 3,
-      //   slug: '/coach/ché-greeff',
-      //   label: 'Ché Greeff',
-      //   open: false,
-      // },
       {
         id: 3,
         slug: 'https://themendwellness.com/',
@@ -78,6 +72,11 @@ export const SITE_NAVS = [
       },
       {
         id: 2,
+        slug: '/interviews',
+        label: 'Interviews',
+      },
+      {
+        id: 3,
         slug: '/podcast',
         label: 'Podcast',
       },

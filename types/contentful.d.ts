@@ -98,6 +98,37 @@ export interface ICoach extends Entry<ICoachFields> {
   };
 }
 
+export interface IDisclaimerFields {
+  /** Title */
+  title?: string | undefined;
+
+  /** Last updated */
+  lastUpdated?: string | undefined;
+
+  /** Secondary title */
+  secondaryTitle?: string | undefined;
+
+  /** Page Content */
+  pageContent?: Document | undefined;
+}
+
+export interface IDisclaimer extends Entry<IDisclaimerFields> {
+  sys: {
+    id: string;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+    locale: string;
+    contentType: {
+      sys: {
+        id: 'disclaimer';
+        linkType: 'ContentType';
+        type: 'Link';
+      };
+    };
+  };
+}
+
 export interface IHomePageFields {
   /** SEO Title */
   seoTitle?: string | undefined;
@@ -347,6 +378,7 @@ export interface ISimplePage extends Entry<ISimplePageFields> {
 export type CONTENT_TYPE =
   | 'blogPost'
   | 'coach'
+  | 'disclaimer'
   | 'homePage'
   | 'page'
   | 'podcasts'
@@ -357,6 +389,7 @@ export type CONTENT_TYPE =
 export type IEntry =
   | IBlogPost
   | ICoach
+  | IDisclaimer
   | IHomePage
   | IPage
   | IPodcasts
