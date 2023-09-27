@@ -1,6 +1,6 @@
 # Unleashedpotentiallifecoaching.com
 
-### [Live Site](https://www.unleashedpotentiallifecoaching.com/)
+### [Live Site](https://jessrebelo.com/)
 
 ## Motivation
 
@@ -14,7 +14,7 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 - [Framer Motion](https://motion.io)
 - [GraphQL](https://graphql.org/)
 - [Next.js](https://nextjs.org/)
-- [Contentful](https://contentful.com/)
+- [Contentful CMS](https://contentful.com/)
 - [Styled Components](https://styled-components.com/)
 - [Tailwind.css](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -22,7 +22,6 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 
 ## Todos
 
-- Create a highlight media section in bio
-- ~~Updated outdated modules/ code cleanup~~ - 7:30 - 8:30PM (09/26)
-- Create a Interview page to details on the recent interview
-- ~~Moved disclaimer content to contentful~~ - 8:45 - 9:15 (09/26)
+- Create a highlight media section in bio 1.5
+- Create a Interview page to details on the recent interview - 9:15 - 9:30 (09/26) 1
+- ~~Moved disclaimer content to contentful~~ - 8:45 - 9:15 (09/26) .5

@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
 import { fetchAPI } from 'utils/api';
 import { blogPostsQuery } from 'utils/queries';
+import PostsLayout from 'layouts/PostsLayout';
 
 interface Props {
   page: ISimplePageFields;
@@ -79,15 +80,7 @@ const BlogPage = ({ page }: Props) => {
   }, [data]);
 
   return (
-    <FadeInContainer>
-      <SiteHead
-        title={page?.seoTitle}
-        metaDescription={page?.seoMetaDescription}
-      />
-      <PageBanner
-        title={page?.pageTitle as string}
-        bannerImage={page?.banner?.url || BANNER_URL}
-      />
+    <PostsLayout page={page}>
       <Container>
         <main className="flex flex-col items-center justify-center">
           {/** @ts-ignore */}
@@ -188,7 +181,7 @@ const BlogPage = ({ page }: Props) => {
           Load More
         </button>
       </div>
-    </FadeInContainer>
+    </PostsLayout>
   );
 };
 export default BlogPage;

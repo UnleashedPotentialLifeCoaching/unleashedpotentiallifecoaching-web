@@ -1,9 +1,5 @@
 import dynamic from 'next/dynamic';
-import FadeInContainer from 'layouts/FadeInContainer';
 import Container from 'layouts/Container';
-import PageBanner from 'components/shared/PageBanner';
-import SiteHead from 'components/shared/SiteHead';
-import { BANNER_URL } from 'utils/constants';
 import { ISimplePageFields } from 'types/contentful';
 import { useQuery } from 'react-query';
 import { useEffect, useState } from 'react';
@@ -39,7 +35,7 @@ function useGetPodcasts(variables: any) {
   );
 }
 
-const PodcastPage = ({ page }: Props) => {
+const InterviewsPage = ({ page }: Props) => {
   const [variables, setVariables] = useState({
     limit: 4,
   });
@@ -107,4 +103,4 @@ const PodcastPage = ({ page }: Props) => {
   );
 };
 
-export default PodcastPage;
+export default InterviewsPage;
