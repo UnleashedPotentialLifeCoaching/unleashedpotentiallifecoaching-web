@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useGetPosts } from 'utils/api';
 import { podcastPageQuery } from 'utils/queries';
 import SimplePageLayout from 'layouts/SimplePageLayout';
+import usePagination from 'hooks/usePagination';
 const Video = dynamic(() => import('components/organisms/podcast/Video'));
 
 interface Props {
@@ -12,35 +13,16 @@ interface Props {
 }
 
 const PodcastPage = ({ page }: Props) => {
-  const [variables, setVariables] = useState({
-    limit: 4,
+  const [limit, setLimit] = useState(4);
+  const { isLoading, data } = useGetPosts('podcasts', podcastPageQuery, {
+    limit,
   });
-  const [disableBtn, setDisableBtn] = useState(false);
 
-  const { isLoading, data } = useGetPosts(
-    'podcasts',
-    podcastPageQuery,
-    variables,
+  const [disableBtn, handleAmountChange] = usePagination(
+    data?.podcastsCollection?.total,
+    limit,
+    setLimit,
   );
-
-  const handleAmountChange = () => {
-    if (data?.podcastsCollection?.total !== variables?.limit) {
-      let updateLimit = variables?.limit + 1;
-      setVariables({
-        limit: updateLimit,
-      });
-    } else {
-      setDisableBtn(true);
-    }
-  };
-
-  useEffect(() => {
-    // @ts-ignore
-    if (data?.podcastsCollection?.total > 4) {
-      setDisableBtn(false);
-    }
-    // @ts-ignore
-  }, [data?.podcastsCollection?.total]);
 
   return (
     <SimplePageLayout page={page}>

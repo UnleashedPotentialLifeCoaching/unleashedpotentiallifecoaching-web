@@ -7,41 +7,23 @@ import { useEffect, useState } from 'react';
 import { useGetPosts } from 'utils/api';
 import SimplePageLayout from 'layouts/SimplePageLayout';
 import { blogPostsQuery } from 'utils/queries';
+import usePagination from 'hooks/usePagination';
 
 interface Props {
   page: ISimplePageFields;
 }
 
 const BlogPage = ({ page }: Props) => {
-  const [variables, setVariables] = useState({
-    limit: 4,
+  const [limit, setLimit] = useState(4);
+  const { isLoading, data } = useGetPosts('posts', blogPostsQuery, {
+    limit,
   });
-  const [disableBtn, setDisableBtn] = useState(true);
 
-  const { isLoading, data } = useGetPosts('posts', blogPostsQuery, variables);
-
-  const handleAmountChange = () => {
-    try {
-      if (data?.blogPostCollection.total !== variables?.limit) {
-        let updateLimit = variables?.limit + 1;
-        setVariables({
-          limit: updateLimit,
-        });
-      } else {
-        setDisableBtn(true);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    if (data) {
-      if (data?.blogPostCollection?.total > 4) {
-        setDisableBtn(false);
-      }
-    }
-  }, [data]);
+  const [disableBtn, handleAmountChange] = usePagination(
+    data?.blogPostCollection?.total,
+    limit,
+    setLimit,
+  );
 
   return (
     <SimplePageLayout page={page}>

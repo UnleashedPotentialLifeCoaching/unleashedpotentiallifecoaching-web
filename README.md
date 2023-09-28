@@ -23,5 +23,5 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 ## Todos
 
 - Create a highlight media section in bio 1.5
-- Create a Interview page to details on the recent interview - 9:15 - 10:00 (09/26)
+- ~~Create a Interview page to details on the recent interview~~- 9:15 - 10:00 (09/26)
 - ~~Moved disclaimer content to contentful~~ - 8:45 - 9:15 (09/26) .5
