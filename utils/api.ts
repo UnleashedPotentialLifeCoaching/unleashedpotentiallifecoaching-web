@@ -5,12 +5,11 @@ import {
 } from 'utils/constants';
 import { useQuery } from '@tanstack/react-query';
 
-export async function fetchAPI(query: string, { variables }: any = {}) {
+export async function fetchAPI(query: string, variables: any) {
   try {
     if (NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL) {
       headers.Authorization = `Bearer ${NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN}`;
     }
-
     const res = await fetch(NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL as string, {
       method: 'POST',
       headers,
@@ -29,7 +28,11 @@ export async function fetchAPI(query: string, { variables }: any = {}) {
   }
 }
 
-export const useGetPosts = (label: string, query: string, variables: any) => {
+export const useGetPosts = (
+  label: string,
+  query: string,
+  variables: { limit?: number } = {},
+) => {
   return useQuery(
     [label, variables],
     async () => {

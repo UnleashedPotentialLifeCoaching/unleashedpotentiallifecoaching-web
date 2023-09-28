@@ -19,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
   const slug = context?.params?.slug as string;
-  const postData = await fetchAPI(blogPostQuery(slug));
+  const postData = await fetchAPI(blogPostQuery(slug), {});
 
   if (postData?.data?.blogPostCollection?.items.length === 0) {
     return {

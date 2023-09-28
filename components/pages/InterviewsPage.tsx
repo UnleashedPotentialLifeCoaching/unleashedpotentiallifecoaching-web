@@ -7,41 +7,27 @@ import SimplePageLayout from 'layouts/SimplePageLayout';
 import Link from 'next/link';
 import Image from 'next/legacy/image';
 import { format } from 'date-fns';
+import usePagination from 'hooks/usePagination';
 
 interface Props {
   page: ISimplePageFields;
 }
 
 const InterviewsPage = ({ page }: Props) => {
-  const [variables, setVariables] = useState({
-    limit: 4,
-  });
-  const [disableBtn, setDisableBtn] = useState(true);
-
+  const [limit, setLimit] = useState(4);
   const { isLoading, data } = useGetPosts(
     'interviews',
     interviewCollectionQuery,
-    variables,
+    {
+      limit,
+    },
   );
 
-  const handleAmountChange = () => {
-    if (data?.interviewsCollection?.total !== variables?.limit) {
-      let updateLimit = variables?.limit + 1;
-      setVariables({
-        limit: updateLimit,
-      });
-    } else {
-      setDisableBtn(true);
-    }
-  };
-
-  useEffect(() => {
-    // @ts-ignore
-    if (data?.interviewsCollection?.total > 4) {
-      setDisableBtn(false);
-    }
-    // @ts-ignore
-  }, [data?.interviewsCollection?.total]);
+  const [disableBtn, handleAmountChange] = usePagination(
+    data?.interviewsCollection?.total,
+    limit,
+    setLimit,
+  );
 
   return (
     <SimplePageLayout page={page}>
