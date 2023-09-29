@@ -7,6 +7,7 @@ import {
 } from 'next';
 import { fetchAPI } from 'utils/api';
 import { servicePageQuery } from 'utils/queries';
+import { CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
 
 const Service = ({
   page,
@@ -37,10 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (
     ({ slugText }: { slugText: string }) => slugText === slug,
   ) as IServicePageFields;
 
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

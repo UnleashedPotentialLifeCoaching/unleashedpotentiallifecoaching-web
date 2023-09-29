@@ -8,6 +8,7 @@ import PostPage from 'components/pages/PostPage';
 import { IBlogPostFields, IReviewFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
 import { blogPostQuery } from 'utils/queries';
+import { CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
 
 const Post = ({
   post,
@@ -31,10 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (
     ({ slugText }: { slugText: string }) => slugText === slug,
   ) as IBlogPostFields;
 
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

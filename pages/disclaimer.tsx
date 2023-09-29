@@ -8,7 +8,7 @@ import {
 } from 'next';
 import { IDisclaimerFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { SITE_URL } from 'utils/constants';
+import { CACHE_CONTROL, CACHE_LIFE, SITE_URL } from 'utils/constants';
 import { disclaimerPageQuery } from 'utils/queries';
 
 const Disclaimer = ({
@@ -50,10 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const disclaimerPageData = await fetchAPI(disclaimerPageQuery, {});
   const page = disclaimerPageData?.data?.disclaimer as IDisclaimerFields;
 
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

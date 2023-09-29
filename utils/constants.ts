@@ -127,3 +127,6 @@ export const headers = {
   Accept: 'application/json; charset=UTF-8',
   Authorization: '',
 };
+
+export const CACHE_CONTROL = 'Cache-Control';
+export const CACHE_LIFE = 'public, s-maxage=300, stale-while-revalidate=59';

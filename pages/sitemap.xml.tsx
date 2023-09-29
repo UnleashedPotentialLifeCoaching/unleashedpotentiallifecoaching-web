@@ -1,7 +1,12 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { IBlogPostFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { SITE_URL, SITE_NAVS } from 'utils/constants';
+import {
+  SITE_URL,
+  SITE_NAVS,
+  CACHE_CONTROL,
+  CACHE_LIFE,
+} from 'utils/constants';
 import { removeSlashFromSlug } from 'utils/helpers';
 import { allBlogPostsQuery } from 'utils/queries';
 
@@ -63,10 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (
       ${postLinks}
   </urlset>`;
 
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   res.setHeader('Content-Type', 'text/xml');
   res.write(sitemap);

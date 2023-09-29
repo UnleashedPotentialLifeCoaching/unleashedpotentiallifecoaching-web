@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { ICoachFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
+import { CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
 import { urlify } from 'utils/helpers';
 import { coachQuery } from 'utils/queries';
 
@@ -53,10 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (
     };
   }
 
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {
