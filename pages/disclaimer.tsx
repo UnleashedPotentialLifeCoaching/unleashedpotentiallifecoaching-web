@@ -1,19 +1,14 @@
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { IDisclaimerFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { CACHE_CONTROL, CACHE_LIFE, SITE_URL } from 'utils/constants';
+import { SITE_URL } from 'utils/constants';
 import { disclaimerPageQuery } from 'utils/queries';
 
 const Disclaimer = ({
   page,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const pageContent = page?.pageContent?.json?.content[0]?.content[0]?.value;
   return (
     <Container>
@@ -44,13 +39,9 @@ const Disclaimer = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
+export const getStaticProps: GetStaticProps = async () => {
   const disclaimerPageData = await fetchAPI(disclaimerPageQuery, {});
   const page = disclaimerPageData?.data?.disclaimer as IDisclaimerFields;
-
-  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {
