@@ -1,24 +1,33 @@
 import React from 'react';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import PostPage from 'components/pages/PostPage';
-import { IBlogPostFields, IReviewFields } from 'types/contentful';
+import { IBlogPostFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { blogPostQuery } from 'utils/queries';
+import { blogPostQuery, allBlogPostsQuery } from 'utils/queries';
+import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
 
-const Post = ({
-  post,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <PostPage post={post} postContent={post?.postContent} />
-);
+const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const slug = context?.params?.slug as string;
+  if (router.isFallback) return <ErrorPage statusCode={404} />;
+  return <PostPage post={post} postContent={post?.postContent} />;
+};
+
+export const getStaticPaths = async () => {
+  const postsData = await fetchAPI(allBlogPostsQuery, {});
+  const posts = postsData?.data?.blogPostCollection.items;
+
+  return {
+    fallback: true,
+    paths: posts
+      ?.map((post: any) => `/post/${post?.slugText}`)
+      .filter((post: any) => post !== null),
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const slug = params?.slug as string;
   const postData = await fetchAPI(blogPostQuery(slug), {});
 
   if (postData?.data?.blogPostCollection?.items.length === 0) {
@@ -30,11 +39,6 @@ export const getServerSideProps: GetServerSideProps = async (
   const post = postData?.data?.blogPostCollection?.items.find(
     ({ slugText }: { slugText: string }) => slugText === slug,
   ) as IBlogPostFields;
-
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
 
   return {
     props: {

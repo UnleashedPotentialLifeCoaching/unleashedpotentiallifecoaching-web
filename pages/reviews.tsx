@@ -8,7 +8,7 @@ import {
 import React from 'react';
 import { IReviewFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
-import { REVIEWS_PAGE_ID } from 'utils/constants';
+import { CACHE_CONTROL, CACHE_LIFE, REVIEWS_PAGE_ID } from 'utils/constants';
 import { reviewsQuery, simplePageQuery } from 'utils/queries';
 
 const queryClient = new QueryClient();
@@ -38,10 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const page = reviewPageData?.data?.simplePage;
 
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

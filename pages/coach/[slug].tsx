@@ -1,11 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import CoachPage from 'components/pages/CoachPage';
 import { CoachesContext } from 'contexts/CoachesContext';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
@@ -13,12 +9,13 @@ import { ICoachFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
 import { urlify } from 'utils/helpers';
 import { coachQuery } from 'utils/queries';
+import { SITE_NAVS } from 'utils/constants';
 
 const CoachProfile = ({
   coach,
   coaches,
   slug,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const { coaches: contextCoaches, setCoaches } = useContext(CoachesContext);
   useEffect(() => {
@@ -27,7 +24,7 @@ const CoachProfile = ({
     }
   }, [coaches]);
 
-  if (!router.isFallback && !slug) {
+  if (router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />;
   }
 
@@ -36,10 +33,28 @@ const CoachProfile = ({
   return null;
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const slug = context?.params?.slug;
+export const getStaticPaths = async () => {
+  const coachesItem = SITE_NAVS.filter((nav: any) => nav.id === 2)[0];
+  const coacheSlugs = coachesItem?.children
+    ?.filter((coach: any) => !coach?.slug?.includes('themendwellness'))
+    .map((coach: any) => `${coach?.slug}`);
+
+  const staticPaths = {
+    fallback: true,
+    paths: coacheSlugs,
+  };
+
+  console.log('STATIC PATHS@@@');
+  console.log(staticPaths);
+
+  return {
+    fallback: true,
+    paths: coacheSlugs,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const slug = params?.slug;
   const coachesData = await fetchAPI(coachQuery, {});
   const coaches = coachesData?.data?.coachCollection.items as ICoachFields[];
 
@@ -52,11 +67,6 @@ export const getServerSideProps: GetServerSideProps = async (
       notFound: true,
     };
   }
-
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
 
   return {
     props: {

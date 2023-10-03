@@ -7,7 +7,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchAPI } from 'utils/api';
 import { simplePageQuery } from 'utils/queries';
-import { INTERVIEWS_PAGE_ID } from 'utils/constants';
+import { CACHE_CONTROL, CACHE_LIFE, INTERVIEWS_PAGE_ID } from 'utils/constants';
 import InterviewsPage from 'components/pages/InterviewsPage';
 
 const queryClient = new QueryClient();
@@ -31,10 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (
     {},
   );
   const page = interviewsPageData?.data?.simplePage as ISimplePageFields;
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

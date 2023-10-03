@@ -89,6 +89,14 @@ export const SITE_NAVS = [
   },
 ];
 
+export const SERVICES_LIST = [
+  {
+    id: 1,
+    slug: '/service/emdr',
+    service: 'EMDR',
+  },
+];
+
 export const BANNER_URL: string =
   'https://res.cloudinary.com/tumulty-web-services/image/upload/v1638888993/unleashedpotential/geoffroy-hauwen-hU_A4b397bQ-unsplash.webp';
 
@@ -127,3 +135,6 @@ export const headers = {
   Accept: 'application/json; charset=UTF-8',
   Authorization: '',
 };
+
+export const CACHE_CONTROL = 'Cache-Control';
+export const CACHE_LIFE = 'public, s-maxage=300, stale-while-revalidate=59';

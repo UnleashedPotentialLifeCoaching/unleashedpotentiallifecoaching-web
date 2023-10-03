@@ -8,7 +8,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchAPI } from 'utils/api';
 import { simplePageQuery } from 'utils/queries';
-import { BLOG_PAGE_ID } from 'utils/constants';
+import { BLOG_PAGE_ID, CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
 
 const queryClient = new QueryClient();
 
@@ -30,10 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const blogPageData = await fetchAPI(simplePageQuery(BLOG_PAGE_ID), {});
   const page = blogPageData?.data?.simplePage as ISimplePageFields;
 
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=300, stale-while-revalidate=59',
-  );
+  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {
