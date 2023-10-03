@@ -39,17 +39,12 @@ export const getStaticPaths = async () => {
     ?.filter((coach: any) => !coach?.slug?.includes('themendwellness'))
     .map((coach: any) => `${coach?.slug}`);
 
-  const staticPaths = {
-    fallback: true,
-    paths: coacheSlugs,
-  };
-
-  console.log('STATIC PATHS@@@');
-  console.log(staticPaths);
-
   return {
     fallback: true,
-    paths: coacheSlugs,
+    paths: {
+      fallback: true,
+      paths: coacheSlugs,
+    },
   };
 };
 
