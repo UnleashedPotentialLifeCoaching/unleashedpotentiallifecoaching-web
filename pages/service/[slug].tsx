@@ -1,30 +1,36 @@
 import { IServicePageFields } from 'types/contentful';
 import ServicesPage from 'components/pages/ServicesPage';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { fetchAPI } from 'utils/api';
 import { servicePageQuery } from 'utils/queries';
-import { CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
+import { SERVICES_LIST } from 'utils/constants';
+import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
 
 const Service = ({
   page,
   coaches,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
   const servicesPageProps = {
     page,
     coaches,
     pageContent: page?.pageContent,
   };
+
+  if (router.isFallback) return <ErrorPage statusCode={404} />;
   return <ServicesPage {...servicesPageProps} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const slug = context?.params?.slug as string;
+export const getStaticPaths = async () => {
+  return {
+    fallback: true,
+    paths: SERVICES_LIST?.map((service: any) => service?.slug),
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const slug = params?.slug as string;
   const servicesPageData = await fetchAPI(servicePageQuery(slug), {});
 
   if (servicesPageData?.servicePageCollection?.items.length <= 0) {
@@ -37,8 +43,6 @@ export const getServerSideProps: GetServerSideProps = async (
   const page = servicesPageData?.data.servicePageCollection?.items?.find(
     ({ slugText }: { slugText: string }) => slugText === slug,
   ) as IServicePageFields;
-
-  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

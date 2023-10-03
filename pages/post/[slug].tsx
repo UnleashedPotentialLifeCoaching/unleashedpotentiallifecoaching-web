@@ -4,11 +4,15 @@ import PostPage from 'components/pages/PostPage';
 import { IBlogPostFields } from 'types/contentful';
 import { fetchAPI } from 'utils/api';
 import { blogPostQuery, allBlogPostsQuery } from 'utils/queries';
-import { CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
+import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
 
-const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <PostPage post={post} postContent={post?.postContent} />
-);
+const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
+
+  if (router.isFallback) return <ErrorPage statusCode={404} />;
+  return <PostPage post={post} postContent={post?.postContent} />;
+};
 
 export const getStaticPaths = async () => {
   const postsData = await fetchAPI(allBlogPostsQuery, {});
