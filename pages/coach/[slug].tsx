@@ -41,10 +41,7 @@ export const getStaticPaths = async () => {
 
   return {
     fallback: true,
-    paths: {
-      fallback: true,
-      paths: coacheSlugs,
-    },
+    paths: coacheSlugs,
   };
 };
 

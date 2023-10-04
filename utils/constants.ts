@@ -95,6 +95,16 @@ export const SERVICES_LIST = [
     slug: '/service/emdr',
     service: 'EMDR',
   },
+  {
+    id: 2,
+    slug: '/service/trauma-therapy',
+    service: 'Trauma Therapy',
+  },
+  {
+    id: 3,
+    slug: '/service/trauma-informed-life-coaching',
+    service: 'Trauma-Informed Life Coaching',
+  },
 ];
 
 export const BANNER_URL: string =
