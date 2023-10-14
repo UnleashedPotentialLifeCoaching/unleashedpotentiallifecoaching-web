@@ -1,18 +1,13 @@
 import { ICoachFields, IPageFields } from 'types/contentful';
 import ServicesPage from 'components/pages/ServicesPage';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
-import { fetchAPI } from 'utils/api';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { fetchContenfulAPI } from 'utils/api';
 import { coachesQuery, servicesPageQuery } from 'utils/queries';
-import { CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
 
 const Services = ({
   page,
   coaches,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const servicesPageProps = {
     page,
     coaches,
@@ -22,16 +17,12 @@ const Services = ({
   return <ServicesPage {...servicesPageProps} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const servicesPageData = await fetchAPI(servicesPageQuery, {});
-  const coachesData = await fetchAPI(coachesQuery, {});
+export const getStaticProps: GetStaticProps = async () => {
+  const servicesPageData = await fetchContenfulAPI(servicesPageQuery, {});
+  const coachesData = await fetchContenfulAPI(coachesQuery, {});
 
   const page = servicesPageData?.data?.page as IPageFields;
   const coaches = coachesData?.data?.coachCollection?.items as ICoachFields[];
-
-  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

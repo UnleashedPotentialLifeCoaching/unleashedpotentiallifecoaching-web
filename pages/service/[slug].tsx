@@ -1,7 +1,7 @@
 import { IServicePageFields } from 'types/contentful';
 import ServicesPage from 'components/pages/ServicesPage';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import { fetchAPI } from 'utils/api';
+import { fetchContenfulAPI } from 'utils/api';
 import { servicePageQuery } from 'utils/queries';
 import { SERVICES_LIST } from 'utils/constants';
 import { useRouter } from 'next/router';
@@ -31,7 +31,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
-  const servicesPageData = await fetchAPI(servicePageQuery(slug), {});
+  const servicesPageData = await fetchContenfulAPI(servicePageQuery(slug), {});
 
   if (servicesPageData?.servicePageCollection?.items.length <= 0) {
     return {

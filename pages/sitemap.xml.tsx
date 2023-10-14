@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { IBlogPostFields } from 'types/contentful';
-import { fetchAPI } from 'utils/api';
+import { fetchContenfulAPI } from 'utils/api';
 import {
   SITE_URL,
   SITE_NAVS,
@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
   const { res } = context;
-  const blogPostsData = await fetchAPI(allBlogPostsQuery, {});
+  const blogPostsData = await fetchContenfulAPI(allBlogPostsQuery, {});
   const posts = blogPostsData?.data?.blogPostCollection
     ?.items as IBlogPostFields[];
 

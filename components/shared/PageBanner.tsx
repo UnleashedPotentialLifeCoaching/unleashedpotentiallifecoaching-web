@@ -1,18 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { BANNER_URL } from 'utils/constants';
-
 interface Props {
   title: string;
   bannerImage?: string | null | undefined;
 }
 
 const PageBanner = ({ title, bannerImage }: Props) => {
-  const srcUrl: string = bannerImage ? bannerImage : BANNER_URL;
   return (
     <div
       className="bg-no-repeat bg-center bg-cover z-30"
-      style={{ backgroundImage: `url(${srcUrl})` }}
+      style={{ backgroundImage: `url(${bannerImage})` }}
     >
       <h1
         style={{ minHeight: '500px' }}

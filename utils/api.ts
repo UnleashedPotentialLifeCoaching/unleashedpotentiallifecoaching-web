@@ -5,7 +5,7 @@ import {
 } from 'utils/constants';
 import { useQuery } from '@tanstack/react-query';
 
-export async function fetchAPI(query: string, variables: any) {
+export async function fetchContenfulAPI(query: string, variables: any) {
   try {
     if (NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL) {
       headers.Authorization = `Bearer ${NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN}`;
@@ -36,7 +36,7 @@ export const useGetPosts = (
   return useQuery(
     [label, variables],
     async () => {
-      const request = await fetchAPI(query, variables);
+      const request = await fetchContenfulAPI(query, variables);
       return request?.data;
     },
     { keepPreviousData: true },

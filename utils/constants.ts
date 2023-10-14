@@ -3,6 +3,8 @@ export const NEXT_PUBLIC_CONTENTFUL_GRAPHQL_API_URL: string | unknown =
 export const NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN:
   | string
   | unknown = process.env.NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN;
+export const FAUNA_SECRET: string | undefined =
+  process.env.NEXT_PUBLIC_FAUNA_SECRET;
 
 export const BOOLEAN_CHOICE = [
   {
@@ -106,9 +108,6 @@ export const SERVICES_LIST = [
     service: 'Trauma-Informed Life Coaching',
   },
 ];
-
-export const BANNER_URL: string =
-  'https://res.cloudinary.com/tumulty-web-services/image/upload/v1638888993/unleashedpotential/geoffroy-hauwen-hU_A4b397bQ-unsplash.webp';
 
 export const FAILED_EMAIL_MESSAGE: string =
   'There was an issue with your submission, please email the details to unleashedpotential@gmail.com';

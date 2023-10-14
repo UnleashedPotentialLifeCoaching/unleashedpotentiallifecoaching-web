@@ -1,14 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ReviewsPage from 'components/pages/ReviewsPage';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import React from 'react';
 import { IReviewFields } from 'types/contentful';
-import { fetchAPI } from 'utils/api';
-import { CACHE_CONTROL, CACHE_LIFE, REVIEWS_PAGE_ID } from 'utils/constants';
+import { fetchContenfulAPI } from 'utils/api';
+import { REVIEWS_PAGE_ID } from 'utils/constants';
 import { reviewsQuery, simplePageQuery } from 'utils/queries';
 
 const queryClient = new QueryClient();
@@ -17,7 +13,7 @@ const Reviews = ({
   review,
   page,
   allReviews,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const pageProps = { review, page, allReviews };
 
   return (
@@ -27,18 +23,17 @@ const Reviews = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const reviewsData = await fetchAPI(reviewsQuery, {});
-  const reviewPageData = await fetchAPI(simplePageQuery(REVIEWS_PAGE_ID), {});
+export const getStaticProps: GetStaticProps = async () => {
+  const reviewsData = await fetchContenfulAPI(reviewsQuery, {});
+  const reviewPageData = await fetchContenfulAPI(
+    simplePageQuery(REVIEWS_PAGE_ID),
+    {},
+  );
 
   const allReviews = reviewsData?.data?.reviewCollection
     ?.items as IReviewFields[];
 
   const page = reviewPageData?.data?.simplePage;
-
-  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {

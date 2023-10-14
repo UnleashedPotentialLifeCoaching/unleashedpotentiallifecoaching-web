@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { fetchAPI } from 'utils/api';
+import { fetchContenfulAPI } from 'utils/api';
 import { featuredReview } from 'utils/queries';
 import { useQuery } from '@tanstack/react-query';
 import { IReviewFields } from 'types/contentful';
@@ -9,7 +9,7 @@ const useGetReviews = () => {
   return useQuery<IReviewFields[]>(
     ['reviews'],
     async () => {
-      const request = await fetchAPI(featuredReview, {});
+      const request = await fetchContenfulAPI(featuredReview, {});
       return request?.data?.reviewCollection?.items;
     },
     { keepPreviousData: true },
