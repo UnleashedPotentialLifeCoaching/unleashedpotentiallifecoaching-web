@@ -6,9 +6,9 @@ import Button from 'components/atoms/Button';
 import InputRadio from 'components/atoms/InputRadio';
 import InputText from 'components/atoms/InputText';
 import useFormHook from 'hooks/useFormHook';
-import { BOOLEAN_CHOICE } from 'utils/constants';
 import { urlify } from 'utils/helpers';
 import { ICoachFields } from 'types/contentful';
+import { ConstantsContext } from 'contexts/ConstantsContext';
 
 const FormResponse = dynamic(() => import('components/atoms/FormResponse'));
 
@@ -27,6 +27,7 @@ const BookTimeForm = ({ setOpen }: Props) => {
     useFormHook('book-time');
   const router = useRouter();
   const { coaches } = useContext(CoachesContext);
+  const { boolean_choices } = useContext(ConstantsContext);
 
   useEffect(() => {
     if (coachOptions.length <= 0 && coaches) {
@@ -77,7 +78,7 @@ const BookTimeForm = ({ setOpen }: Props) => {
           <InputRadio
             label="previousCoaching"
             title="Have you been coached before?"
-            options={BOOLEAN_CHOICE}
+            options={boolean_choices}
           />
           <InputRadio
             label="selectCoach"

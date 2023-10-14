@@ -1,27 +1,31 @@
 import ImageWrapper from 'components/atoms/ImageWrapper';
-import React from 'react';
+import { ConstantsContext } from 'contexts/ConstantsContext';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { SITE_TITLE } from 'utils/constants';
 
 interface Props {
   imageUrl: string | undefined;
   header: string | undefined;
   body: string | undefined;
 }
-const FeaturedMessage = ({ imageUrl, header, body }: Props) => (
-  <div className="flex flex-col my-24 mx-0 lg:flex-row lg:justify-between">
-    <TextContainer>
-      <h2>{header}</h2>
-      <p>{body}</p>
-    </TextContainer>
-    <ImageWrapper
-      url={imageUrl as string}
-      width={450}
-      height={450}
-      name={SITE_TITLE}
-    />
-  </div>
-);
+
+const FeaturedMessage = ({ imageUrl, header, body }: Props) => {
+  const { site_title } = useContext(ConstantsContext);
+  return (
+    <div className="flex flex-col my-24 mx-0 lg:flex-row lg:justify-between">
+      <TextContainer>
+        <h2>{header}</h2>
+        <p>{body}</p>
+      </TextContainer>
+      <ImageWrapper
+        url={imageUrl as string}
+        width={450}
+        height={450}
+        name={site_title}
+      />
+    </div>
+  );
+};
 
 const TextContainer = styled.div`
   text-align: center;

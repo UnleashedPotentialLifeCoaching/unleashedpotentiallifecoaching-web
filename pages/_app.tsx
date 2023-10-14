@@ -6,6 +6,7 @@ import { CoachesProvider } from 'contexts/CoachesContext';
 import Header from 'components/shared/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'styles/globals.css';
+import { ConstantsProvider } from 'contexts/ConstantsContext';
 
 const queryClient = new QueryClient();
 const Footer = dynamic(() => import('components/shared/Footer'));
@@ -28,12 +29,14 @@ const SiteHead = () => (
 const UnleashedPotentialApp = ({ Component, pageProps }: AppProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <CoachesProvider>
-        <SiteHead />
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
-      </CoachesProvider>
+      <ConstantsProvider>
+        <CoachesProvider>
+          <SiteHead />
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
+        </CoachesProvider>
+      </ConstantsProvider>
     </QueryClientProvider>
   );
 };
