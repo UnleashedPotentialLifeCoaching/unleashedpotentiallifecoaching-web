@@ -3,13 +3,15 @@ import Button from 'components/atoms/Button';
 import InputRadio from 'components/atoms/InputRadio';
 import InputText from 'components/atoms/InputText';
 import useFormHook from 'hooks/useFormHook';
-import { BOOLEAN_CHOICE, SERVICES_OPTIONS } from 'utils/constants';
+import { useContext } from 'react';
+import { ConstantsContext } from 'contexts/ConstantsContext';
 
 const FormResponse = dynamic(() => import('components/atoms/FormResponse'));
 
 const ReviewForm = () => {
   const [onChangeHandler, onSubmitHandler, didSend, response] =
     useFormHook('review');
+  const { boolean_choices, service_options } = useContext(ConstantsContext);
   return (
     <>
       {didSend ? (
@@ -39,7 +41,7 @@ const ReviewForm = () => {
           <InputRadio
             label="ratings"
             title="Rate Our Services"
-            options={SERVICES_OPTIONS}
+            options={service_options}
           />
           <InputText
             id="explanation"
@@ -57,7 +59,7 @@ const ReviewForm = () => {
           <InputRadio
             label="recommend"
             title="Would you recommend us to your friends?"
-            options={BOOLEAN_CHOICE}
+            options={boolean_choices}
           />
           <InputText
             id="comments"

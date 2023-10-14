@@ -3,13 +3,14 @@ import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
-import { SEO_DEFAULTS } from 'utils/constants';
 import { urlify } from 'utils/helpers';
 import { AiOutlineFacebook, AiOutlineInstagram } from 'react-icons/ai';
 import { format } from 'date-fns';
 import { IBlogPostFields, IReviewFields } from 'types/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { ConstantsContext } from 'contexts/ConstantsContext';
 
 interface Props {
   post: IBlogPostFields;
@@ -18,12 +19,13 @@ interface Props {
 
 const PostPage = ({ post, postContent }: Props) => {
   const router = useRouter();
+  const { seo_defaults } = useContext(ConstantsContext);
   return (
     <FadeInContainer>
       <SiteHead
-        title={post?.seoTitle || SEO_DEFAULTS.title}
+        title={post?.seoTitle || seo_defaults.title}
         metaDescription={
-          post?.seoMetaDescription || SEO_DEFAULTS.metaDescription
+          post?.seoMetaDescription || seo_defaults.metaDescription
         }
       />
       <main>

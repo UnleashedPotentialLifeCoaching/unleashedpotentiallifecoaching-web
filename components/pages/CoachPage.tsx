@@ -1,11 +1,11 @@
 import ProfileHeader from 'components/organisms/coach/ProfileHeader';
 import SiteHead from 'components/shared/SiteHead';
+import { ConstantsContext } from 'contexts/ConstantsContext';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
 import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { useContext } from 'react';
 import { ICoachFields, IReviewFields } from 'types/contentful';
-import { SEO_DEFAULTS } from 'utils/constants';
 const Biography = dynamic(() => import('components/organisms/coach/Biography'));
 
 interface Props {
@@ -21,12 +21,13 @@ const CoachPage = ({ coach }: Props) => {
     seoTitle,
     seoMetaDescription,
   } = coach;
+  const { seo_defaults } = useContext(ConstantsContext);
 
   return (
     <FadeInContainer>
       <SiteHead
-        title={seoTitle || SEO_DEFAULTS.title}
-        metaDescription={seoMetaDescription || SEO_DEFAULTS.metaDescription}
+        title={seoTitle || seo_defaults.title}
+        metaDescription={seoMetaDescription || seo_defaults.metaDescription}
       />
       <main>
         <Container>

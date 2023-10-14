@@ -42,3 +42,12 @@ export const useGetPosts = (
     { keepPreviousData: true },
   );
 };
+
+export const useGetSiteConstants = () => {
+  return useQuery(['site_constants'], async () => {
+    const request = await fetch('/api/site-constants');
+    const res = await request?.json();
+
+    return res;
+  });
+};
