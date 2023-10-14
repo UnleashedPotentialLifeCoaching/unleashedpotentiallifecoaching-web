@@ -2,7 +2,7 @@ import SiteHead from 'components/shared/SiteHead';
 import Container from 'layouts/Container';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { IDisclaimerFields } from 'types/contentful';
-import { fetchAPI } from 'utils/api';
+import { fetchContenfulAPI } from 'utils/api';
 import { SITE_URL } from 'utils/constants';
 import { disclaimerPageQuery } from 'utils/queries';
 
@@ -40,7 +40,7 @@ const Disclaimer = ({
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const disclaimerPageData = await fetchAPI(disclaimerPageQuery, {});
+  const disclaimerPageData = await fetchContenfulAPI(disclaimerPageQuery, {});
   const page = disclaimerPageData?.data?.disclaimer as IDisclaimerFields;
 
   return {

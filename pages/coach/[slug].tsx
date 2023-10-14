@@ -6,7 +6,7 @@ import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { ICoachFields } from 'types/contentful';
-import { fetchAPI } from 'utils/api';
+import { fetchContenfulAPI } from 'utils/api';
 import { urlify } from 'utils/helpers';
 import { coachQuery } from 'utils/queries';
 import { SITE_NAVS } from 'utils/constants';
@@ -47,7 +47,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug;
-  const coachesData = await fetchAPI(coachQuery, {});
+  const coachesData = await fetchContenfulAPI(coachQuery, {});
   const coaches = coachesData?.data?.coachCollection.items as ICoachFields[];
 
   const coach = coaches?.find(

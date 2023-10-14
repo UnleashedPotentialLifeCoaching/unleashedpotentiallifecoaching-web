@@ -1,11 +1,7 @@
 import { ISimplePageFields } from 'types/contentful';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  InferGetServerSidePropsType,
-} from 'next';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fetchAPI } from 'utils/api';
+import { fetchContenfulAPI } from 'utils/api';
 import { simplePageQuery } from 'utils/queries';
 import { CACHE_CONTROL, CACHE_LIFE, INTERVIEWS_PAGE_ID } from 'utils/constants';
 import InterviewsPage from 'components/pages/InterviewsPage';
@@ -14,7 +10,7 @@ const queryClient = new QueryClient();
 
 const Interviews = ({
   page,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const interviewsPageProps = { page };
   return (
     <QueryClientProvider client={queryClient}>
@@ -23,15 +19,12 @@ const Interviews = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext,
-) => {
-  const interviewsPageData = await fetchAPI(
+export const getStaticProps: GetStaticProps = async () => {
+  const interviewsPageData = await fetchContenfulAPI(
     simplePageQuery(INTERVIEWS_PAGE_ID),
     {},
   );
   const page = interviewsPageData?.data?.simplePage as ISimplePageFields;
-  context.res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
   return {
     props: {
