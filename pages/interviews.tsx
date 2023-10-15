@@ -3,8 +3,10 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchContenfulAPI } from 'utils/api';
 import { simplePageQuery } from 'utils/queries';
-import { CACHE_CONTROL, CACHE_LIFE, INTERVIEWS_PAGE_ID } from 'utils/constants';
+import { siteConstants } from 'pages/api/site-constants';
+
 import InterviewsPage from 'components/pages/InterviewsPage';
+import { IPageIds } from 'utils/types';
 
 const queryClient = new QueryClient();
 
@@ -20,8 +22,12 @@ const Interviews = ({
 };
 
 export const getStaticProps: GetStaticProps = async () => {
+  const constants = await siteConstants();
+  const pageId = constants.page_ids
+    .filter((p: IPageIds) => p.page === 'interviews')
+    .map((p: IPageIds) => p.id)[0];
   const interviewsPageData = await fetchContenfulAPI(
-    simplePageQuery(INTERVIEWS_PAGE_ID),
+    simplePageQuery(pageId),
     {},
   );
   const page = interviewsPageData?.data?.simplePage as ISimplePageFields;
