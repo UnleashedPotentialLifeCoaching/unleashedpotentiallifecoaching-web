@@ -97,8 +97,6 @@ export const ConstantsProvider = ({
 }) => {
   const { data } = useGetSiteConstants();
 
-  console.log(data?.data);
-
   if (data) {
     return (
       <ConstantsContext.Provider value={...data?.data}>

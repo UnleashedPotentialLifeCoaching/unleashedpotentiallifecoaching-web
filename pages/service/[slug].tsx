@@ -3,9 +3,9 @@ import ServicesPage from 'components/pages/ServicesPage';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { fetchContenfulAPI } from 'utils/api';
 import { servicePageQuery } from 'utils/queries';
-import { SERVICES_LIST } from 'utils/constants';
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
+import { siteConstants } from 'pages/api/site-constants';
 
 const Service = ({
   page,
@@ -23,9 +23,10 @@ const Service = ({
 };
 
 export const getStaticPaths = async () => {
+  const constants = await siteConstants();
   return {
     fallback: true,
-    paths: SERVICES_LIST?.map((service: any) => service?.slug),
+    paths: constants.service_list.map((service: any) => service?.slug),
   };
 };
 

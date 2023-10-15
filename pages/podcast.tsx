@@ -4,7 +4,8 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fetchContenfulAPI } from 'utils/api';
 import { simplePageQuery } from 'utils/queries';
-import { PODCAST_PAGE_ID } from 'utils/constants';
+import { siteConstants } from 'pages/api/site-constants';
+import { IPageIds } from 'utils/types';
 
 const queryClient = new QueryClient();
 
@@ -20,10 +21,11 @@ const PodCast = ({ page }: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const podcastPageData = await fetchContenfulAPI(
-    simplePageQuery(PODCAST_PAGE_ID),
-    {},
-  );
+  const constants = await siteConstants();
+  const pageId = constants.page_ids
+    .filter((p: IPageIds) => p.page === 'podcast')
+    .map((p: IPageIds) => p.id)[0];
+  const podcastPageData = await fetchContenfulAPI(simplePageQuery(pageId), {});
   const page = podcastPageData?.data?.simplePage;
 
   return {

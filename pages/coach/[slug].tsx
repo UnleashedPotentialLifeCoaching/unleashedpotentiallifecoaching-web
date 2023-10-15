@@ -9,7 +9,7 @@ import { ICoachFields } from 'types/contentful';
 import { fetchContenfulAPI } from 'utils/api';
 import { urlify } from 'utils/helpers';
 import { coachQuery } from 'utils/queries';
-import { SITE_NAVS } from 'utils/constants';
+import { siteConstants } from 'pages/api/site-constants';
 
 const CoachProfile = ({
   coach,
@@ -34,7 +34,10 @@ const CoachProfile = ({
 };
 
 export const getStaticPaths = async () => {
-  const coachesItem = SITE_NAVS.filter((nav: any) => nav.id === 2)[0];
+  const constants = await siteConstants();
+  const coachesItem = constants.site_navigation.filter(
+    (nav: any) => nav.id === 2,
+  )[0];
   const coacheSlugs = coachesItem?.children
     ?.filter((coach: any) => !coach?.slug?.includes('themendwellness'))
     .map((coach: any) => `${coach?.slug}`);
