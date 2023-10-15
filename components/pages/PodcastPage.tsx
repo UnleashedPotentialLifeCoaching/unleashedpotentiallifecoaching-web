@@ -43,8 +43,12 @@ const PodcastPage = ({ page }: Props) => {
                 href={podcast?.link}
                 target="_blank"
                 rel="noreferrer"
+                className="flex flex-col my-16 max-w-md border p-6 rounded"
               >
-                {podcast?.title}
+                <h3 className="text-2xl text-forrest mb-2 block">
+                  {podcast?.title}
+                </h3>
+                <p>{podcast?.excerpt}</p>
               </a>
             ),
           )}
