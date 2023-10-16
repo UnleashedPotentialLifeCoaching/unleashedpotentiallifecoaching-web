@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client, fql } from 'fauna';
-import { FAUNA_SECRET } from 'utils/constants';
+import { CACHE_CONTROL, CACHE_LIFE, FAUNA_SECRET } from 'utils/constants';
 
 const client = new Client({
   secret: FAUNA_SECRET,
@@ -45,6 +45,8 @@ export const siteConstants = async () => {
 export default async (_: NextApiRequest, res: NextApiResponse) => {
   try {
     const data = await siteConstants();
+
+    res.setHeader(CACHE_CONTROL, CACHE_LIFE);
 
     res.status(200).json({
       status: 200,
