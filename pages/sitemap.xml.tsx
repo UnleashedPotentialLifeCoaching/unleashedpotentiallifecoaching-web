@@ -9,6 +9,18 @@ import { siteConstants } from './api/site-constants';
 const Sitemap = () => null;
 export default Sitemap;
 
+const generateXML = (slug: string, date: string, isPost: boolean) => {
+  const url = `${SITE_URL}${isPost ? 'post/' : ''}${slug}`;
+  return `
+  <url>
+        <loc>${url}</loc>
+        <lastmod>${date}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1.0</priority>
+      </url> 
+    `;
+};
+
 export const getServerSideProps: GetServerSideProps = async (
   context: GetServerSidePropsContext,
 ) => {
@@ -20,55 +32,41 @@ export const getServerSideProps: GetServerSideProps = async (
 
   const postLinks = posts
     .filter((post: IBlogPostFields) => post?.slugText !== null)
-    .map((post: IBlogPostFields) => {
-      return `
-      <url>
-        <loc>${SITE_URL}post/${post?.slugText}</loc>
-        <lastmod>${new Date(
-          post?.publishDate as string,
-        ).toISOString()}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>1.0</priority>
-      </url> 
-
-    `;
-    })
+    .map((post: IBlogPostFields) =>
+      generateXML(
+        post?.slugText as string,
+        new Date(post?.publishDate as string).toISOString(),
+        true,
+      ),
+    )
     .join('');
 
   const siteLinks = constants?.site_navigation
-    .map(
-      ({
-        slug,
-        children,
-      }: {
-        slug: string;
-        children: {
-          slug: string;
-        }[];
-      }) =>
-        slug
-          ? `
-      <url>
-        <loc>${SITE_URL}${removeSlashFromSlug(slug)}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>1.0</priority>
-      </url> 
-  `
-          : children
-              ?.filter((link) => !link?.slug?.includes('themendwellness'))
-              .map(
-                ({ slug }) =>
-                  `
-      <url>
-        <loc>${SITE_URL}${removeSlashFromSlug(slug)}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>1.0</priority>
-      </url> 
-      `,
-              ),
-    )
+    .map((nav: { slug: string; children: any[] }) => {
+      if (nav?.slug) {
+        return generateXML(
+          removeSlashFromSlug(nav?.slug),
+          new Date().toISOString(),
+          false,
+        );
+      }
+
+      if (nav?.children) {
+        return nav?.children
+          .filter(
+            (link: { slug: string | string[] }) =>
+              !link?.slug?.includes('themendwellness'),
+          )
+          .map((nav: { slug: string }) => {
+            return generateXML(
+              removeSlashFromSlug(nav?.slug),
+              new Date().toISOString(),
+              false,
+            );
+          })
+          .join('');
+      }
+    })
     .join('');
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
