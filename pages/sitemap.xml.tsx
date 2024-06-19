@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (
     .map((post: IBlogPostFields) => {
       return `
       <url>
-        <loc>${SITE_URL}/post${post?.slugText}</loc>
+        <loc>${SITE_URL}post/${post?.slugText}</loc>
         <lastmod>${new Date(
           post?.publishDate as string,
         ).toISOString()}</lastmod>
