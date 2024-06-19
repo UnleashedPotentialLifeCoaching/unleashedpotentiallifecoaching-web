@@ -15,9 +15,9 @@ const Coaches = ({ coaches }: { coaches: ICoachFields[] }) => {
               ? 1
               : -1,
           )
-          .map((coach) => (
+          .map((coach, index) => (
             <CoachCard
-              key={coach.name}
+              key={`${coach.name}-${index}`}
               name={coach.name}
               url={coach?.bookTimePhoto?.url}
             />

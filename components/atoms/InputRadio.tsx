@@ -13,8 +13,8 @@ const RadioInput = ({ title, label, options }: Props) => {
   return (
     <div className="my-6">
       <p className="text-forrest text-xl font-bold">{title}</p>
-      {options.map(({ name, checked }) => (
-        <label className="block my-4" htmlFor={name} key={name}>
+      {options.map(({ name, checked }, index) => (
+        <label className="block my-4" htmlFor={name} key={`${name}-${index}`}>
           <input
             aria-label={name}
             value={name}

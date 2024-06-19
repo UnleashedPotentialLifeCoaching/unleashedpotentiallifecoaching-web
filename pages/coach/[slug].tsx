@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import CoachPage from 'components/pages/CoachPage';
 import { CoachesContext } from 'contexts/CoachesContext';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';

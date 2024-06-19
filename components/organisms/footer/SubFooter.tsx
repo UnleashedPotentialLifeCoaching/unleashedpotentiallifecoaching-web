@@ -23,9 +23,9 @@ const SubFooter = () => {
     <div className="flex flex-col h-4 mt-12 border-t border-black sm:flex-row sm:justify-between">
       <p className="mt-4 text-forrest">Unleashed Potential ©️ {year}</p>
       <ul className="flex mt-4">
-        {FOOTER_LINKS.map(({ slug, label }) =>
+        {FOOTER_LINKS.map(({ slug, label }, index) =>
           slug !== FOOTER_LINKS[2].slug ? (
-            <li key={label}>
+            <li key={`${label}-${index}`}>
               <Link
                 href={slug}
                 className="mx-4 font-serif text-lg italic text-forrest hover:underline"
@@ -36,7 +36,7 @@ const SubFooter = () => {
           ) : (
             <a
               href={slug}
-              key={label}
+              key={`${label}-${index}`}
               className="mx-4 font-serif text-lg italic text-forrest hover:underline"
             >
               {label}

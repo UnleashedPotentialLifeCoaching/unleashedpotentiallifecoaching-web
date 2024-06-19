@@ -19,6 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const constants = await siteConstants();
 
   const postLinks = posts
+    .filter((post: IBlogPostFields) => post?.slugText !== null)
     .map((post: IBlogPostFields) => {
       return `
       <url>

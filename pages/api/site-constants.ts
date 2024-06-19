@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Client, fql } from 'fauna';
 import { CACHE_CONTROL, CACHE_LIFE, FAUNA_SECRET } from 'utils/constants';

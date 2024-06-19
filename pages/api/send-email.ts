@@ -1,4 +1,3 @@
-/* eslint-disable import/no-anonymous-default-export */
 import type { NextApiRequest, NextApiResponse } from 'next';
 import sendSeverEmail from 'utils/email/server-handler';
 

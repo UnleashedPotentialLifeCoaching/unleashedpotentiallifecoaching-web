@@ -8,10 +8,10 @@ const CONTACT_INFO = [
 
 const ContactInfo = () => (
   <div className="w-100 sm:w-1/2 my-12 mx-12 sm:mx-0">
-    {CONTACT_INFO.map((person) => (
+    {CONTACT_INFO.map((person, index) => (
       <p
         className="text-forrest break-words sm:break-normal text-xl sm:text-2xl"
-        key={person}
+        key={`${person}-${index}`}
       >
         {person}
       </p>
