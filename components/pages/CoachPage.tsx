@@ -1,12 +1,12 @@
-import ProfileHeader from 'components/organisms/coach/ProfileHeader';
+import BasicPage from 'components/organisms/coach/BasicPage';
+import CarouselPage from 'components/organisms/coach/CarouselPage';
 import SiteHead from 'components/shared/SiteHead';
 import { ConstantsContext } from 'contexts/ConstantsContext';
 import Container from 'layouts/Container';
 import FadeInContainer from 'layouts/FadeInContainer';
-import dynamic from 'next/dynamic';
-import React, { useContext } from 'react';
-import { ICoachFields, IReviewFields } from 'types/contentful';
-const Biography = dynamic(() => import('components/organisms/coach/Biography'));
+import React, { useContext, useEffect, useState } from 'react';
+import { ICoachFields } from 'types/contentful';
+import { CAROUSEL_COACHES_LIST } from 'utils/constants';
 
 interface Props {
   coach: ICoachFields;
@@ -22,6 +22,13 @@ const CoachPage = ({ coach }: Props) => {
     seoMetaDescription,
   } = coach;
   const { seo_defaults } = useContext(ConstantsContext);
+  const [isCarouselPage, setCarouselPage] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (CAROUSEL_COACHES_LIST.includes(name as string)) {
+      setCarouselPage(true);
+    }
+  }, [name, setCarouselPage]);
 
   return (
     <FadeInContainer>
@@ -31,13 +38,21 @@ const CoachPage = ({ coach }: Props) => {
       />
       <main>
         <Container>
-          <ProfileHeader
-            name={name as string}
-            profileImage={profileImage}
-            welcomeMessage={welcomeMessage}
-          />
-          <br />
-          <Biography biography={biography} />
+          {isCarouselPage ? (
+            <CarouselPage
+              name={name as string}
+              profileImage={profileImage}
+              welcomeMessage={welcomeMessage}
+              biography={biography}
+            />
+          ) : (
+            <BasicPage
+              name={name as string}
+              profileImage={profileImage}
+              welcomeMessage={welcomeMessage}
+              biography={biography}
+            />
+          )}
         </Container>
       </main>
     </FadeInContainer>

@@ -1,5 +1,4 @@
 import React, { createContext } from 'react';
-import { ICoachFields } from 'types/contentful';
 import { useGetSiteConstants } from 'utils/api';
 
 interface ContextProps {
@@ -99,7 +98,7 @@ export const ConstantsProvider = ({
 
   if (data) {
     return (
-      <ConstantsContext.Provider value={...data?.data}>
+      <ConstantsContext.Provider value={data?.data}>
         {children}
       </ConstantsContext.Provider>
     );

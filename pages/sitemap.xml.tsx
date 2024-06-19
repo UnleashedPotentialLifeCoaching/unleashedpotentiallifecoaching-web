@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = async (
     .map((post: IBlogPostFields) => {
       return `
       <url>
-        <loc>${SITE_URL}/post/${post?.slugText}</loc>
+        <loc>${SITE_URL}/post${post?.slugText}</loc>
         <lastmod>${new Date(
           post?.publishDate as string,
         ).toISOString()}</lastmod>
@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async (
         slug
           ? `
       <url>
-        <loc>${SITE_URL}/${removeSlashFromSlug(slug)}</loc>
+        <loc>${SITE_URL}${removeSlashFromSlug(slug)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (
                 ({ slug }) =>
                   `
       <url>
-        <loc>${SITE_URL}/${removeSlashFromSlug(slug)}</loc>
+        <loc>${SITE_URL}${removeSlashFromSlug(slug)}</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
