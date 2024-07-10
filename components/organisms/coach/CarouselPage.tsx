@@ -14,12 +14,11 @@ const CarouselPage = ({
   biography: any;
 }) => (
   <>
-    {/* <ProfileHeader
+    <ProfileHeader
       name={name as string}
       profileImage={profileImage}
       welcomeMessage={welcomeMessage}
-    /> */}
-    <FadeInCarousel />
+    />
     <br />
     <Biography biography={biography} />
   </>
