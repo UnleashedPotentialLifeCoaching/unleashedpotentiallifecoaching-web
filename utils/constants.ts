@@ -33,3 +33,4 @@ export const CACHE_CONTROL = 'Cache-Control';
 export const CACHE_LIFE = 'public, s-maxage=300, stale-while-revalidate=59';
 
 export const CAROUSEL_COACHES_LIST = ['Jessica Rebelo'];
+export const GA_ID = 'G-X4HKDL4H2G';
