@@ -37,38 +37,38 @@ export const CAROUSEL_COACHES_LIST = ['Jessica Rebelo'];
 export const CTA_CAROUSEL_ITEMS = [
   {
     source: '/imgs/cta-carousel/1.webp',
-    alt: 'image 1',
+    alt: 'Jess Rebelo explaining EMDR therapy for processing distressing or traumatic memories',
   },
   {
     source: '/imgs/cta-carousel/2.webp',
-    alt: 'image 2',
+    alt: 'Jess Rebelo providing specialized trauma therapy support to help individuals navigate their healing journey.',
   },
   {
     source: '/imgs/cta-carousel/3.webp',
-    alt: 'image 3',
+    alt: 'Jess Rebelo, a trauma-informed life coach, offering guidance and support for a more fulfilling life.',
   },
   {
     source: '/imgs/cta-carousel/4.webp',
-    alt: 'image 4',
+    alt: 'Jess Rebelo utilizing EMDR techniques to help clients with unprocessed trauma',
   },
   {
     source: '/imgs/cta-carousel/5.webp',
-    alt: 'image 5',
+    alt: 'Jess Rebelo, a trauma therapist, using evidence-based techniques like EMDR and CBT for trauma healing.',
   },
   {
     source: '/imgs/cta-carousel/6.webp',
-    alt: 'image 6',
+    alt: 'Jess Rebelo providing trauma-informed life coaching to help overcome challenges and improve well-being.',
   },
   {
     source: '/imgs/cta-carousel/7.webp',
-    alt: 'image 7',
+    alt: 'Jess Rebelo discussing the benefits of EMDR in managing psychological and physical difficulties from past trauma',
   },
   {
     source: '/imgs/cta-carousel/8.webp',
-    alt: 'image 8',
+    alt: 'Jess Rebelo guiding clients through emotional regulation and coping strategies in trauma-focused therapy sessions.',
   },
   {
     source: '/imgs/cta-carousel/9.webp',
-    alt: 'image 9',
+    alt: "Jess Rebelo's trauma-informed coaching sessions focus on goal setting, resilience building, and personal growth.",
   },
 ];
