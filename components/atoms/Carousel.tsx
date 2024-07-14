@@ -1,24 +1,44 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import classNames from 'classnames';
 import Slider from 'react-slick';
-import { useMemo } from 'react';
-import { CTA_CAROUSEL_ITEMS } from 'utils/constants';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
+interface IPhoto {
+  source: string;
+  alt: string;
+}
 const Carousel = ({
   settings,
   photoArray,
   carouselHeight,
 }: {
-  settings: any;
-  photoArray: any;
+  settings: {
+    [key: string]: string | number | boolean;
+  };
+  photoArray: IPhoto[];
   carouselHeight: string;
 }) => {
+  const containerClass = useMemo(
+    () =>
+      classNames(
+        'border-t-2 border-b-2 border-black max-w-full overflow-hidden bg-forrest',
+        carouselHeight,
+      ),
+    [carouselHeight],
+  );
+
+  const slideClass = useMemo(
+    () => classNames('"w-full relative', carouselHeight),
+    [carouselHeight],
+  );
+
   return (
-    <div className="border-t-2 border-b-2 border-black max-w-full overflow-hidden bg-forrest h-96">
+    <div className={containerClass}>
       <Slider {...settings}>
         {photoArray.map((image: { alt: string; source: string }) => (
-          <div key={image.alt} className="w-full h-96 relative">
+          <div key={image.alt} className={slideClass}>
             <Image
               src={image.source}
               alt={image.alt}

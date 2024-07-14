@@ -36,39 +36,39 @@ export const CAROUSEL_COACHES_LIST = ['Jessica Rebelo'];
 
 export const CTA_CAROUSEL_ITEMS = [
   {
-    source: '/imgs/cta-carousel/1.jpg',
+    source: '/imgs/cta-carousel/1.webp',
     alt: 'image 1',
   },
   {
-    source: '/imgs/cta-carousel/2.jpg',
+    source: '/imgs/cta-carousel/2.webp',
     alt: 'image 2',
   },
   {
-    source: '/imgs/cta-carousel/3.jpg',
+    source: '/imgs/cta-carousel/3.webp',
     alt: 'image 3',
   },
   {
-    source: '/imgs/cta-carousel/4.jpg',
+    source: '/imgs/cta-carousel/4.webp',
     alt: 'image 4',
   },
   {
-    source: '/imgs/cta-carousel/5.jpg',
+    source: '/imgs/cta-carousel/5.webp',
     alt: 'image 5',
   },
   {
-    source: '/imgs/cta-carousel/6.jpg',
+    source: '/imgs/cta-carousel/6.webp',
     alt: 'image 6',
   },
   {
-    source: '/imgs/cta-carousel/7.jpg',
+    source: '/imgs/cta-carousel/7.webp',
     alt: 'image 7',
   },
   {
-    source: '/imgs/cta-carousel/8.jpg',
+    source: '/imgs/cta-carousel/8.webp',
     alt: 'image 8',
   },
   {
-    source: '/imgs/cta-carousel/9.jpg',
+    source: '/imgs/cta-carousel/9.webp',
     alt: 'image 9',
   },
 ];
