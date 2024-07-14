@@ -24,7 +24,7 @@ const AnimatedButton = ({
           onMouseUp={() => setBackgroundColor(false)}
           onMouseLeave={() => setBackgroundColor(false)}
           className={classNames(
-            'px-4 py-4 bg-transparent text-white font-semibold shadow-lg bg-black bg-opacity-25',
+            'px-4 py-4 bg-black text-white font-semibold shadow-lg bg-black bg-opacity-50',
             {
               'shadow-xl': backgroundColor,
             },
