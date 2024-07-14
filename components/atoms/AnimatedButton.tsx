@@ -1,30 +1,39 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m, useInView } from 'framer-motion';
+import classNames from 'classnames';
+import React, { useRef, useState } from 'react';
 
 const AnimatedButton = ({
   children,
 }: {
   children: React.ReactElement[] | React.ReactElement;
 }) => {
+  const [backgroundColor, setBackgroundColor] = useState(false);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: false, amount: 1 });
+
   return (
-    <motion.div
-      animate={{
-        scale: [1, 2, 2, 1, 1],
-        rotate: [0, 0, 180, 180, 0],
-        borderRadius: ['0%', '0%', '50%', '50%', '0%'],
-      }}
-      transition={{
-        duration: 2,
-        ease: 'easeInOut',
-        times: [0, 0.2, 0.5, 0.8, 1],
-        repeat: Infinity,
-        repeatDelay: 1,
-      }}
-    >
-      <button className="px-4 py-4 bg-transparent text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 block">
-        <div className="border py-4 px-6">{children}</div>
-      </button>
-    </motion.div>
+    <LazyMotion features={domAnimation}>
+      <m.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 30 }}
+        transition={{ duration: 2 }}
+      >
+        <button
+          onMouseDown={() => setBackgroundColor(true)}
+          onMouseUp={() => setBackgroundColor(false)}
+          onMouseLeave={() => setBackgroundColor(false)}
+          className={classNames(
+            'px-4 py-4 bg-transparent text-white font-semibold shadow-lg bg-black bg-opacity-25',
+            {
+              'shadow-xl': backgroundColor,
+            },
+          )}
+        >
+          <div className="border py-4 px-6">{children}</div>
+        </button>
+      </m.div>
+    </LazyMotion>
   );
 };
 

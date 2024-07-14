@@ -33,3 +33,42 @@ export const CACHE_CONTROL = 'Cache-Control';
 export const CACHE_LIFE = 'public, s-maxage=300, stale-while-revalidate=59';
 
 export const CAROUSEL_COACHES_LIST = ['Jessica Rebelo'];
+
+export const CTA_CAROUSEL_ITEMS = [
+  {
+    source: '/imgs/cta-carousel/1.jpg',
+    alt: 'image 1',
+  },
+  {
+    source: '/imgs/cta-carousel/2.jpg',
+    alt: 'image 2',
+  },
+  {
+    source: '/imgs/cta-carousel/3.jpg',
+    alt: 'image 3',
+  },
+  {
+    source: '/imgs/cta-carousel/4.jpg',
+    alt: 'image 4',
+  },
+  {
+    source: '/imgs/cta-carousel/5.jpg',
+    alt: 'image 5',
+  },
+  {
+    source: '/imgs/cta-carousel/6.jpg',
+    alt: 'image 6',
+  },
+  {
+    source: '/imgs/cta-carousel/7.jpg',
+    alt: 'image 7',
+  },
+  {
+    source: '/imgs/cta-carousel/8.jpg',
+    alt: 'image 8',
+  },
+  {
+    source: '/imgs/cta-carousel/9.jpg',
+    alt: 'image 9',
+  },
+];
