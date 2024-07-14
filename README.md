@@ -24,8 +24,11 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 
 ## Todos
 
-- Google Analytics
+- Google Analytics -X
 - Publish Podcasts/Blog
-- CTA Carousel
+- CTA Carousel -X
   -- .5 setting up carousel 07/06
   -- .5 setting up image CDN 07/09
+  -- 2 hours finishing up carousel
+
+  3 \* 50 = $150

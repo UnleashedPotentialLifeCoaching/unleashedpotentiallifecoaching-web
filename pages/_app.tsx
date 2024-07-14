@@ -7,6 +7,8 @@ import Header from 'components/shared/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import 'styles/globals.css';
 import { ConstantsProvider } from 'contexts/ConstantsContext';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import { GA_ID } from 'utils/constants';
 
 const queryClient = new QueryClient();
 const Footer = dynamic(() => import('components/shared/Footer'));
@@ -28,16 +30,19 @@ const SiteHead = () => (
 
 const UnleashedPotentialApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ConstantsProvider>
-        <CoachesProvider>
-          <SiteHead />
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-        </CoachesProvider>
-      </ConstantsProvider>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <ConstantsProvider>
+          <CoachesProvider>
+            <SiteHead />
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+          </CoachesProvider>
+        </ConstantsProvider>
+      </QueryClientProvider>
+      <GoogleAnalytics gaId={GA_ID} />
+    </>
   );
 };
 

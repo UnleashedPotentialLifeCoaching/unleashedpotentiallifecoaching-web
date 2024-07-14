@@ -87,3 +87,4 @@ export const PROFILE_CAROUSEL_ITEMS = [
     alt: 'Jess Rebelo, a trauma-informed life coach, offering guidance and support for a more fulfilling life.',
   },
 ];
+export const GA_ID = 'G-X4HKDL4H2G';

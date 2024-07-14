@@ -14,6 +14,7 @@
     "@contentful/rich-text-react-renderer": "^15.12.1",
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^2.0.18",
+    "@next/third-parties": "^14.2.5",
     "@tailwindcss/forms": "^0.5.2",
     "@tanstack/react-query": "^4.12.0",
     "@vercel/kv": "^0.2.3",
