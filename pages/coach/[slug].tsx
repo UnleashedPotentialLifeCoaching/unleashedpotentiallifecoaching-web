@@ -18,18 +18,16 @@ const CoachProfile = ({
   const router = useRouter();
   const { coaches: contextCoaches, setCoaches } = useContext(CoachesContext);
   useEffect(() => {
-    if (!contextCoaches) {
+    if (!contextCoaches && setCoaches) {
       setCoaches(coaches);
     }
-  }, [coaches]);
+  }, [coaches, contextCoaches, setCoaches]);
 
   if (router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />;
   }
 
   return <CoachPage coach={coach} />;
-
-  return null;
 };
 
 export const getStaticPaths = async () => {

@@ -13,20 +13,23 @@ const Carousel = ({
   settings,
   photoArray,
   carouselHeight,
+  borderStyle,
 }: {
   settings: {
     [key: string]: string | number | boolean;
   };
   photoArray: IPhoto[];
   carouselHeight: string;
+  borderStyle?: string;
 }) => {
   const containerClass = useMemo(
     () =>
       classNames(
-        'border-t-2 border-b-2 border-black max-w-full overflow-hidden bg-forrest',
+        'max-w-full overflow-hidden bg-forrest',
         carouselHeight,
+        borderStyle,
       ),
-    [carouselHeight],
+    [carouselHeight, borderStyle],
   );
 
   const slideClass = useMemo(
@@ -42,9 +45,10 @@ const Carousel = ({
             <Image
               src={image.source}
               alt={image.alt}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: 'cover' }}
               priority={false}
+              sizes="100%"
             />
           </div>
         ))}

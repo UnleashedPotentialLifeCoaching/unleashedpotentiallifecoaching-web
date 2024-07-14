@@ -22,6 +22,7 @@ const CarouselCTA = ({
       cssEase: 'ease-in',
       slidesPerRow: 3,
       pauseOnHover: false,
+      arrows: false,
     }),
     [],
   );
@@ -39,6 +40,7 @@ const CarouselCTA = ({
         settings={settings}
         photoArray={CTA_CAROUSEL_ITEMS}
         carouselHeight="h-96"
+        borderStyle="border-t-2 border-b-2 border-black"
       />
     </>
   );
