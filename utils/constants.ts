@@ -13,7 +13,7 @@ export const successEmailMessage = (page: string) =>
 
 export const SITE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://www.unleashedpotentiallifecoaching.com/'
+    ? 'https://www.jessrebelo.com/'
     : 'http://localhost:3000';
 
 export const CONTACT_INFO = [
