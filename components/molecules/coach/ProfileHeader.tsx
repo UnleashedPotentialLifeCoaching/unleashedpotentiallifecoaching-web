@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button';
-import ImageWrapper from 'components/atoms/ImageWrapper';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { useRouter } from 'next/router';
+import Carousel from 'components/atoms/Carousel';
+import { PROFILE_CAROUSEL_ITEMS } from 'utils/constants';
 
 const BookTimeUp = dynamic(() => import('components/shared/BookTimePopup'));
 
@@ -19,9 +20,32 @@ const ProfileHeader = ({ name, profileImage, welcomeMessage }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const firstName = name.split(' ')[0];
   const isJessProfile = router.asPath.includes('coach/jessica-rebelo');
+  const settings = useMemo(
+    () => ({
+      dots: false,
+      fade: true,
+      infinite: true,
+      autoplay: true,
+      speed: 2500,
+      autoplaySpeed: 2500,
+      cssEase: 'ease-in',
+      slidesPerRow: 1,
+      pauseOnHover: false,
+      arrows: false,
+    }),
+    [],
+  );
+  console.log('PROFILE_CAROUSEL_ITEMS', PROFILE_CAROUSEL_ITEMS);
   return (
     <div className="lg:flex lg:flex-row lg:justify-start">
-      <ImageWrapper {...profileImage} alt={name as string} />
+      <div className="w-100 m-auto md:w-3/5 lg:w-2/5">
+        <Carousel
+          settings={settings}
+          photoArray={PROFILE_CAROUSEL_ITEMS}
+          carouselHeight="profile-image-wrapper"
+          borderStyle="shadow-xl border-0"
+        />
+      </div>
       <div className="flex flex-col mw-full m-2 lg:w-3/5 lg:mx-12">
         <h1 className="text-forrest text-3xl mt-0 font-bold mb-4">
           Hi, I&apos;m {firstName}

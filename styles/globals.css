@@ -58,3 +58,7 @@ a {
   @apply my-6;
   @apply text-stone-500;
 }
+
+.profile-image-wrapper {
+  height: 750px;
+}
