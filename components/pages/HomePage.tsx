@@ -3,7 +3,7 @@ import SiteHead from 'components/shared/SiteHead';
 import HomeBanner from 'components/organisms/home/Banner';
 import Container from 'layouts/Container';
 import { ICoachFields, IHomePageFields } from 'types/contentful';
-import { useMemo, memo } from 'react';
+import { useMemo } from 'react';
 
 interface Props {
   page: IHomePageFields;
@@ -11,6 +11,7 @@ interface Props {
 }
 
 import dynamic from 'next/dynamic';
+import ButtonContent from 'components/shared/ButtonContent';
 
 const FeaturedMessage = dynamic(
   () => import('components/organisms/home/FeaturedMessage'),
@@ -21,18 +22,6 @@ const WidgetWrapper = dynamic(
 );
 
 const HomePage = ({ page, coaches }: Props) => {
-  const ButtonContent = memo(function ButtonContent() {
-    return (
-      <>
-        <p className="text-white font-serif italic font-bold text-center text-3xl">
-          Take the first step
-        </p>
-        <p className="font-bold mb-0 text-base text-center">
-          Get your first 1 hour session today!
-        </p>
-      </>
-    );
-  });
   const widgets = useMemo(
     () => [
       {

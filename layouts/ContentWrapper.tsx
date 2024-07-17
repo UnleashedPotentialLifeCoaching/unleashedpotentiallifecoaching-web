@@ -55,17 +55,11 @@ const Container = styled.div`
     margin-bottom: 2.5em;
   }
 
-  .services-1180x1573 {
-    max-width: 420px;
-  }
-
   .daniel-castellon-ievtpifod0a-unsplash {
     max-width: 300px;
   }
 
   img {
-    max-width: 420px;
-
     display: block;
     margin: auto;
     margin-bottom: 1em;
@@ -74,6 +68,7 @@ const Container = styled.div`
       display: inline;
       float: right;
       margin-left: 2em;
+      max-width: 420px;
     }
   }
 

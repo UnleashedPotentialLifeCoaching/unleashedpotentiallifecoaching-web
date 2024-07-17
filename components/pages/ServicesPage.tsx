@@ -8,6 +8,8 @@ import React from 'react';
 import { ICoachFields, IPageFields } from 'types/contentful';
 import { urlify } from 'utils/helpers';
 import SimplePageLayout from 'layouts/SimplePageLayout';
+import CarouselCTA from 'components/molecules/CarouselCTA';
+import ButtonContent from 'components/shared/ButtonContent';
 
 interface Props {
   coaches: ICoachFields[];
@@ -104,30 +106,13 @@ const ServicesPage = ({ page, pageContent, coaches }: Props) => {
             renderOptions(pageContent?.links),
           )}
         </ContentWrapper>
-        <br />
-        <BorderRight />
-        <BorderMessage>
-          <h5 className="text-5xl text-center font-serif text-forrest">
-            Learn more
-          </h5>
-        </BorderMessage>
-        <br />
-        <div className="mx-auto max-w-full lg:max-w-6xl">
-          {coaches
-            .sort((a, b) =>
-              (a.appearanceOrder as number) > (b.appearanceOrder as number)
-                ? 1
-                : -1,
-            )
-            .map((coach: ICoachFields) => (
-              <ServiceCard
-                name={coach?.name as string}
-                bookTimePhoto={coach?.bookTimePhoto?.url}
-                key={coach?.name}
-              />
-            ))}
-        </div>
       </Container>
+      <div className="relative bottom-36">
+        <CarouselCTA
+          ButtonContent={ButtonContent}
+          buttonLink="/coach/jessica-rebelo"
+        />
+      </div>
     </SimplePageLayout>
   );
 };
