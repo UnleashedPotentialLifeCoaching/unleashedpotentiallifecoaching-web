@@ -5,7 +5,7 @@ import FeaturedMessage from 'components/organisms/home/FeaturedMessage';
 import WidgetWrapper from 'components/organisms/home/WidgetWrapper';
 import Coaches from 'components/organisms/home/Coaches';
 import Container from 'layouts/Container';
-import { ICoachFields, IHomePageFields, IReviewFields } from 'types/contentful';
+import { ICoachFields, IHomePageFields } from 'types/contentful';
 
 interface Props {
   page: IHomePageFields;
