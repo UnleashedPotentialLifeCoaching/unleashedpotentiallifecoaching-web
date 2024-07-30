@@ -4,7 +4,11 @@ import FadeInContainer from 'layouts/FadeInContainer';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { urlify } from 'utils/helpers';
-import { AiOutlineFacebook, AiOutlineInstagram } from 'react-icons/ai';
+import {
+  AiOutlineFacebook,
+  AiOutlineInstagram,
+  AiOutlineTikTok,
+} from 'react-icons/ai';
 import { format } from 'date-fns';
 import { IBlogPostFields, IReviewFields } from 'types/contentful';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -137,6 +141,14 @@ const PostPage = ({ post, postContent }: Props) => {
                   >
                     <AiOutlineInstagram size={36} className="text-forrest" />
                     <span className="sr-only">Instagram</span>
+                  </a>
+                  <a
+                    href="https://www.tiktok.com/@unleashed.potential.lc?_t=8nKqFBRLsSN&_r=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <AiOutlineTikTok size={36} className="text-forrest" />
+                    <span className="sr-only">TikTok</span>
                   </a>
                 </div>
               </div>
