@@ -10,6 +10,7 @@ import { ConstantsProvider } from 'contexts/ConstantsContext';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { GA_ID } from 'utils/constants';
 import { EmailsProvider } from 'contexts/EmailsContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
 const Footer = dynamic(() => import('components/shared/Footer'));

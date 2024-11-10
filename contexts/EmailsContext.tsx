@@ -17,6 +17,7 @@ import {
 import sendClientEmail from 'utils/email/client-handler';
 import { FAILED_EMAIL_MESSAGE, successEmailMessage } from 'utils/constants';
 import { convertTime, formatDate } from 'utils/helpers';
+import { toast } from 'react-toastify';
 
 interface ContactForm {
   fullName: string;
@@ -160,6 +161,31 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
     setResponse('');
     setEmailTemplate('');
   }, []);
+
+  const notify = useCallback(() => {
+    toast.dismiss();
+    if (response) {
+      toast(response, {
+        position: window.innerWidth <= 768 ? 'top-center' : 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        onClose: () => {
+          setTimeout(() => {
+            resetForm();
+          }, 100);
+        },
+      });
+    }
+  }, [response, resetForm]);
+
+  useEffect(() => {
+    if (didSend && response) {
+      notify();
+    }
+  }, [didSend, notify, response]);
 
   const value = useMemo(
     () => ({

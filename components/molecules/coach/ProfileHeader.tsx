@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button';
@@ -7,9 +7,6 @@ import { useRouter } from 'next/router';
 import Carousel from 'components/atoms/Carousel';
 import { PROFILE_CAROUSEL_ITEMS } from 'utils/constants';
 import { useEmails } from 'contexts/EmailsContext';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { resolve } from 'path';
 
 const BookTimeUp = dynamic(() => import('components/shared/BookTimePopup'));
 
@@ -42,40 +39,15 @@ const ProfileHeader = ({ name, welcomeMessage }: Props) => {
   );
 
   const { didSend, response } = useEmails();
-  const notify = useCallback(() => {
-    toast.dismiss();
-    if (response) {
-      toast(response, {
-        position: window.innerWidth <= 768 ? 'top-center' : 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
-  }, [response]);
 
   useEffect(() => {
     if (didSend && response) {
-      notify();
       setIsOpen(false);
     }
-  }, [didSend, notify, response]);
+  }, [didSend, response]);
 
   return (
     <>
-      <ToastContainer
-        position={window.innerWidth <= 768 ? 'top-center' : 'top-right'}
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <div className="lg:flex lg:flex-row lg:justify-start">
         <div className="w-100 m-auto md:w-3/5 lg:w-2/5">
           <Carousel

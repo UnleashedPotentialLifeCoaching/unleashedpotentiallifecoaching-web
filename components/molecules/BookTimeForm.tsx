@@ -1,10 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useEmails, Form as EmailsForm } from 'contexts/EmailsContext';
-
-interface Props {
-  setOpen: (e: boolean) => void;
-}
+import Button from 'components/atoms/Button';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full name is required'),
@@ -174,15 +171,11 @@ const BookTimeForm = () => {
                 className="mt-1 text-sm text-red-600"
               />
             </div>
-
             <div>
-              <button
-                type="submit"
+              <Button
                 disabled={isSubmitting}
-                className="w-full px-4 py-2 bg-forrest-900 hover:bg-forrest text-white rounded transition-colors disabled:opacity-50"
-              >
-                {isSubmitting ? 'Submitting...' : 'Book Time'}
-              </button>
+                label={isSubmitting ? 'Submitting...' : 'Book Time'}
+              />
             </div>
           </Form>
         )}

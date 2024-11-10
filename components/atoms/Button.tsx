@@ -2,12 +2,12 @@ import React from 'react';
 
 interface Props {
   label: string;
-  handlePress?: () => void;
+  disabled: boolean;
 }
-const Button = ({ label, handlePress }: Props) => (
+const Button = ({ label, disabled }: Props) => (
   <button
     type="submit"
-    onClick={handlePress}
+    disabled={disabled}
     className="bg-forrest-900 hover:bg-forrest  text-white text-center py-4 px-12 text-xl rounded"
   >
     {label}
