@@ -35,7 +35,6 @@ const ProfileHeader = ({ name, profileImage, welcomeMessage }: Props) => {
     }),
     [],
   );
-  console.log('PROFILE_CAROUSEL_ITEMS', PROFILE_CAROUSEL_ITEMS);
   return (
     <div className="lg:flex lg:flex-row lg:justify-start">
       <div className="w-100 m-auto md:w-3/5 lg:w-2/5">
