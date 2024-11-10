@@ -1,70 +1,192 @@
-import React, { useContext, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import Button from 'components/atoms/Button';
-import InputRadio from 'components/atoms/InputRadio';
-import InputText from 'components/atoms/InputText';
-import useFormHook from 'hooks/useFormHook';
-
-import { ConstantsContext } from 'contexts/ConstantsContext';
-
-const FormResponse = dynamic(() => import('components/atoms/FormResponse'));
-
-interface CoachCheck {
-  name: string;
-  checked: boolean;
-}
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { useEmails, Form as EmailsForm } from 'contexts/EmailsContext';
 
 interface Props {
   setOpen: (e: boolean) => void;
 }
 
-const BookTimeForm = ({ setOpen }: Props) => {
-  const [onChangeHandler, onSubmitHandler, didSend, response] =
-    useFormHook('book-time');
-  const { boolean_choices } = useContext(ConstantsContext);
+const validationSchema = Yup.object().shape({
+  fullName: Yup.string().required('Full name is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  phone: Yup.string()
+    .matches(/^[0-9]{10}$/, 'Invalid phone number')
+    .required('Phone number is required'),
+  date: Yup.date().required('Date is required'),
+  time: Yup.string()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid time format')
+    .required('Time is required'),
+  comments: Yup.string(),
+});
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    onSubmitHandler(e);
+const BookTimeForm = () => {
+  const { setForm, setDidSend, setEmailTemplate } = useEmails();
+
+  const initialValues = {
+    fullName: '',
+    email: '',
+    phone: '',
+    date: '',
+    time: '',
+    comments: '',
+  };
+
+  const onSubmit = async (
+    values: typeof initialValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
+  ) => {
+    try {
+      setForm(values as EmailsForm);
+      setDidSend(true);
+      setEmailTemplate('book-time');
+    } catch (error) {
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
-    <div>
-      {didSend ? (
-        <>
-          <FormResponse message={response} />
-          <div className="text-center">
-            <Button handlePress={() => setOpen(false)} label="Close" />
-          </div>
-        </>
-      ) : (
-        <form onSubmit={handleSubmit} onChange={onChangeHandler}>
-          <InputText
-            id="bt-full-name"
-            name="fullName"
-            label="Full Name"
-            type="text"
-          />
-          <br />
-          <InputText id="bt-email" name="email" label="Email" type="email" />
-          <br />
-          <InputText id="bt-phone" name="phone" label="phone" type="phone" />
-          <br />
-          <p>Pick a date</p>
-          <InputText id="date" name="date" label="Pick a date" type="date" />
-          <br />
-          <p>Select a time</p>
-          <InputText id="time" name="time" label="Select time" type="time" />
-          <br />
-          <InputText
-            id="comments"
-            name="comments"
-            label="Anything else you would like to add?"
-            type="textarea"
-          />
-          <br />
-          <Button label="Book Time" />
-        </form>
-      )}
+    <div className="max-w-md mx-auto">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form className="space-y-4">
+            <div>
+              <label
+                htmlFor="fullName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Full Name
+              </label>
+              <Field
+                id="fullName"
+                name="fullName"
+                type="text"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-200 focus:ring-opacity-50"
+              />
+              <ErrorMessage
+                name="fullName"
+                component="p"
+                className="mt-1 text-sm text-red-600"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email
+              </label>
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-200 focus:ring-opacity-50"
+              />
+              <ErrorMessage
+                name="email"
+                component="p"
+                className="mt-1 text-sm text-red-600"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Phone
+              </label>
+              <Field
+                id="phone"
+                name="phone"
+                type="tel"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-200 focus:ring-opacity-50"
+              />
+              <ErrorMessage
+                name="phone"
+                component="p"
+                className="mt-1 text-sm text-red-600"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Pick a date
+              </label>
+              <Field
+                id="date"
+                name="date"
+                type="date"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-200 focus:ring-opacity-50"
+              />
+              <ErrorMessage
+                name="date"
+                component="p"
+                className="mt-1 text-sm text-red-600"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="time"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Select a time
+              </label>
+              <Field
+                id="time"
+                name="time"
+                type="time"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-200 focus:ring-opacity-50"
+              />
+              <ErrorMessage
+                name="time"
+                component="p"
+                className="mt-1 text-sm text-red-600"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="comments"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Anything else you would like to add?
+              </label>
+              <Field
+                as="textarea"
+                id="comments"
+                name="comments"
+                rows={4}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-200 focus:ring-opacity-50"
+              />
+              <ErrorMessage
+                name="comments"
+                component="p"
+                className="mt-1 text-sm text-red-600"
+              />
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full px-4 py-2 bg-forrest-900 hover:bg-forrest text-white rounded transition-colors disabled:opacity-50"
+              >
+                {isSubmitting ? 'Submitting...' : 'Book Time'}
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };
