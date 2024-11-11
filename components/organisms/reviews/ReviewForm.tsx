@@ -119,10 +119,10 @@ const ReviewForm = () => {
             />
           </div>
 
-          <div role="group" aria-labelledby="rating">
+          <div role="group" aria-labelledby="rating-label">
             <label
-              id="rating"
-              className="block text-sm font-medium text-gray-700"
+              id="rating-label"
+              className="block text-sm font-medium text-gray-700 mb-2"
             >
               Rate Our Services
             </label>
@@ -141,7 +141,7 @@ const ReviewForm = () => {
               </label>
             ))}
             <ErrorMessage
-              name="ratings"
+              name="rating"
               component="div"
               className="mt-1 text-sm text-red-600"
             />
