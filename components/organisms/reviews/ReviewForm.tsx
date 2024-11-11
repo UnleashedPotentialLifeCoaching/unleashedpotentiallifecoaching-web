@@ -58,7 +58,7 @@ const ReviewForm = () => {
       onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
-        <Form className="space-y-4">
+        <Form className="space-y-4 forrest-form">
           <div>
             <label
               htmlFor="fullName"
@@ -70,7 +70,7 @@ const ReviewForm = () => {
               type="text"
               id="review-full-name"
               name="fullName"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <ErrorMessage
               name="fullName"
@@ -90,7 +90,7 @@ const ReviewForm = () => {
               type="email"
               id="review-email"
               name="email"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <ErrorMessage
               name="email"
@@ -110,7 +110,7 @@ const ReviewForm = () => {
               type="tel"
               id="review-phone"
               name="phone"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <ErrorMessage
               name="phone"
@@ -158,7 +158,7 @@ const ReviewForm = () => {
               as="textarea"
               id="explanation"
               name="explanation"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <ErrorMessage
               name="explanation"
@@ -178,7 +178,7 @@ const ReviewForm = () => {
               as="textarea"
               id="improvements"
               name="improvements"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <ErrorMessage
               name="improvements"
@@ -226,7 +226,7 @@ const ReviewForm = () => {
               as="textarea"
               id="comments"
               name="comments"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             />
             <ErrorMessage
               name="comments"

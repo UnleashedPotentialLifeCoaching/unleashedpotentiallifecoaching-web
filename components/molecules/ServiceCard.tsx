@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import Button from 'components/atoms/Button';
 import Image from 'next/legacy/image';
 
 const BookTimeUp = dynamic(() => import('components/shared/BookTimePopup'));
@@ -31,7 +30,16 @@ const ServiceCard = ({
             1 Hour Session with {name}
           </p>
           <div className="mx-auto text-center py-5">
-            <Button handlePress={() => setIsOpen(!isOpen)} label="Book now" />
+            <button
+              onClick={() => {
+                console.log('Ummm...');
+                setIsOpen(true);
+              }}
+              className="bg-forrest-900 hover:bg-forrest  text-white text-center py-4 px-12 text-xl rounded"
+            >
+              Book now
+            </button>
+
             <BookTimeUp open={isOpen} setOpen={setIsOpen} />
           </div>
         </div>

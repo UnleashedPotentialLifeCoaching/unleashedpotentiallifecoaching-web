@@ -63,7 +63,12 @@ const ProfileHeader = ({ name, welcomeMessage }: Props) => {
           </h1>
           <Details>{documentToReactComponents(welcomeMessage?.json)}</Details>
           <div className="w-full lg:w-80">
-            <Button handlePress={() => setIsOpen(!isOpen)} label="Book" />
+            <button
+              onClick={() => setIsOpen(true)}
+              className="bg-forrest-900 hover:bg-forrest  text-white text-center py-4 px-12 text-xl rounded"
+            >
+              Book now
+            </button>
             <BookTimeUp open={isOpen} setOpen={setIsOpen} />
           </div>
           <div className="w-full">

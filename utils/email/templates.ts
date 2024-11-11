@@ -17,8 +17,7 @@ interface ReviewForm {
 }
 
 interface BookingForm {
-  time: string;
-  date: string;
+  eventDate: any;
   fullName: string;
   email: string;
   phone: string;
@@ -89,13 +88,12 @@ export const contactTemplate = (contact: ContactForm) => {
 export const bookingTemplate = (booking: BookingForm) => {
   const {
     comments,
-    date,
     email,
     fullName,
     phone,
     previousCoaching,
     selectCoach,
-    time,
+    eventDate,
   } = booking;
 
   const bookingSubject = `Someone has booked time with ${selectCoach} from unleashedpotentiallifecoaching.com`;
@@ -105,8 +103,7 @@ export const bookingTemplate = (booking: BookingForm) => {
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Full name: </strong>${fullName}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Email: </strong>${email}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Phone: </strong>${phone}</p>
-      <p style="margin-bottom:12px; font-size: 18px;"><strong>Date: </strong>${date}</p>
-      <p style="margin-bottom:12px; font-size: 18px;"><strong>Time: </strong>${time}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Date/Time: </strong>${JSON.stringify(eventDate)}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Has been previously coached: </strong>${previousCoaching}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Additional comments</strong></p>
       <p>${comments}</p>

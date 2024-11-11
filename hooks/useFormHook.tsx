@@ -6,7 +6,7 @@ import {
 } from 'utils/email/templates';
 import sendClientEmail from 'utils/email/client-handler';
 import { FAILED_EMAIL_MESSAGE, successEmailMessage } from 'utils/constants';
-import { convertTime, formatDate } from 'utils/helpers';
+import { formatDate } from 'utils/helpers';
 
 interface ContactForm {
   fullName: string;
@@ -27,11 +27,10 @@ interface ReviewForm {
 }
 
 interface BookingForm {
-  time: string;
-  date: string;
   fullName: string;
   email: string;
   phone: string;
+  eventDate: any;
   ratings: string;
   explanation: string;
   improvements: string;
@@ -75,13 +74,7 @@ const useFormHook = (formName: string) => {
     }
 
     if (formName === 'book-time') {
-      const modDetails = {
-        ...details,
-        time: convertTime(details.time),
-        date: formatDate(details.date),
-      } as BookingForm;
-
-      const bTemplate = bookingTemplate(modDetails);
+      const bTemplate = bookingTemplate(details as BookingForm);
       handleSendClient(bTemplate.body, bTemplate.subject);
     }
   };

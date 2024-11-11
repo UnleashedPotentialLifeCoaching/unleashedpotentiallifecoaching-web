@@ -77,7 +77,7 @@ const WebsiteSupport = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.fullName}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />
           {formik.touched.fullName && formik.errors.fullName ? (
             <div className="text-red-500 text-sm mt-1">
@@ -100,7 +100,7 @@ const WebsiteSupport = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />
           {formik.touched.email && formik.errors.email ? (
             <div className="text-red-500 text-sm mt-1">
@@ -123,7 +123,7 @@ const WebsiteSupport = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.phone}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />
         </div>
 
@@ -140,7 +140,7 @@ const WebsiteSupport = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.stepsToReproduce}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />
           {formik.touched.stepsToReproduce && formik.errors.stepsToReproduce ? (
             <div className="text-red-500 text-sm mt-1">
@@ -159,7 +159,7 @@ const WebsiteSupport = () => {
             name="file"
             multiple
             onChange={handleFileChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
           />
           {fileError && (
             <div className="text-red-500 text-sm mt-1">{fileError}</div>

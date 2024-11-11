@@ -62,3 +62,7 @@ a {
 .profile-image-wrapper {
   height: 750px;
 }
+
+.react-datepicker__month-container {
+  min-width: 360px;
+}

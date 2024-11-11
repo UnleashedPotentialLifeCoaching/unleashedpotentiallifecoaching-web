@@ -16,7 +16,7 @@ import {
 } from 'utils/email/templates';
 import sendClientEmail from 'utils/email/client-handler';
 import { FAILED_EMAIL_MESSAGE, successEmailMessage } from 'utils/constants';
-import { convertTime, formatDate } from 'utils/helpers';
+import { formatDate } from 'utils/helpers';
 import { toast } from 'react-toastify';
 
 interface ContactForm {
@@ -38,8 +38,7 @@ interface ReviewForm {
 }
 
 interface BookingForm {
-  time: string;
-  date: string;
+  eventDate: string;
   fullName: string;
   email: string;
   phone: string;
@@ -119,9 +118,7 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
       case 'book-time':
         return bookingTemplate({
           ...clonedForm,
-          time: convertTime((clonedForm as BookingForm).time),
-          date: formatDate((clonedForm as BookingForm).date),
-        } as BookingForm);
+        });
       default:
         throw new Error(`Unsupported email template: ${templateName}`);
     }

@@ -50,7 +50,7 @@ const ContactForm = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <Form className="space-y-4">
+          <Form className="space-y-4 forrest-form">
             <div>
               <label
                 htmlFor="fullName"
@@ -62,7 +62,7 @@ const ContactForm = () => {
                 type="text"
                 name="fullName"
                 id="fullName"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
               <ErrorMessage
                 name="fullName"
@@ -82,7 +82,7 @@ const ContactForm = () => {
                 type="email"
                 name="email"
                 id="email"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
               <ErrorMessage
                 name="email"
@@ -102,7 +102,7 @@ const ContactForm = () => {
                 type="tel"
                 name="phone"
                 id="phone"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
               <ErrorMessage
                 name="phone"
@@ -123,7 +123,7 @@ const ContactForm = () => {
                 name="message"
                 id="message"
                 rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-900 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
               <ErrorMessage
                 name="message"
