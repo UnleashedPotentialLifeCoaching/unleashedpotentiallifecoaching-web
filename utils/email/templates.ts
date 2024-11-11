@@ -59,6 +59,9 @@ export const reviewTemplate = (review: ReviewForm) => {
   <p style="margin-bottom:12px; font-size: 18px;"><strong>Anything else you would like to add?</strong></p>
   <p>${comments}</p>
 `;
+  console.log({
+    body,
+  });
   return {
     body,
     subject,
