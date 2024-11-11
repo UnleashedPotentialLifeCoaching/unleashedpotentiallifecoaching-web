@@ -104,7 +104,6 @@ export const bookingTemplate = (booking: BookingForm) => {
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Email: </strong>${email}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Phone: </strong>${phone}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Date/Time: </strong>${JSON.stringify(eventDate)}</p>
-      <p style="margin-bottom:12px; font-size: 18px;"><strong>Has been previously coached: </strong>${previousCoaching}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Additional comments</strong></p>
       <p>${comments}</p>
     `;

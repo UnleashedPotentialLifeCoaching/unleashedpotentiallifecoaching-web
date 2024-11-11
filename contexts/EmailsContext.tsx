@@ -130,9 +130,9 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
       const sendEmail = async () => {
         try {
           const template = getTemplate(emailTemplate, form);
-          const message = await sendClient(template.body, template.subject);
+          // const message = await sendClient(template.body, template.subject);
           if (isMounted) {
-            setResponse(message);
+            // setResponse(message);
             setDidSend(true);
           }
         } catch (error) {

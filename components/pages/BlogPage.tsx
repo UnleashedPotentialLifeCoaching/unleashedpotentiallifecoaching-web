@@ -18,10 +18,6 @@ const BlogPage = ({ page }: Props) => {
   const { isLoading, data } = useGetPosts('posts', blogPostsQuery, {
     limit,
   });
-  console.log(
-    'data?.blogPostCollection?.total',
-    data?.blogPostCollection?.total,
-  );
   const [disableBtn, handleAmountChange] = usePagination(
     data?.blogPostCollection?.total,
     limit,

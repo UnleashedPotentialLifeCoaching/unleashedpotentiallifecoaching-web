@@ -34,7 +34,6 @@ const ReviewForm = () => {
       resetForm: () => void;
     },
   ) => {
-    console.log(values);
     setForm(values);
     setEmailTemplate('review');
     setDidSend(true);

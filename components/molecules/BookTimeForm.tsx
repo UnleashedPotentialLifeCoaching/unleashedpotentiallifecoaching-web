@@ -50,8 +50,7 @@ const BookTimeForm = () => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ setFieldValue, errors, touched, isSubmitting }) => {
-          console.log(errors, touched);
+        {({ setFieldValue, isSubmitting }) => {
           return (
             <Form className="space-y-4 forrest-form">
               <div>

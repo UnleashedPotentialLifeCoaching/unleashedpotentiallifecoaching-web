@@ -31,10 +31,7 @@ const ServiceCard = ({
           </p>
           <div className="mx-auto text-center py-5">
             <button
-              onClick={() => {
-                console.log('Ummm...');
-                setIsOpen(true);
-              }}
+              onClick={() => setIsOpen(true)}
               className="bg-forrest-900 hover:bg-forrest  text-white text-center py-4 px-12 text-xl rounded"
             >
               Book now
