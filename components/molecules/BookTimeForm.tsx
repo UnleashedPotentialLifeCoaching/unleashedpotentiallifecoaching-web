@@ -126,6 +126,7 @@ const BookTimeForm = () => {
                         {...field}
                         selected={field.value}
                         onChange={(date) => setFieldValue('eventDate', date)}
+                        minDate={new Date()}
                         inline
                         showTimeSelect
                         timeFormat="h:mm aa"
