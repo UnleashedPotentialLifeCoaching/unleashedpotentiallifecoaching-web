@@ -36,7 +36,7 @@ export const reviewTemplate = (review: ReviewForm) => {
     fullName,
     email,
     phone,
-    ratings,
+    rating,
     explanation,
     improvements,
     recommend,
@@ -50,7 +50,7 @@ export const reviewTemplate = (review: ReviewForm) => {
   <p style="margin-bottom:12px; font-size: 18px;"><strong>Full name: </strong>${fullName}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>Email: </strong>${email}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>Phone: </strong>${phone}</p>
-  <p style="margin-bottom:12px; font-size: 18px;"><strong>Rate our services: </strong>${ratings}</p>
+  <p style="margin-bottom:12px; font-size: 18px;"><strong>Rate our services: </strong>${rating}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>What did you like best?</strong></p>
   <p>${explanation}</p>
   <p style="margin-bottom:12px; font-size: 18px;"><strong>How can we improve?</strong></p>
