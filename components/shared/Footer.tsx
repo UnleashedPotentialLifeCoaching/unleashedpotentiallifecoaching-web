@@ -1,9 +1,19 @@
 import Banner from 'components/organisms/footer/Banner';
-import ContactForm from 'components/organisms/footer/ContactForm';
-import ContactInfo from 'components/organisms/footer/ContactInfo';
-import SubFooter from 'components/organisms/footer/SubFooter';
 import Container from 'layouts/Container';
 import dynamic from 'next/dynamic';
+import SharedToastContainer from './SharedToastContainer';
+
+const ContactForm = dynamic(
+  () => import('components/organisms/footer/ContactForm'),
+);
+
+const ContactInfo = dynamic(
+  () => import('components/organisms/footer/ContactInfo'),
+);
+
+const SubFooter = dynamic(
+  () => import('components/organisms/footer/SubFooter'),
+);
 
 const FeaturedReview = dynamic(
   () => import('components/shared/FeaturedReview'),
@@ -11,6 +21,7 @@ const FeaturedReview = dynamic(
 
 const Footer = () => (
   <>
+    <SharedToastContainer />
     <FeaturedReview />
     <div className="w-100">
       <Container>

@@ -1,4 +1,4 @@
-/* This example requires Tailwind CSS v2.0+ */
+// @ts-nocheck
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import BookTimeForm from 'components/molecules/BookTimeForm';

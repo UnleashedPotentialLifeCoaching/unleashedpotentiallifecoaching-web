@@ -1,4 +1,5 @@
 import BasicPage from 'components/organisms/coach/BasicPage';
+import SharedToastContainer from 'components/shared/SharedToastContainer';
 import SiteHead from 'components/shared/SiteHead';
 import { ConstantsContext } from 'contexts/ConstantsContext';
 import Container from 'layouts/Container';
@@ -23,6 +24,7 @@ const CoachPage = ({ coach }: Props) => {
 
   return (
     <FadeInContainer>
+      <SharedToastContainer />
       <SiteHead
         title={seoTitle || seo_defaults.title}
         metaDescription={seoMetaDescription || seo_defaults.metaDescription}

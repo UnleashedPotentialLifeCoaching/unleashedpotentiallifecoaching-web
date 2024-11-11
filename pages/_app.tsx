@@ -9,6 +9,8 @@ import 'styles/globals.css';
 import { ConstantsProvider } from 'contexts/ConstantsContext';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { GA_ID } from 'utils/constants';
+import { EmailsProvider } from 'contexts/EmailsContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
 const Footer = dynamic(() => import('components/shared/Footer'));
@@ -34,10 +36,12 @@ const UnleashedPotentialApp = ({ Component, pageProps }: AppProps) => {
       <QueryClientProvider client={queryClient}>
         <ConstantsProvider>
           <CoachesProvider>
-            <SiteHead />
-            <Header />
-            <Component {...pageProps} />
-            <Footer />
+            <EmailsProvider>
+              <SiteHead />
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </EmailsProvider>
           </CoachesProvider>
         </ConstantsProvider>
       </QueryClientProvider>

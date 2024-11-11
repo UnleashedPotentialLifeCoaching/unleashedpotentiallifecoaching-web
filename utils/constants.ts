@@ -18,7 +18,7 @@ export const SITE_URL =
 
 export const CONTACT_INFO = [
   'Jessica: (631) 432-8897',
-  'Unleashedpotentiallifecoaching@gmail.com',
+  'unleashedpotentiallifecoaching@gmail.com',
 ];
 
 export const headers = {

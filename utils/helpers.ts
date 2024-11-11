@@ -4,28 +4,28 @@ export const urlify = (str: string): string =>
 export const removeSlashFromSlug = (slug: string) => slug.replace('/', '');
 
 // time conversion
-export const convertTime = (time: string): string | undefined => {
-  const timeArr = time.split(':'); // convert to array
+// export const convertTime = (time: string): string | undefined => {
+//   const timeArr = time.split(':'); // convert to array
 
-  // fetch
-  var hours = Number(timeArr[0]);
-  var minutes = Number(timeArr[1]);
+//   // fetch
+//   var hours = Number(timeArr[0]);
+//   var minutes = Number(timeArr[1]);
 
-  // calculate
-  let timeValue;
+//   // calculate
+//   let timeValue;
 
-  if (hours > 0 && hours <= 12) {
-    timeValue = '' + hours;
-  } else if (hours > 12) {
-    timeValue = '' + (hours - 12);
-  } else if (hours == 0) {
-    timeValue = '12';
-  }
+//   if (hours > 0 && hours <= 12) {
+//     timeValue = '' + hours;
+//   } else if (hours > 12) {
+//     timeValue = '' + (hours - 12);
+//   } else if (hours == 0) {
+//     timeValue = '12';
+//   }
 
-  timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get seconds
-  timeValue += hours >= 12 ? ' P.M.' : ' A.M.'; // get AM/PM
-  return timeValue;
-};
+//   timeValue += minutes < 10 ? ':0' + minutes : ':' + minutes; // get seconds
+//   timeValue += hours >= 12 ? ' P.M.' : ' A.M.'; // get AM/PM
+//   return timeValue;
+// };
 
 // date conversion
 export const formatDate = (date: string): string | undefined => {

@@ -1,70 +1,180 @@
-import React, { useContext, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import { useEmails, Form as EmailsForm } from 'contexts/EmailsContext';
 import Button from 'components/atoms/Button';
-import InputRadio from 'components/atoms/InputRadio';
-import InputText from 'components/atoms/InputText';
-import useFormHook from 'hooks/useFormHook';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-import { ConstantsContext } from 'contexts/ConstantsContext';
+const validationSchema = Yup.object().shape({
+  fullName: Yup.string().required('Full name is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  phone: Yup.string()
+    .matches(/^[0-9]{10}$/, 'Invalid phone number')
+    .required('Phone number is required'),
+  comments: Yup.string(),
+  eventDate: Yup.date()
+    .required('Event date and time is required')
+    .min(new Date(), 'Event date and time must be in the future')
+    .typeError('Please select a valid date and time'),
+});
 
-const FormResponse = dynamic(() => import('components/atoms/FormResponse'));
+const BookTimeForm = () => {
+  const { setForm, setDidSend, setEmailTemplate } = useEmails();
 
-interface CoachCheck {
-  name: string;
-  checked: boolean;
-}
+  const initialValues = {
+    fullName: '',
+    email: '',
+    phone: '',
+    eventDate: '',
+    comments: '',
+  };
 
-interface Props {
-  setOpen: (e: boolean) => void;
-}
-
-const BookTimeForm = ({ setOpen }: Props) => {
-  const [onChangeHandler, onSubmitHandler, didSend, response] =
-    useFormHook('book-time');
-  const { boolean_choices } = useContext(ConstantsContext);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    onSubmitHandler(e);
+  const onSubmit = async (
+    values: typeof initialValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
+  ) => {
+    try {
+      setForm(values as EmailsForm);
+      setDidSend(true);
+      setEmailTemplate('book-time');
+    } catch (error) {
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
-    <div>
-      {didSend ? (
-        <>
-          <FormResponse message={response} />
-          <div className="text-center">
-            <Button handlePress={() => setOpen(false)} label="Close" />
-          </div>
-        </>
-      ) : (
-        <form onSubmit={handleSubmit} onChange={onChangeHandler}>
-          <InputText
-            id="bt-full-name"
-            name="fullName"
-            label="Full Name"
-            type="text"
-          />
-          <br />
-          <InputText id="bt-email" name="email" label="Email" type="email" />
-          <br />
-          <InputText id="bt-phone" name="phone" label="phone" type="phone" />
-          <br />
-          <p>Pick a date</p>
-          <InputText id="date" name="date" label="Pick a date" type="date" />
-          <br />
-          <p>Select a time</p>
-          <InputText id="time" name="time" label="Select time" type="time" />
-          <br />
-          <InputText
-            id="comments"
-            name="comments"
-            label="Anything else you would like to add?"
-            type="textarea"
-          />
-          <br />
-          <Button label="Book Time" />
-        </form>
-      )}
+    <div className="max-w-md mx-auto">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        {({ setFieldValue, errors, touched, isSubmitting }) => {
+          console.log(errors, touched);
+          return (
+            <Form className="space-y-4 forrest-form">
+              <div>
+                <label
+                  htmlFor="fullName"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Full Name
+                </label>
+                <Field
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-900 focus:ring-opacity-50"
+                />
+                <ErrorMessage
+                  name="fullName"
+                  component="p"
+                  className="mt-1 text-sm text-red-600"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Email
+                </label>
+                <Field
+                  id="email"
+                  name="email"
+                  type="email"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-900 focus:ring-opacity-50"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="p"
+                  className="mt-1 text-sm text-red-600"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Phone
+                </label>
+                <Field
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-900 focus:ring-opacity-50"
+                />
+                <ErrorMessage
+                  name="phone"
+                  component="p"
+                  className="mt-1 text-sm text-red-600"
+                />
+              </div>
+              <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
+                <div className="flex-1 rounded-lg">
+                  <label
+                    htmlFor="eventDate"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Pick date & time
+                  </label>
+                  <Field name="eventDate">
+                    {({ field }: { field: any }) => (
+                      <DatePicker
+                        {...field}
+                        selected={field.value}
+                        onChange={(date) => setFieldValue('eventDate', date)}
+                        inline
+                        showTimeSelect
+                        timeFormat="h:mm aa"
+                        timeIntervals={15}
+                        timeCaption="Time"
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        calendarClassName="w-full"
+                        wrapperClassName="w-full"
+                      />
+                    )}
+                  </Field>
+                  <ErrorMessage
+                    name="eventDate"
+                    component="div"
+                    className="mt-1 text-sm text-red-600"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  htmlFor="comments"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Anything else you would like to add?
+                </label>
+                <Field
+                  as="textarea"
+                  id="comments"
+                  name="comments"
+                  rows={4}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-forrest-300 focus:ring focus:ring-forrest-900 focus:ring-opacity-50"
+                />
+                <ErrorMessage
+                  name="comments"
+                  component="p"
+                  className="mt-1 text-sm text-red-600"
+                />
+              </div>
+              <div>
+                <Button
+                  disabled={isSubmitting}
+                  label={isSubmitting ? 'Submitting...' : 'Book Time'}
+                />
+              </div>
+            </Form>
+          );
+        }}
+      </Formik>
     </div>
   );
 };
