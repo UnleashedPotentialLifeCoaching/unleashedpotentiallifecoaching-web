@@ -59,7 +59,14 @@ export const contactTemplate = (contact: ContactForm) => {
 };
 
 export const bookingTemplate = (booking: BookingForm) => {
-  const { comments, email, fullName, phone, selectCoach, eventDate } = booking;
+  const {
+    comments,
+    email,
+    fullName,
+    phone,
+    selectCoach = 'Jess Rebelo',
+    eventDate,
+  } = booking;
 
   const bookingDate = formatDateToReadableString(eventDate);
 
