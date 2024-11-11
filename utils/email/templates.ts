@@ -1,35 +1,5 @@
-interface ContactForm {
-  fullName: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-interface ReviewForm {
-  fullName: string;
-  email: string;
-  phone: string;
-  rating: string;
-  explanation: string;
-  improvements: string;
-  recommend: string;
-  comments: string;
-}
-
-interface BookingForm {
-  eventDate: any;
-  fullName: string;
-  email: string;
-  phone: string;
-  rating: string;
-  explanation: string;
-  improvements: string;
-  comments: string;
-  subject: string;
-  message: string;
-  selectCoach: string;
-  previousCoaching: string;
-}
+import { formatDateToReadableString } from 'utils/helpers';
+import { BookingForm, ContactForm, ReviewForm } from 'utils/types';
 
 export const reviewTemplate = (review: ReviewForm) => {
   const {
@@ -89,15 +59,9 @@ export const contactTemplate = (contact: ContactForm) => {
 };
 
 export const bookingTemplate = (booking: BookingForm) => {
-  const {
-    comments,
-    email,
-    fullName,
-    phone,
-    previousCoaching,
-    selectCoach,
-    eventDate,
-  } = booking;
+  const { comments, email, fullName, phone, selectCoach, eventDate } = booking;
+
+  const bookingDate = formatDateToReadableString(eventDate);
 
   const bookingSubject = `Someone has booked time with ${selectCoach} from unleashedpotentiallifecoaching.com`;
   const body = `
@@ -106,7 +70,7 @@ export const bookingTemplate = (booking: BookingForm) => {
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Full name: </strong>${fullName}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Email: </strong>${email}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Phone: </strong>${phone}</p>
-      <p style="margin-bottom:12px; font-size: 18px;"><strong>Date/Time: </strong>${JSON.stringify(eventDate)}</p>
+      <p style="margin-bottom:12px; font-size: 18px;"><strong>Date/Time: </strong>${bookingDate}</p>
       <p style="margin-bottom:12px; font-size: 18px;"><strong>Additional comments</strong></p>
       <p>${comments}</p>
     `;

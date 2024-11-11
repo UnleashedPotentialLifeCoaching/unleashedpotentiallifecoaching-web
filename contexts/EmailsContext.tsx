@@ -16,41 +16,8 @@ import {
 } from 'utils/email/templates';
 import sendClientEmail from 'utils/email/client-handler';
 import { FAILED_EMAIL_MESSAGE, successEmailMessage } from 'utils/constants';
-import { formatDate } from 'utils/helpers';
 import { toast } from 'react-toastify';
-
-interface ContactForm {
-  fullName: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-interface ReviewForm {
-  fullName: string;
-  email: string;
-  phone: string;
-  rating: string;
-  explanation: string;
-  improvements: string;
-  recommend: string;
-  comments: string;
-}
-
-interface BookingForm {
-  eventDate: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  rating: string;
-  explanation: string;
-  improvements: string;
-  comments: string;
-  subject: string;
-  message: string;
-  selectCoach: string;
-  previousCoaching: string;
-}
+import { BookingForm, ContactForm, ReviewForm } from 'utils/types';
 
 export type Form = ContactForm | ReviewForm | BookingForm;
 
