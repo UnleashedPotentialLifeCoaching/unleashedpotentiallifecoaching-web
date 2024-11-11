@@ -30,7 +30,7 @@ interface ReviewForm {
   fullName: string;
   email: string;
   phone: string;
-  ratings: string;
+  rating: string;
   explanation: string;
   improvements: string;
   recommend: string;
@@ -42,7 +42,7 @@ interface BookingForm {
   fullName: string;
   email: string;
   phone: string;
-  ratings: string;
+  rating: string;
   explanation: string;
   improvements: string;
   comments: string;
