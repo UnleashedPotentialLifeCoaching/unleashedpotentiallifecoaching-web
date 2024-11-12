@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic';
 import Container from 'layouts/Container';
 import { IReviewFields, ISimplePageFields } from 'types/contentful';
 import SimplePageLayout from 'layouts/SimplePageLayout';
-import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef } from 'react';
 
 const ReviewBlock = dynamic(
@@ -20,13 +19,6 @@ interface Props {
 const ReviewsPage = ({ page, allReviews }: Props) => {
   const parentRef = useRef<HTMLDivElement>(null);
 
-  const virtualizer = useVirtualizer({
-    count: allReviews.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => 100, // Estimate each item to be 100px tall
-    overscan: 5, // Number of items to render outside of the visible area
-  });
-
   return (
     <SimplePageLayout page={page}>
       <main>
@@ -36,7 +28,7 @@ const ReviewsPage = ({ page, allReviews }: Props) => {
               ref={parentRef}
               className="overflow-auto rounded border p-2"
               style={{
-                height: 520,
+                height: 820,
                 overflow: 'auto',
               }}
             >
@@ -49,9 +41,9 @@ const ReviewsPage = ({ page, allReviews }: Props) => {
                   // border: '3px solid red',
                 }}
               >
-                {virtualizer.getVirtualItems().map((virtualItem) => (
+                {allReviews.map((virtualItem) => (
                   <div
-                    key={virtualItem.key}
+                    key={virtualItem.name}
                     className="mb-8"
                     style={{
                       width: '100%',
@@ -60,8 +52,8 @@ const ReviewsPage = ({ page, allReviews }: Props) => {
                     }}
                   >
                     <ReviewBlock
-                      name={allReviews[virtualItem.index].name as string}
-                      quote={allReviews[virtualItem.index].quote}
+                      name={virtualItem.name as string}
+                      quote={virtualItem.quote}
                     />
                   </div>
                 ))}
