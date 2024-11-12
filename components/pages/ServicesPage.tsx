@@ -107,12 +107,10 @@ const ServicesPage = ({ page, pageContent, coaches }: Props) => {
           )}
         </ContentWrapper>
       </Container>
-      <div className="relative bottom-36">
-        <CarouselCTA
-          ButtonContent={ButtonContent}
-          buttonLink="/coach/jessica-rebelo"
-        />
-      </div>
+      <CarouselCTA
+        ButtonContent={ButtonContent}
+        buttonLink="/coach/jessica-rebelo"
+      />
     </SimplePageLayout>
   );
 };

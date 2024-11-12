@@ -34,7 +34,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const allReviews = reviewsData?.data?.reviewCollection
     ?.items as IReviewFields[];
-
   const page = reviewPageData?.data?.simplePage;
 
   return {

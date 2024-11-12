@@ -59,6 +59,21 @@ a {
   @apply text-stone-500;
 }
 
+.blog-post-content > h2 {
+  @apply text-3xl;
+  @apply leading-normal;
+  @apply font-serif;
+  @apply my-6;
+  @apply text-stone-500;
+}
+
+.blog-post-content > h3 {
+  @apply text-2xl;
+  @apply leading-normal;
+  @apply font-serif;
+  @apply my-6;
+  @apply text-stone-500;
+}
 .profile-image-wrapper {
   height: 750px;
 }
