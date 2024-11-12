@@ -34,9 +34,9 @@ const ReviewsPage = ({ page, allReviews }: Props) => {
           <div className="lg:grid lg:grid-cols-2 lg:grid-flow-col lg:gap-4">
             <div
               ref={parentRef}
-              className="h-[520px] overflow-auto rounded border p-4"
+              className="overflow-auto rounded border p-2"
               style={{
-                height: 500,
+                height: 520,
                 overflow: 'auto',
               }}
             >
@@ -52,9 +52,11 @@ const ReviewsPage = ({ page, allReviews }: Props) => {
                 {virtualizer.getVirtualItems().map((virtualItem) => (
                   <div
                     key={virtualItem.key}
+                    className="mb-8"
                     style={{
                       width: '100%',
-                      height: 350,
+                      minHeight: 'content',
+                      padding: 2,
                     }}
                   >
                     <ReviewBlock
