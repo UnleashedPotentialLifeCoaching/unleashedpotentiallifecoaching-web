@@ -1,5 +1,5 @@
 import React, { createContext } from 'react';
-import { useGetSiteConstants } from 'utils/api';
+import { siteConstants } from 'utils/helpers';
 
 interface ContextProps {
   banner_url: string;
@@ -7,7 +7,7 @@ interface ContextProps {
     name: string;
     checked: boolean;
   }[];
-  page_id: {
+  page_ids: {
     page: string;
     id: string;
   }[];
@@ -46,7 +46,7 @@ const defaultProps = {
       checked: false,
     },
   ],
-  page_id: [
+  page_ids: [
     {
       page: 'Home',
       id: '1',
@@ -94,13 +94,26 @@ export const ConstantsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { data } = useGetSiteConstants();
-
-  if (data) {
-    return (
-      <ConstantsContext.Provider value={data?.data}>
-        {children}
-      </ConstantsContext.Provider>
-    );
-  }
+  return (
+    <ConstantsContext.Provider
+      value={{
+        ...siteConstants,
+        seo_defaults: siteConstants.seo_default,
+        page_ids: siteConstants.page_ids,
+        site_navigation: siteConstants.site_navigation.map((nav: any) => ({
+          ...nav,
+          // Ensure slug is string or undefined, not null
+          slug: nav.slug === null ? undefined : nav.slug,
+          children: nav.children
+            ? nav.children.map((child: any) => ({
+                ...child,
+                slug: child.slug === null ? undefined : child.slug,
+              }))
+            : undefined,
+        })),
+      }}
+    >
+      {children}
+    </ConstantsContext.Provider>
+  );
 };

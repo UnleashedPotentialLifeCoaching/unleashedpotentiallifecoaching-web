@@ -11,7 +11,6 @@ Our coaching is done virtually. We've found that meeting online allows for conve
 **Built with**
 
 - [Context API](https://reactjs.org/docs/context.html)
-- [Fauna DB](https://fauna.com/)
 - [Framer Motion](https://motion.io)
 - [GraphQL](https://graphql.org/)
 - [Next.js](https://nextjs.org/)

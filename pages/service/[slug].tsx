@@ -5,7 +5,7 @@ import { fetchContenfulAPI } from 'utils/api';
 import { servicePageQuery } from 'utils/queries';
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
-import { siteConstants } from 'pages/api/site-constants';
+import { siteConstants } from 'utils/helpers';
 
 const Service = ({
   page,
@@ -23,7 +23,7 @@ const Service = ({
 };
 
 export const getStaticPaths = async () => {
-  const constants = await siteConstants();
+  const constants = siteConstants;
   return {
     fallback: true,
     paths: constants.service_list.map((service: any) => service?.slug),

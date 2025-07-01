@@ -128,7 +128,7 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
 
   const notify = useCallback(() => {
     toast.dismiss();
-    if (response) {
+    if (response && typeof window !== 'undefined') {
       toast(response, {
         position: window.innerWidth <= 768 ? 'top-center' : 'top-right',
         autoClose: 5000,

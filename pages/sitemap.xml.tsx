@@ -2,9 +2,8 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 import { IBlogPostFields } from 'types/contentful';
 import { fetchContenfulAPI } from 'utils/api';
 import { SITE_URL, CACHE_CONTROL, CACHE_LIFE } from 'utils/constants';
-import { removeSlashFromSlug } from 'utils/helpers';
+import { removeSlashFromSlug, siteConstants } from 'utils/helpers';
 import { allBlogPostsQuery } from 'utils/queries';
-import { siteConstants } from './api/site-constants';
 
 const Sitemap = () => null;
 export default Sitemap;
@@ -28,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const blogPostsData = await fetchContenfulAPI(allBlogPostsQuery, {});
   const posts = blogPostsData?.data?.blogPostCollection
     ?.items as IBlogPostFields[];
-  const constants = await siteConstants();
+  const constants = siteConstants;
 
   const postLinks = posts
     .filter((post: IBlogPostFields) => post?.slugText !== null)
@@ -42,10 +41,13 @@ export const getServerSideProps: GetServerSideProps = async (
     .join('');
 
   const siteLinks = constants?.site_navigation
-    .map((nav: { slug: string; children: any[] }) => {
-      if (nav?.slug) {
+    .map((nav) => {
+      // nav can be:
+      // { id: number; slug: string; label: string; children?: undefined }
+      // or { id: number; slug: null; label: string; children: [...] }
+      if (nav && typeof nav.slug === 'string' && nav.slug) {
         return generateXML(
-          removeSlashFromSlug(nav?.slug),
+          removeSlashFromSlug(nav.slug),
           new Date().toISOString(),
           false,
         );

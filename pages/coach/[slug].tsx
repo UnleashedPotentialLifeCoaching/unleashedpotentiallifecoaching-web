@@ -6,9 +6,8 @@ import { useRouter } from 'next/router';
 import React, { useContext, useEffect } from 'react';
 import { ICoachFields } from 'types/contentful';
 import { fetchContenfulAPI } from 'utils/api';
-import { urlify } from 'utils/helpers';
+import { siteConstants, urlify } from 'utils/helpers';
 import { coachQuery } from 'utils/queries';
-import { siteConstants } from 'pages/api/site-constants';
 
 const CoachProfile = ({
   coach,
@@ -31,7 +30,7 @@ const CoachProfile = ({
 };
 
 export const getStaticPaths = async () => {
-  const constants = await siteConstants();
+  const constants = siteConstants;
   const coachesItem = constants.site_navigation.filter(
     (nav: any) => nav.id === 2,
   )[0];
