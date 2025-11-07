@@ -17,6 +17,11 @@
     "incremental": true,
     "useUnknownInCatchVariables": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "components/atoms/Carousel.jsx"
+  ],
   "exclude": ["node_modules"]
 }
