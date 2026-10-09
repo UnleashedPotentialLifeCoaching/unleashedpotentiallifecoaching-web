@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface Banner {
   imageUrl: string | undefined;
@@ -8,12 +9,19 @@ interface Banner {
 
 const HomeBanner = ({ imageUrl, lineOne, lineTwo }: Banner) => {
   return (
-    <div
-      className="bg-no-repeat bg-center bg-cover z-30"
-      style={{ backgroundImage: `url(${imageUrl})` }}
-    >
+    <div className="relative z-30">
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      )}
       <div
-        className="flex flex-col items-center justify-center text-center"
+        className="relative flex flex-col items-center justify-center text-center"
         style={{ minHeight: '575px' }}
       >
         <h1 className="m-0 p-0 banner-shadow  text-cream-200 font-bold text-7xl">
@@ -24,7 +32,6 @@ const HomeBanner = ({ imageUrl, lineOne, lineTwo }: Banner) => {
         </h2>
       </div>
     </div>
-    // <>{JSON.stringify(imageUrl)}</>
   );
 };
 

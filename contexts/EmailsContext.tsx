@@ -61,7 +61,7 @@ export const EmailsProvider: React.FC<EmailsProviderProps> = ({ children }) => {
     async (body: string, subject: string) => {
       try {
         const request = await sendClientEmail({ subject, body });
-        if (request?.status === 200) {
+        if (request.success) {
           return successEmailMessage(emailTemplate);
         } else {
           throw new Error('Failed to send email');
