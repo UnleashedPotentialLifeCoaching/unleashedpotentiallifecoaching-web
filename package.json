@@ -41,6 +41,7 @@
     "@types/react-slick": "^0.23.13",
     "@types/styled-components": "^5.1.20",
     "autoprefixer": "^10.4.16",
+    "contentful-management": "^11.76.0",
     "contentful-typescript-codegen": "^3.2.3",
     "date-fns": "^4.1.0",
     "eslint": "^8.57.1",
