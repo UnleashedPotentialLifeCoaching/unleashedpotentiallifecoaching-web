@@ -114,7 +114,7 @@ Ordered by impact. Items crossed out are done.
 **Security**
 
 - The Contentful token is exposed in the browser through `NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN`. If it is a management token rather than a read-only delivery token, rotate it and move fetching to build time only. The old site had the same pattern with `NEXT_PUBLIC_YT_API_KEY`.
-- Remove `FAUNA_SECRET` from `.env` and revoke it. Fauna was removed from the code in July 2025.
+- ~~Revoke `FAUNA_SECRET`~~: done (2026-10-09). The key is revoked in Fauna and removed from the local `.env`. Fauna was removed from the code in July 2025.
 - ~~Clear the `next` advisories~~: done, upgraded to 15.5.27.
 - Remaining build-time findings: they go away with Tailwind 4 (`postcss-selector-parser`) and an upstream fix for `braces`. `next lint` is deprecated in Next 15. Run `npx @next/codemod@canary next-lint-to-eslint-cli .` before moving to Next 16.
 
