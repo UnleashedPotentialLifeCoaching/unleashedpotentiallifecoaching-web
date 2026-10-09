@@ -2,42 +2,43 @@
 
 Before: commit `85ff22c` (2022-03-29), documented in [BASELINE.md](BASELINE.md)
 After: commit `4dbc2a0` (2025-07-01), the commit that is live in production (its `_app` chunk hash matches the live site)
-After fixes: `4dbc2a0` plus the follow-up fixes (hero image through `next/image`, AVIF enabled, email check fixed), measured 2026-10-09
+After fixes: `822fbb7` (hero image through `next/image`, AVIF enabled, email check fixed)
+After audit: unused dependencies removed, Next.js 14.2 → 15.5.27, patched transitive versions. All measured 2026-10-09
 Recorded: 2026-10-09
 
 ## Summary
 
 The migration ran from June 2022 to October 2023. It moved the CMS from Prismic to Contentful (PR #3), and in October 2023 it switched every content page from rendering on each request to rendering once at build time (PR #17). Those changes did what they were meant to do: the server answers 30–45× faster, text appears about twice as fast, and the site no longer depends on the CMS being up when a visitor arrives.
 
-Along the way the home page hero became a raw 3.6 MB phone photo, which hid those gains in Lighthouse's headline score. The follow-up fix serves it through `next/image` as a resized AVIF (3,622 KiB → 162 KiB). With that in place, the page weighs 749 KiB, down from 4,322, LCP is 5.3 s, down from 23.2, and Lighthouse Performance is 80, up from 75 on the live site and 73 on the old one.
+Along the way the home page hero became a raw 3.6 MB phone photo, which hid those gains in Lighthouse's headline score. The follow-up fix serves it through `next/image` as a resized AVIF (3,622 KiB → 162 KiB). With that in place, and after the dependency cleanup and the Next 15 upgrade, the home page weighs 654 KiB (down from 4,322), LCP is 3.9 s (down from 23.2 live, and now faster than the old site's 4.8), and Lighthouse Performance is 88 (75 live, 73 before). Known vulnerabilities in runtime dependencies went from 150 to 0.
 
 ## Before and after
 
 Home page, Lighthouse 12.8.2, mobile, simulated throttling, 3 runs each against `next start` on the same machine. Medians.
 
-| Metric                                     | Before (Prismic, SSR)              | After migration (live)                       | After fixes                           |
-| ------------------------------------------ | ---------------------------------- | -------------------------------------------- | ------------------------------------- |
-| Routes rendered on every request           | 7 of 10                            | 1 of 14 (`/sitemap.xml`, plus the email API) | Same                                  |
-| Server response, median of 5 pages (local) | 58–92 ms                           | 2 ms                                         | 2 ms                                  |
-| Production cache                           | `no-store`, `x-vercel-cache: MISS` | `x-vercel-cache: HIT`                        | Same                                  |
-| First Contentful Paint                     | 2.8 s                              | 1.5 s                                        | 1.5 s (−46% vs before)                |
-| Speed Index                                | 5.4 s                              | 1.8 s                                        | 1.7 s (−69% vs before)                |
-| Largest Contentful Paint                   | 4.8 s                              | 23.2 s                                       | 5.3 s (−77% vs live)                  |
-| Total Blocking Time                        | 0 ms                               | 30 ms                                        | 40 ms                                 |
-| Cumulative Layout Shift                    | 0                                  | 0.008                                        | 0.008                                 |
-| Total transfer                             | 578 KiB, 28 requests               | 4,322 KiB, 48 requests                       | 749 KiB, 49 requests (−83% vs live)   |
-| Hero image                                 | 301 KiB AVIF (Prismic CDN)         | 3,622 KiB JPEG (raw)                         | 162 KiB AVIF (−96% vs live)           |
-| JavaScript transferred                     | 159 KiB                            | 245 KiB                                      | 246 KiB                               |
-| Lighthouse Performance                     | 73                                 | 75                                           | 80                                    |
-| Lighthouse Accessibility                   | 96                                 | 92                                           | 92                                    |
-| Lighthouse Best Practices                  | 100                                | 96                                           | 96                                    |
-| Lighthouse SEO                             | 100                                | 100                                          | 100                                   |
-| Site renders when the CMS request fails    | No (every page returns 500)        | Yes (prebuilt HTML)                          | Yes                                   |
-| Routes                                     | 10                                 | 14                                           | 14                                    |
-| `next build`                               | 7.7 s                              | 16.7 s (prerenders 22 pages)                 | Passes (`HEAD` before the fix failed) |
-| Next.js / React / TypeScript               | 12 (unpinned `latest`) / 17 / 4.5  | 14.2 / 18 / 5                                | Same                                  |
-| Node version declared                      | None                               | `>=18.18.0`                                  | Same                                  |
-| `yarn audit`, runtime deps (today)         | 37 (5 critical)                    | 150 (3 critical)                             | Same                                  |
+| Metric                                     | Before (Prismic, SSR)              | After migration (live)                       | After fixes                           | After audit (Next 15)                |
+| ------------------------------------------ | ---------------------------------- | -------------------------------------------- | ------------------------------------- | ------------------------------------ |
+| Routes rendered on every request           | 7 of 10                            | 1 of 14 (`/sitemap.xml`, plus the email API) | Same                                  | Same                                 |
+| Server response, median of 5 pages (local) | 58–92 ms                           | 2 ms                                         | 2 ms                                  | 2 ms                                 |
+| Production cache                           | `no-store`, `x-vercel-cache: MISS` | `x-vercel-cache: HIT`                        | Same                                  | Same                                 |
+| First Contentful Paint                     | 2.8 s                              | 1.5 s                                        | 1.5 s (−46% vs before)                | 1.5 s                                |
+| Speed Index                                | 5.4 s                              | 1.8 s                                        | 1.7 s (−69% vs before)                | 1.7 s                                |
+| Largest Contentful Paint                   | 4.8 s                              | 23.2 s                                       | 5.3 s (−77% vs live)                  | 3.9 s (−19% vs before, −83% vs live) |
+| Total Blocking Time                        | 0 ms                               | 30 ms                                        | 40 ms                                 | 20 ms                                |
+| Cumulative Layout Shift                    | 0                                  | 0.008                                        | 0.008                                 | 0                                    |
+| Total transfer                             | 578 KiB, 28 requests               | 4,322 KiB, 48 requests                       | 749 KiB, 49 requests (−83% vs live)   | 654 KiB, 49 requests                 |
+| Hero image                                 | 301 KiB AVIF (Prismic CDN)         | 3,622 KiB JPEG (raw)                         | 162 KiB AVIF (−96% vs live)           | AVIF via `next/image`                |
+| JavaScript transferred                     | 159 KiB                            | 245 KiB                                      | 246 KiB                               | 250 KiB                              |
+| Lighthouse Performance                     | 73                                 | 75                                           | 80                                    | 88                                   |
+| Lighthouse Accessibility                   | 96                                 | 92                                           | 92                                    | 92                                   |
+| Lighthouse Best Practices                  | 100                                | 96                                           | 96                                    | 96                                   |
+| Lighthouse SEO                             | 100                                | 100                                          | 100                                   | 100                                  |
+| Site renders when the CMS request fails    | No (every page returns 500)        | Yes (prebuilt HTML)                          | Yes                                   | Yes                                  |
+| Routes                                     | 10                                 | 14                                           | 14                                    | 14                                   |
+| `next build`                               | 7.7 s                              | 16.7 s (prerenders 22 pages)                 | Passes (`HEAD` before the fix failed) | Passes                               |
+| Next.js / React / TypeScript               | 12 (unpinned `latest`) / 17 / 4.5  | 14.2 / 18 / 5                                | Same                                  | 15.5.27 / 18 / 5                     |
+| Node version declared                      | None                               | `>=18.18.0`                                  | Same                                  | Same                                 |
+| `yarn audit`, runtime deps (today)         | 37 (5 critical)                    | 150 (3 critical)                             | Same                                  | **0**                                |
 
 ## What improved
 
@@ -63,7 +64,9 @@ What remains of LCP (5.3 s) is almost all render delay (4.8 s), not loading. The
 
 **Small accessibility and console regressions.** Accessibility fell from 96 to 92 and Best Practices from 100 to 96. Lighthouse flags low text contrast on the banner (in both versions), a `<ul class="flex mt-4">` with non-`<li>` children, and React hydration errors #418, #423 and #425 (server and client HTML disagree) in the console.
 
-**Dependency audit.** Both lockfiles were audited today against the same advisory database. The current one has more findings: 150 runtime vs 37. Most come from packages the code never imports. 12 runtime dependencies are unused, including `contentful-import`, which pulls in the 12 high-severity `axios` advisories. Another 12 advisories (2 critical, 10 high) are against the installed `next` 14.2.30 itself.
+**Dependency audit (fixed).** Both lockfiles were audited against the same advisory database on the same day. The migrated site had more findings than the old one: 150 runtime vs 37. Most came from 12 runtime dependencies the code never imported, such as `contentful-import`, which pulled in 12 high-severity `axios` advisories. The rest were in Next 14, which gets no more security patches. All of the remaining `next` advisories, including 2 critical ones (one is remote code execution in the image optimizer), are only fixed in 15.5.24 or later.
+
+The fix: remove the 12 unused packages (150 → 46), upgrade to Next 15.5.27 (Pages Router and React 18 still work, with no code changes), pin patched versions of `lodash`, `lodash-es`, `postcss`, `nanoid` and `source-map-js` through `resolutions`, and refresh the vulnerable dev-tool entries in the lockfile. Result: **0 runtime vulnerabilities**. 5 build-time findings remain (3 high, 2 moderate). They are in `braces`, which has no patched release, and `postcss-selector-parser`, which Tailwind 3 pins to the vulnerable 6.x line. Both only process this repo's own source during builds. ESLint is now a direct dev dependency: it had only been installed as a side effect of `contentful-import`, so removing that package silently turned off linting during builds.
 
 ## Live production check
 
@@ -85,19 +88,20 @@ FCP 1.8 s, LCP 23.3 s, TBT 0 ms, CLS 0, 4,298 KiB across 48 requests. These matc
 - Images are fetched from each CMS's real CDN, so the hero image comparison reflects what each CMS actually serves.
 - Server response time is time to first byte with `curl`, 20 requests per page, on localhost. That isolates rendering cost from network distance.
 - Lighthouse runs through the Wayback Machine were discarded: timings served through the archive measure the archive.
+- "After audit" was measured the same way (3 runs, image cache warmed). Every route was smoke-tested on the Next 15 build (all 200, unknown path 404).
 - `HEAD` (`4835081`) was not measured because it did not build. The "After fixes" column includes the fix for that.
 - "After fixes" was measured on a fresh build with the image cache warmed by one request. The first run after a cold start (when Next.js encodes the AVIF) was slower (LCP 5.7 s, Performance 67) and is excluded from the median.
 - Raw Lighthouse JSON and build logs were kept out of the repo.
 
 ## Backlog
 
-Ordered by impact. Hero image and the broken build are done. The rest is not.
+Ordered by impact. Items crossed out are done.
 
 **Performance**
 
 - ~~Hero image~~: done. Served through `next/image` as AVIF, 3,622 → 162 KiB.
 - LCP render delay: `layouts/FadeInContainer.tsx` starts the home page at `opacity: 0`, so nothing counts as painted until hydration plus the 1.2 s fade. Rendering the banner outside the fade (or starting at `opacity: 1`) should take most of the remaining 4.8 s off LCP. This changes how the page appears, so it's a design call.
-- Remove the 12 unused runtime dependencies: `@apollo/client`, `@hookform/resolvers`, `@vercel/kv`, `contentful-import`, `embla-carousel-react`, `fauna`, `graphql`, `graphql-request`, `next-cloudinary`, `react-hook-form`, `react-query` (v3, duplicated by `@tanstack/react-query`), `react-share`. Re-run `yarn audit`.
+- ~~Remove the 12 unused runtime dependencies~~: done.
 - Render-blocking resources: Lighthouse estimates 560–710 ms of savings (the Google Fonts stylesheet). `next/font` would self-host the fonts.
 - Pages have no `revalidate`, so content edits in Contentful only go live after a redeploy. Add ISR (`revalidate`) or a Contentful webhook that triggers a deploy.
 
@@ -111,7 +115,8 @@ Ordered by impact. Hero image and the broken build are done. The rest is not.
 
 - The Contentful token is exposed in the browser through `NEXT_PUBLIC_CONTENTFUL_MANAGEMENT_API_ACCESS_TOKEN`. If it is a management token rather than a read-only delivery token, rotate it and move fetching to build time only. The old site had the same pattern with `NEXT_PUBLIC_YT_API_KEY`.
 - Remove `FAUNA_SECRET` from `.env` and revoke it. Fauna was removed from the code in July 2025.
-- Upgrade within Next 14 (or move to 15) to clear the remaining `next` advisories.
+- ~~Clear the `next` advisories~~: done, upgraded to 15.5.27.
+- Remaining build-time findings: they go away with Tailwind 4 (`postcss-selector-parser`) and an upstream fix for `braces`. `next lint` is deprecated in Next 15. Run `npx @next/codemod@canary next-lint-to-eslint-cli .` before moving to Next 16.
 
 **Documentation**
 
